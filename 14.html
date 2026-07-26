@@ -36,89 +36,34 @@
     .content {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      gap: 0;
     }
 
     .title {
-      font-size: 4.5vw;
+      font-size: 4vw;
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 1.2vw;
+      margin-bottom: 0.75vw;
     }
 
-    .title .gold {
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .question {
-      font-size: 1.25vw;
-      font-weight: 400;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.05em;
-      margin-bottom: 3.5vw;
-    }
-
-    .formula {
-      display: flex;
-      align-items: center;
-      gap: 1.5vw;
-      margin-bottom: 2.5vw;
-    }
-
-    .formula .term {
-      font-size: 2.5vw;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-    }
-
-    .formula .term.gold {
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .formula .term.dim {
-      color: rgba(255,255,255,0.55);
-    }
-
-    .formula .op {
-      font-size: 1.5vw;
-      color: rgba(255,255,255,0.30);
-      font-weight: 300;
-    }
-
-    .warning {
+    .subtitle {
       font-size: 1.44vw;
       font-weight: 500;
-      color: rgba(255,255,255,0.60);
-      letter-spacing: 0.05em;
-      margin-bottom: 3.5vw;
-      line-height: 1.8;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5vw;
+      display: flex;
+      align-items: center;
+      gap: 0.3vw;
     }
 
-    .warning .zero {
-      font-weight: 900;
-      font-size: 2vw;
+    .subtitle .inline-logo {
+      height: 2.5vw;
+      filter: brightness(0.95) saturate(0.4);
+    }
+    .subtitle .brand-name {
+      font-weight: 700;
       background: linear-gradient(135deg,
         #e2c988 0%,
         #f5e6c8 25%,
@@ -136,18 +81,38 @@
       width: 25vw;
       height: 0.16vw;
       background: rgba(255,255,255,0.18);
-      margin-bottom: 2.2vw;
+      margin-bottom: 2.75vw;
     }
 
-    .conclusion {
-      font-size: 1.5vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.78);
+    .columns {
+      display: flex;
+      gap: 5vw;
+    }
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1vw;
+    }
+
+    .item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75vw;
+      font-size: 1.375vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.70);
       letter-spacing: 0.04em;
-      line-height: 1.85;
+      line-height: 1.7;
     }
 
-    .conclusion .gold {
+    .item .arrow {
+      color: rgba(255,255,255,0.30);
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    .item .gold {
       font-weight: 700;
       background: linear-gradient(135deg,
         #e2c988 0%,
@@ -160,34 +125,35 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      white-space: nowrap;
     }
 
     /* Logo */
     .brand {
       position: absolute;
-      top: 2.75vw;
-      left: 10vw;
+      top: 1.8vw;
+      left: 3.5vw;
       display: flex;
       align-items: center;
       gap: 0.75vw;
-      opacity: 0.75;
+      opacity: 1;
       transition: opacity 0.3s;
       text-decoration: none;
     }
     .brand:hover { opacity: 1; }
-    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand img { height: 2.5vw; filter: brightness(0.95) saturate(0.4); }
     .brand span {
       font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
-      font-size: 1vw;
+      font-size: 1.25vw;
       font-weight: 600;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.78);
       letter-spacing: 0.04em;
     }
 
     .meta {
       position: absolute;
       bottom: 2.5vw;
-      left: 10vw;
+      left: 3.5vw;
       font-size: 0.73vw;
       font-weight: 300;
       color: rgba(255,255,255,0.08);
@@ -205,26 +171,47 @@
 
     <div class="content">
 
-      <div class="title">AI 是<span class="gold">杠杆</span>，不是引擎</div>
+      <div class="title">开采手段和生产机器</div>
 
-      <div class="question">为什么你只需要录音，觅火智能体就能出稿子？</div>
-
-      <div class="formula">
-        <span class="term gold">专有知识</span>
-        <span class="op">×</span>
-        <span class="term dim">杠杆</span>
-        <span class="op">=</span>
-        <span class="term dim">财富</span>
-      </div>
-
-      <div class="warning">
-        如果专有知识是 <span class="zero">0</span>，杠杆再大，<span class="zero">0</span> × 任何数 = <span class="zero">0</span>
-      </div>
+      <div class="subtitle">用 <img src="logo.png" class="inline-logo"> <span class="brand-name">觅火 MIIFIRE AI 智能体</span></div>
 
       <div class="divider"></div>
 
-      <div class="conclusion">
-        我把我的<span class="gold">能力</span>灌注进了觅火，让它变成你的<span class="gold">杠杆</span>
+      <div class="columns">
+        <div class="col">
+          <div class="item">
+            <span class="gold">把小事讲好</span>
+            <span class="arrow">→</span>
+            <span>「坚持」用嘴巴写日记</span>
+          </div>
+          <div class="item">
+            <span class="gold">把想讲的讲好</span>
+            <span class="arrow">→</span>
+            <span>不要浪费自己的表达欲</span>
+          </div>
+          <div class="item">
+            <span class="gold">把客户故事讲好</span>
+            <span class="arrow">→</span>
+            <span>每个客户都是你的内容供应商</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item">
+            <span class="gold">把产品/服务讲好</span>
+            <span class="arrow">→</span>
+            <span>每件新品讲一遍</span>
+          </div>
+          <div class="item">
+            <span class="gold">把你出差过程讲好</span>
+            <span class="arrow">→</span>
+            <span>现场出稿子 / 现场拍</span>
+          </div>
+          <div class="item">
+            <span class="gold">把低粉高赞讲好</span>
+            <span class="arrow">→</span>
+            <span>低粉高赞短视频</span>
+          </div>
+        </div>
       </div>
 
     </div>

@@ -36,63 +36,18 @@
     .content {
       display: flex;
       flex-direction: column;
+      gap: 0;
     }
 
-    /* ---- 流程行 ---- */
-    .flow {
-      display: flex;
-      align-items: center;
-      gap: 1.25vw;
-      font-size: 2vw;
+    .title {
+      font-size: 4vw;
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 2.5vw;
-    }
-    .flow .arrow {
-      font-size: 1.5vw;
-      color: rgba(255,255,255,0.25);
-      font-weight: 300;
-    }
-    .flow .gold {
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 0.75vw;
     }
 
-    /* ---- 推理结果 ---- */
-    .inferences {
-      font-size: 1.375vw;
-      font-weight: 400;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.04em;
-      line-height: 2;
-      margin-bottom: 1.5vw;
-    }
-
-    .inferences .dot {
-      color: rgba(255,255,255,0.22);
-      margin: 0 0.75vw;
-    }
-
-    /* ---- 两句结论 ---- */
-    .quotes {
-      display: flex;
-      gap: 3.75vw;
-      margin-bottom: 2.5vw;
-    }
-    .quotes .q {
-      font-size: 2.5vw;
-      font-weight: 900;
-      letter-spacing: 0.08em;
+    .title .kw {
       background: linear-gradient(135deg,
         #e2c988 0%,
         #f5e6c8 25%,
@@ -110,49 +65,92 @@
       width: 25vw;
       height: 0.16vw;
       background: rgba(255,255,255,0.18);
+      margin-bottom: 2.75vw;
+    }
+
+    .question {
+      font-size: 1.625vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.06em;
       margin-bottom: 2.5vw;
     }
 
-    .conclusion {
-      font-size: 1.56vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.78);
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.69vw;
+      margin-bottom: 3.5vw;
+      font-size: 1.44vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.60);
       letter-spacing: 0.04em;
-      line-height: 1.85;
+      line-height: 1.8;
     }
 
-    .conclusion em {
-      font-style: normal;
-      color: #d4b87a;
+    .items .item {
+      display: flex;
+      align-items: baseline;
+      gap: 1vw;
+    }
+
+    .items .num {
+      font-size: 0.875vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      min-width: 1.875vw;
+    }
+
+    .items .kw {
       font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .bottom {
+      font-size: 2.25vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
     }
 
     /* Logo */
     .brand {
       position: absolute;
-      top: 2.75vw;
-      left: 10vw;
+      top: 1.8vw;
+      left: 3.5vw;
       display: flex;
       align-items: center;
       gap: 0.75vw;
-      opacity: 0.75;
+      opacity: 1;
       transition: opacity 0.3s;
       text-decoration: none;
     }
     .brand:hover { opacity: 1; }
-    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand img { height: 2.5vw; filter: brightness(0.95) saturate(0.4); }
     .brand span {
       font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
-      font-size: 1vw;
+      font-size: 1.25vw;
       font-weight: 600;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.78);
       letter-spacing: 0.04em;
     }
 
     .meta {
       position: absolute;
       bottom: 2.5vw;
-      left: 10vw;
+      left: 3.5vw;
       font-size: 0.73vw;
       font-weight: 300;
       color: rgba(255,255,255,0.08);
@@ -170,33 +168,24 @@
 
     <div class="content">
 
-      <div class="flow">
-        <span>你做</span>
-        <span class="arrow">→</span>
-        <span>用户看</span>
-        <span class="arrow">→</span>
-        <span>用户在观看过程中自己</span>
-        <span class="gold">发现 / 推理出</span>
-      </div>
-
-      <div class="inferences">
-        这家店有严格的管理制度<span class="dot">·</span>
-        这家店招聘员工的标准很高<span class="dot">·</span>
-        这家店会主动收集和复盘客户反馈<span class="dot">·</span>
-        这家店对服务细节有高标准要求<span class="dot">·</span>
-        这家店的老板每天都在店里盯着
-      </div>
-
-      <div class="quotes">
-        <span class="q">「这个人做事靠谱」</span>
-        <span class="q">「这家店做事真讲究」</span>
-      </div>
+      <div class="title">你的经营场景，每天都有<span class="kw">过程</span>的发生</div>
 
       <div class="divider"></div>
 
-      <div class="conclusion">
-        把卖点从<em>「嘴说」</em>变成<em>「眼见」</em>——让客户的信任从「<em>相信你说了什么</em>」变成「<em>相信他看到了什么</em>」。
+      <div class="question">过程里有什么</div>
+
+      <div class="items">
+        <div class="item"><span class="num">01</span>有我和客户的 <span class="kw">因缘际会</span></div>
+        <div class="item"><span class="num">02</span>有客户一开始的 <span class="kw">困扰 / 问题</span></div>
+        <div class="item"><span class="num">03</span>有客户的 <span class="kw">疑虑 / 顾虑</span></div>
+        <div class="item"><span class="num">04</span>有我的 <span class="kw">专业经验</span> 注入</div>
+        <div class="item"><span class="num">05</span>有客户从模糊到明确的 <span class="kw">思维转变</span></div>
+        <div class="item"><span class="num">06</span>有我的 <span class="kw">责任心</span> 服务态度</div>
+        <div class="item"><span class="num">07</span>有 <span class="kw">结果</span>，有 <span class="kw">评价</span></div>
+        <div class="item"><span class="num">08</span>有我的 <span class="kw">事后感受</span></div>
       </div>
+
+      <div class="bottom">经营的过程，就是源源不断的新内容</div>
 
     </div>
 
