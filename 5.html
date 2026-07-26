@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 5 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5vw;
+    }
+
+    .title {
+      font-size: 4.25vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+    }
+
+    .traps {
+      display: flex;
+      gap: 1vw;
+    }
+    .trap {
+      font-size: 1.25vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,0.18);
+      text-decoration-thickness: 0.08vw;
+    }
+
+    .lessons {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25vw;
+    }
+    .lesson {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75vw;
+    }
+    .lesson .bar {
+      width: 0.23vw;
+      flex-shrink: 0;
+      align-self: stretch;
+      background: linear-gradient(180deg, rgba(212,184,122,0.5), rgba(180,150,100,0.05));
+      border-radius: 0.08vw;
+      min-height: 100%;
+    }
+    .lesson .keyword {
+      font-size: 1.56vw;
+      font-weight: 900;
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      min-width: 6.25vw;
+    }
+    .lesson .text {
+      font-size: 1.56vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.05em;
+      line-height: 1.55;
+      padding-top: 0.06vw;
+    }
+    .lesson .text .gold {
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="title">我把大部分弯路都走了一遍</div>
+
+      <div class="traps">
+        <span class="trap">流量</span>
+        <span class="trap">人设</span>
+        <span class="trap">高级感</span>
+      </div>
+
+      <div class="lessons">
+        <div class="lesson">
+          <span class="bar"></span>
+          <span class="keyword">流量</span>
+          <span class="text">有流量的，一旦脱离 <span class="gold">基础身份</span> 和 <span class="gold">经营场景</span>，意义其实没有想象中那么大</span>
+        </div>
+        <div class="lesson">
+          <span class="bar"></span>
+          <span class="keyword">人设</span>
+          <span class="text">人设不是设计出来的，也不是演出来的，人设是真实的你，人设是一种结果</span>
+        </div>
+        <div class="lesson">
+          <span class="bar"></span>
+          <span class="keyword">高级感</span>
+          <span class="text">刻意营造的高级感，<span class="gold">叫好不叫座</span></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

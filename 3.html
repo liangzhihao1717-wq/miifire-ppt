@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 3 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      padding: 6.875vw 10vw;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      gap: 3.5vw;
+    }
+
+    .top-title {
+      font-size: 2.75vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.12em;
+    }
+
+    .columns {
+      display: flex;
+      gap: 6.25vw;
+    }
+    .col { flex: 1; }
+
+    .col-label {
+      font-size: 2vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25vw;
+    }
+
+    .chain { display: flex; flex-direction: column; gap: 0.81vw; }
+    .chain-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+    }
+    .arrow {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+    .text {
+      font-size: 1.31vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+    }
+
+    .conclusion {
+      font-size: 2.75vw;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-top: 1vw;
+    }
+    .conclusion.gold {
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .divider {
+      width: 100%;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .bottom-label {
+      font-size: 1.75vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1em;
+      margin-bottom: 1vw;
+    }
+    .bottom-chain {
+      display: flex;
+      align-items: center;
+      gap: 1.5vw;
+    }
+    .bottom-chain .arrow {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+    }
+    .bottom-chain .text {
+      font-size: 1.375vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.05em;
+    }
+    .dot {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="top-title">网红群体 · 老板群体 · 稀里糊涂群体</div>
+
+      <div class="columns">
+        <div class="col">
+          <div class="col-label">网红群体</div>
+          <div class="chain">
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">为了流量做</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">12 个小时全用来研究博眼球</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">反差 / 剧情 / 故事 / 冲突 / 搞笑</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">天然带有营销杠杆</span>
+            </div>
+          </div>
+          <div class="conclusion gold">流量 &gt; 信用</div>
+        </div>
+
+        <div class="col">
+          <div class="col-label">老板群体</div>
+          <div class="chain">
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">为了成交做</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">12 个小时用来维持经营</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">做生意 / 做服务（情绪价值服务）</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">天然具有经营场景</span>
+            </div>
+          </div>
+          <div class="conclusion gold">信用 &gt; 流量</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div>
+        <div class="bottom-label">稀里糊涂群体</div>
+        <div class="bottom-chain">
+          <span class="text">先做流量再成交客户</span>
+          <span class="arrow">→</span>
+          <span class="text">讲干货</span>
+          <span class="dot">·</span>
+          <span class="text">拍剧情</span>
+          <span class="dot">·</span>
+          <span class="text">拍广告</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

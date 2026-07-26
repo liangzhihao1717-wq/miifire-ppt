@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 15 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .title {
+      font-size: 4vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75vw;
+    }
+
+    .title .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .divider {
+      width: 25vw;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 2.75vw;
+    }
+
+    .cards {
+      display: flex;
+      gap: 3vw;
+      margin-bottom: 2.5vw;
+    }
+
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8vw;
+    }
+
+    .card .label {
+      font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card .label .note {
+      font-size: 0.9vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      background: none;
+      -webkit-text-fill-color: rgba(255,255,255,0.35);
+      letter-spacing: 0.04em;
+      margin-left: 0.3vw;
+    }
+
+    .card .desc {
+      font-size: 1.25vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+    }
+
+    .modes {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      font-size: 1.75vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
+    }
+
+    .modes .sep {
+      color: rgba(255,255,255,0.20);
+      font-weight: 300;
+      margin: 0 0.3vw;
+    }
+
+    .modes .num {
+      font-size: 1.3vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.22);
+      margin-right: 0.2vw;
+    }
+
+    .modes .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Logo */
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="title"><span class="gold">真实、真诚</span>远胜于专业拍剪</div>
+
+      <div class="divider"></div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="label">A 镜<span class="note">（A-roll）</span></div>
+          <div class="desc">你怎么打视频通话，你就怎么拍口播</div>
+        </div>
+        <div class="card">
+          <div class="label">B 镜<span class="note">（B-roll）</span></div>
+          <div class="desc">不专业的拍摄画面，不需要学运镜，才有真实感</div>
+        </div>
+      </div>
+
+      <div class="modes">
+        <span>要么</span>
+        <span class="gold">A 镜拍口播</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">B 镜拼画面</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">A 镜插 B 镜</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">A 镜叠 B 镜</span>
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

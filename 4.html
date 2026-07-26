@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 4 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      padding: 6.875vw 10vw;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5vw;
+    }
+
+    .subtitle {
+      font-size: 1.625vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.08em;
+    }
+
+    .title {
+      font-size: 4vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      line-height: 1.25;
+    }
+    .title .gold {
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .points {
+      display: flex;
+      gap: 3.75vw;
+      margin-top: 3.125vw;
+    }
+    .point {
+      display: flex;
+      align-items: stretch;
+      gap: 1.5vw;
+    }
+    .point::before {
+      content: '';
+      width: 0.23vw;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #d4b87a, rgba(180,150,100,0.15));
+      border-radius: 0.08vw;
+    }
+    .point .body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625vw;
+    }
+    .point .label {
+      font-size: 1.19vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+    }
+    .point .desc {
+      font-size: 2vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.08em;
+    }
+
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="subtitle">手里有什么牌，怎么摸怎么打</div>
+
+      <div class="title">
+        老板拍短视频要直奔着 <span class="gold">信任</span> 去
+      </div>
+
+      <div class="points">
+        <div class="point">
+          <div class="body">
+            <div class="label">定位原点</div>
+            <div class="desc">你的经营场景</div>
+          </div>
+        </div>
+        <div class="point">
+          <div class="body">
+            <div class="label">核心优势</div>
+            <div class="desc">你能见到客户</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

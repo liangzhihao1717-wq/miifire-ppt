@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 10 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .title {
+      font-size: 4vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75vw;
+    }
+
+    .divider {
+      width: 25vw;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 2.75vw;
+    }
+
+    .examples {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5vw;
+      margin-bottom: 2.75vw;
+    }
+
+    .example {
+      display: flex;
+      gap: 1.25vw;
+      align-items: flex-start;
+    }
+
+    .example::before {
+      content: '▶';
+      flex-shrink: 0;
+      font-size: 0.875vw;
+      color: rgba(255,255,255,0.30);
+      margin-top: 0.4vw;
+    }
+
+    .example .text {
+      font-size: 1.5vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+
+    .conclusion {
+      font-size: 1.44vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
+      line-height: 1.85;
+      max-width: 65vw;
+    }
+
+    .conclusion em {
+      font-style: normal;
+      color: #d4b87a;
+      font-weight: 700;
+    }
+
+    /* Logo */
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="title">其他行业其实也是一样</div>
+
+      <div class="divider"></div>
+
+      <div class="examples">
+        <div class="example">
+          <div class="text">大酒店不会说自己的菜好，而是拍客人走了以后，我们检查服务</div>
+        </div>
+        <div class="example">
+          <div class="text">给客户做皮肤检测和分析、产品 / 设备的开箱和上架流程、员工手法培训考核</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="conclusion">
+        今天不管是什么行业的老板，最好的广告从来不是坐在镜头前跟客户说「<em>我服务很好、产品很好、售后很好</em>」。最好的广告，就是把你生产经营的场景拆解下来，变成内容产出素材。让客户自然感知到<em>你在用心经营</em>，你的产品和服务自然就不会差。
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

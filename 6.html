@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 6 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .lead {
+      font-size: 2.25vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75vw;
+    }
+
+    .divider {
+      width: 25vw;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 5.625vw;
+    }
+
+    .stages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4.375vw;
+    }
+
+    .stage {
+      text-align: center;
+    }
+
+    .who {
+      font-size: 1.625vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.10em;
+      margin-bottom: 1.5vw;
+    }
+
+    .what {
+      font-size: 2.75vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.10em;
+      white-space: nowrap;
+    }
+
+    .what .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Arrow */
+    .arrow {
+      font-size: 1.75vw;
+      color: rgba(255,255,255,0.25);
+      font-weight: 300;
+    }
+
+    /* Logo */
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="lead">拍什么，米饭馒头从哪来</div>
+
+      <div class="divider"></div>
+
+      <div class="stages">
+
+        <div class="stage">
+          <div class="who">普通人</div>
+          <div class="what">埋头苦干</div>
+        </div>
+
+        <div class="arrow-block">
+          <span class="arrow">→</span>
+        </div>
+
+        <div class="stage">
+          <div class="who">聪明人</div>
+          <div class="what">展示结果</div>
+        </div>
+
+        <div class="arrow-block">
+          <span class="arrow">→</span>
+        </div>
+
+        <div class="stage">
+          <div class="who">最聪明的人</div>
+          <div class="what"><span class="gold">呈现过程</span></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>

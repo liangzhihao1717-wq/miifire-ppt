@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 7 页</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+
+    }
+
+    .slide {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5vw;
+    }
+
+    .title {
+      font-size: 4vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      margin-bottom: 1vw;
+    }
+
+    .examples {
+      display: flex;
+      flex-direction: column;
+      gap: 2.75vw;
+    }
+
+    .example {
+      display: flex;
+      gap: 1.75vw;
+      align-items: flex-start;
+    }
+
+    .example::before {
+      content: '▶';
+      flex-shrink: 0;
+      font-size: 0.875vw;
+      color: rgba(255,255,255,0.30);
+      margin-top: 0.44vw;
+    }
+
+    .example .text {
+      font-size: 1.5vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+
+    /* Logo */
+    .brand {
+      position: absolute;
+      top: 2.75vw;
+      left: 10vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 10vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="/ppt/" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+
+      <div class="title">什么叫埋头苦干？</div>
+
+      <div class="examples">
+        <div class="example">
+          <div class="text">你有没有发现调整型的内衣肩带都特别的宽？很多姐妹为了好看，喜欢穿一些细肩带的内衣...</div>
+        </div>
+        <div class="example">
+          <div class="text">夏天胸小的姐妹听我一句劝，别用乳贴去代替你的内衣。胸小一旦下垂，比大胸垮还显老...</div>
+        </div>
+        <div class="example">
+          <div class="text">臀，它是身体的地基。老话常说，屁股凉，子宫寒。现在人久坐不动，臀部淤堵不通，往上腰酸胀痛...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meta">— 互联网大厂 · 产品路演 —</div>
+  </div>
+</body>
+</html>
