@@ -234,6 +234,68 @@
     #drawer-container .drawer-item:hover .drawer-label {
       color: rgba(255,255,255,0.6);
     }
+
+    /* ====== 右侧提醒 —— 小圆点 ====== */
+    #notes-dots {
+      position: fixed;
+      bottom: 8vh; right: 0;
+      width: 40px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: 20px;
+      gap: 2.2vh;
+      pointer-events: none;
+    }
+    .note-mark {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(212,184,122,0.15);
+      border: none;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      flex-shrink: 0;
+    }
+    /* 扩大触摸区 */
+    .note-mark::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: -10px;
+      right: -10px; bottom: -10px;
+      border-radius: 50%;
+    }
+    .note-mark:hover {
+      background: rgba(212,184,122,0.35);
+      transform: scale(1.4);
+      box-shadow: 0 0 6px rgba(212,184,122,0.12);
+    }
+    /* 气泡 */
+    .note-bubble {
+      position: absolute;
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(14,14,14,0.97);
+      border-radius: 4px;
+      padding: 0.6vh 0.8vw;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 0.9vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.04em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .note-mark:hover .note-bubble {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -261,10 +323,16 @@
     </div>
   </div>
 
+  <div id="notes-dots"></div>
+
   <script>
     const TOTAL = 21;
-    let current = 1;
     let currentStyle = null;
+
+    // 从 URL query string 读取起始页码，例如 slides.html?page=5
+    const queryPage = parseInt(new URLSearchParams(window.location.search).get('page'), 10);
+    const startPage = (queryPage >= 1 && queryPage <= TOTAL) ? queryPage : 1;
+    let current = startPage;
 
     const stage = document.getElementById('stage');
 
@@ -289,9 +357,12 @@
 
     let _busy = false;
     let _flipAt = 0;
+    let _flipId = 0;
 
     function executeFlip(p, dir) {
+      const thisFlipId = ++_flipId;
       current = p;
+      history.replaceState(null, '', '?page=' + p);
       stage.style.opacity = '0';
 
       fetch(p + '.html')
@@ -319,8 +390,16 @@
           fitSlide();
 
           updateDrawerActive();
+          loadNotes(current);
 
           const slide = stage.querySelector('.slide');
+
+          if (dir === 0) {
+            // 初始加载，无入场动画
+            stage.style.opacity = '1';
+            return;
+          }
+
           const baseTx = slide.style.transform;
           const ty = dir > 0 ? '100px' : '-100px';
           const scaleMatch = baseTx.match(/scale\(([^)]+)\)/);
@@ -341,7 +420,7 @@
             released = true;
             slide.style.transition = '';
             slide.removeEventListener('transitionend', onEnd);
-            _busy = false;
+            if (_flipId === thisFlipId) _busy = false;
           };
           const onEnd = (e) => {
             // 只响应 slide 自身的 transform 过渡，忽略子元素冒泡上来的事件
@@ -354,7 +433,7 @@
         })
         .catch(() => {
           stage.style.opacity = '1';
-          _busy = false;
+          if (_flipId === thisFlipId) _busy = false;
         });
     }
 
@@ -363,7 +442,7 @@
     // ——————————————————————————————
 
     function requestFlip(dir, immediate) {
-      if (_busy) return;
+      if (!immediate && _busy) return;
       if (!immediate) {
         const now = Date.now();
         if (now - _flipAt < 2000) return;
@@ -427,6 +506,9 @@
     }
     document.getElementById('curtain').addEventListener('click', openCurtain);
 
+    // 从目录跳转进来（带 ?page= 参数），自动跳过帷幕
+    if (new URLSearchParams(window.location.search).has('page')) openCurtain();
+
     // ——————————————————————————————
     // 抽屉页面列表
     // ——————————————————————————————
@@ -465,7 +547,7 @@
       closeDrawer();
     });
 
-    // Escape 键 → 关闭
+    // Escape 键 → 关闭抽屉
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && drawerContainer.classList.contains('open')) {
         closeDrawer();
@@ -495,7 +577,7 @@
         e.stopPropagation();
         const curtain = document.getElementById('curtain');
         if (curtain && !curtain.classList.contains('done')) return;
-        if (_busy || i === current) return;
+        if (i === current) return;
         _flipAt = Date.now();
         _busy = true;
         executeFlip(i, i > current ? 1 : -1);
@@ -510,6 +592,36 @@
     drawerContainer.querySelector('.panel').addEventListener('wheel', (e) => {
       e.stopPropagation();
     });
+
+    // ——————————————————————————————
+    // 右侧提醒 —— 侧边短刻线
+    // ——————————————————————————————
+
+    const notesDots = document.getElementById('notes-dots');
+
+    async function loadNotes(page) {
+      try {
+        const res = await fetch('/api/notes?page=' + page);
+        const data = await res.json();
+        const notes = data[page] || [];
+        renderMarks(notes);
+      } catch {
+        notesDots.innerHTML = '';
+      }
+    }
+
+    function renderMarks(notes) {
+      notesDots.innerHTML = '';
+      notes.forEach((text) => {
+        const mark = document.createElement('div');
+        mark.className = 'note-mark';
+        const bubble = document.createElement('div');
+        bubble.className = 'note-bubble';
+        bubble.textContent = text;
+        mark.appendChild(bubble);
+        notesDots.appendChild(mark);
+      });
+    }
 
     function updateDrawerActive() {
       drawerItems.forEach(entry => {
@@ -528,21 +640,7 @@
     // 首屏
     // ——————————————————————————————
 
-    fetch('1.html')
-      .then(r => r.text())
-      .then(html => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const styles = doc.querySelectorAll('style');
-        let combined = '';
-        styles.forEach(s => {
-          combined += s.textContent.replace(/body\b/g, '#stage');
-        });
-        currentStyle = document.createElement('style');
-        currentStyle.textContent = combined;
-        document.head.appendChild(currentStyle);
-        stage.innerHTML = doc.body.innerHTML;
-        fitSlide();
-      });
+    executeFlip(startPage, 0);
   </script>
 </body>
 </html>

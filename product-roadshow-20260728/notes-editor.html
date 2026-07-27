@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演讲备注</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      color: #e0ded5;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      padding: 4vh 0 6vh;
+    }
+    .container {
+      width: 90vw;
+      max-width: 1000px;
+    }
+
+    /* ====== 顶部栏 ====== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3vh;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 1; }
+    .brand img { height: 1.8vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-size: 0.95vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
+    }
+    .back-link {
+      font-size: 0.8vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #d4b87a; }
+
+    /* ====== 标题 ====== */
+    .main-title {
+      text-align: left;
+      font-size: 1.2vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.12em;
+      margin-bottom: 2.5vh;
+    }
+
+    /* ====== 主布局：左右结构 ====== */
+    .layout {
+      display: grid;
+      grid-template-columns: 56fr 44fr;
+      align-items: start;
+      gap: 2vw;
+      margin-bottom: 3vh;
+    }
+
+    /* 左侧：大图预览 */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .hero img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+    }
+    .hero .overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+      padding: 3vh 1.5vw 1.5vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .hero .overlay .info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2vh;
+    }
+    .hero .overlay .page-num {
+      font-size: 2vw;
+      font-weight: 900;
+      color: rgba(212,184,122,0.7);
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+    .hero .overlay .page-title {
+      font-size: 1vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+    }
+    .hero .overlay .notes-dot {
+      width: 0.5vw;
+      height: 0.5vw;
+      border-radius: 50%;
+      background: rgba(212,184,122,0.7);
+      display: none;
+      margin-bottom: 0.8vh;
+    }
+    .hero.has-notes .overlay .notes-dot {
+      display: block;
+    }
+
+    /* 右侧：可滚动的页面列表 */
+    .page-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      height: 27vw;
+      max-height: 305px;
+    }
+    .page-panel-label {
+      font-size: 0.65vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: 0.08em;
+      margin-bottom: 1vh;
+      flex-shrink: 0;
+    }
+    .page-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.5vw;
+    }
+    .page-list::-webkit-scrollbar {
+      width: 2px;
+    }
+    .page-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.06);
+      border-radius: 1px;
+    }
+
+    .page-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7vw;
+      padding: 0.5vh 0.5vw;
+      cursor: pointer;
+      border-radius: 1px;
+      transition: background 0.2s, opacity 0.25s;
+      opacity: 0.35;
+      margin-bottom: 0.15vh;
+    }
+    .page-item:hover {
+      opacity: 0.7;
+      background: rgba(255,255,255,0.02);
+    }
+    .page-item.active {
+      opacity: 1;
+      background: rgba(212,184,122,0.04);
+    }
+    .page-item .thumb-mini {
+      flex-shrink: 0;
+      width: 4.5vw;
+      aspect-ratio: 16 / 9;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .page-item .thumb-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .page-item .item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2vh;
+      min-width: 0;
+    }
+    .page-item .item-num {
+      font-size: 0.65vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.06em;
+      transition: color 0.25s;
+    }
+    .page-item.active .item-num {
+      color: #d4b87a;
+    }
+    .page-item .item-title {
+      font-size: 0.72vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .page-item.active .item-title {
+      color: rgba(255,255,255,0.6);
+    }
+    .page-item .item-dot {
+      flex-shrink: 0;
+      width: 0.35vw;
+      height: 0.35vw;
+      border-radius: 50%;
+      background: rgba(212,184,122,0.6);
+      display: none;
+    }
+    .page-item.has-notes .item-dot {
+      display: block;
+    }
+
+    /* ====== 分割线 ====== */
+    .rule {
+      width: 100%;
+      height: 0.04vw;
+      background: rgba(212,184,122,0.14);
+      margin-bottom: 2vh;
+    }
+
+    /* ====== 编辑区 ====== */
+    .notes-list {
+      min-height: 4vh;
+    }
+    .empty {
+      text-align: center;
+      color: rgba(255,255,255,0.08);
+      font-size: 0.85vw;
+      padding: 3vh 0;
+      letter-spacing: 0.06em;
+    }
+    .note-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8vw;
+      padding: 0.8vh 0;
+      border-bottom: 0.04vw solid rgba(212,184,122,0.06);
+      transition: background 0.2s;
+    }
+    .note-item:hover {
+      background: rgba(212,184,122,0.015);
+    }
+    .note-index {
+      font-size: 1.05vw;
+      color: rgba(212,184,122,0.22);
+      min-width: 2vw;
+      text-align: right;
+      flex-shrink: 0;
+      font-weight: 300;
+    }
+    .note-text {
+      font-size: 1.05vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .note-delete {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.10);
+      font-size: 0.85vw;
+      cursor: pointer;
+      padding: 0.3vw;
+      transition: color 0.2s;
+      flex-shrink: 0;
+      font-family: inherit;
+      line-height: 1;
+    }
+    .note-delete:hover {
+      color: rgba(212,184,122,0.45);
+    }
+
+    /* 添加表单 */
+    .add-form {
+      display: flex;
+      gap: 0.8vw;
+      margin-bottom: 2vh;
+      padding-bottom: 2vh;
+      border-bottom: 0.04vw solid rgba(212,184,122,0.08);
+    }
+    .add-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 0.04vw solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95vw;
+      font-family: inherit;
+      padding: 1vh 1vw;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .add-form input:focus {
+      border-color: rgba(212,184,122,0.35);
+    }
+    .add-form input::placeholder {
+      color: rgba(255,255,255,0.08);
+    }
+    .add-form button {
+      background: rgba(212,184,122,0.08);
+      border: 0.04vw solid rgba(212,184,122,0.18);
+      color: rgba(212,184,122,0.65);
+      font-size: 0.85vw;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 0.8vh 1.6vw;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      letter-spacing: 0.06em;
+    }
+    .add-form button:hover {
+      background: rgba(212,184,122,0.15);
+      border-color: rgba(212,184,122,0.35);
+      color: #d4b87a;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 3vh;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10,10,10,0.95);
+      border: 0.04vw solid rgba(212,184,122,0.20);
+      color: rgba(212,184,122,0.8);
+      font-size: 0.8vw;
+      font-family: inherit;
+      padding: 0.7vh 2vw;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+      letter-spacing: 0.06em;
+      z-index: 10;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="top-bar">
+      <a href="index.html" class="brand">
+        <img src="logo.png" alt="MIIFIRE">
+        <span>觅火 MIIFIRE</span>
+      </a>
+      <a href="index.html" class="back-link">← 返回目录</a>
+    </div>
+
+    <div class="main-title">演讲备注</div>
+
+    <!-- 左右布局 -->
+    <div class="layout">
+      <!-- 左侧：大图预览 -->
+      <div class="hero" id="hero">
+        <img id="hero-img" src="thumbs/1.png" alt="">
+        <div class="overlay">
+          <div class="info">
+            <span class="page-num" id="hero-num">01</span>
+            <span class="page-title" id="hero-title">前情回顾</span>
+          </div>
+          <span class="notes-dot"></span>
+        </div>
+      </div>
+
+      <!-- 右侧：可滚动页面列表 -->
+      <div class="page-panel">
+        <div class="page-panel-label">所有页面</div>
+        <div class="page-list" id="page-list"></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- 编辑区 -->
+    <div class="add-form">
+      <input type="text" id="add-input" placeholder="输入提醒内容，回车添加" maxlength="80">
+      <button id="add-btn">添加</button>
+    </div>
+    <div class="notes-list" id="notes-list"></div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script>
+    const TOTAL = 21;
+    const API = '/api/notes';
+
+    const hero = document.getElementById('hero');
+    const heroImg = document.getElementById('hero-img');
+    const heroNum = document.getElementById('hero-num');
+    const heroTitle = document.getElementById('hero-title');
+    const pageList = document.getElementById('page-list');
+    const notesList = document.getElementById('notes-list');
+    const addInput = document.getElementById('add-input');
+    const addBtn = document.getElementById('add-btn');
+    const toast = document.getElementById('toast');
+
+    let currentPage = 1;
+    let allNotes = {};
+
+    const pageTitles = [
+      '前情回顾','不要给我讲虚头巴脑的东西','方向 · 实操 · 路线',
+      '网红 · 老板 · 稀里糊涂','老板拍短视频要直奔着信任去','我把大部分弯路都走了一遍',
+      '普通人 · 聪明人 · 最聪明的人','什么叫埋头苦干？','你的信用是怎么累积的',
+      '方案设计 · 验收工地','和客户谈方案 · 材料验收','其他行业其实也是一样',
+      '过程里有什么','讲故事的八要素','从嘴说到眼见',
+      '开采手段和生产机器','AI 是杠杆，不是引擎','真实、真诚远胜于专业拍剪',
+      '能获得信任的短视频，才叫超级传单','超级传单的魅力','你起身，能带走了什么'
+    ];
+
+    function buildPageList() {
+      pageList.innerHTML = '';
+      for (let i = 1; i <= TOTAL; i++) {
+        const item = document.createElement('div');
+        item.className = 'page-item';
+        item.dataset.page = i;
+
+        item.innerHTML = `
+          <div class="thumb-mini"><img src="thumbs/${i}.png" alt=""></div>
+          <div class="item-info">
+            <span class="item-num">${String(i).padStart(2, '0')}</span>
+            <span class="item-title">${pageTitles[i - 1]}</span>
+          </div>
+          <span class="item-dot"></span>
+        `;
+
+        item.addEventListener('click', () => selectPage(i));
+        pageList.appendChild(item);
+      }
+    }
+
+    function updateHero() {
+      heroImg.src = 'thumbs/' + currentPage + '.png';
+      heroNum.textContent = String(currentPage).padStart(2, '0');
+      heroTitle.textContent = pageTitles[currentPage - 1];
+      const hasNotes = allNotes[currentPage] && allNotes[currentPage].length > 0;
+      hero.classList.toggle('has-notes', hasNotes);
+    }
+
+    function updatePageList() {
+      document.querySelectorAll('.page-item').forEach(item => {
+        const p = parseInt(item.dataset.page);
+        item.classList.toggle('active', p === currentPage);
+        item.classList.toggle('has-notes', allNotes[p] && allNotes[p].length > 0);
+      });
+    }
+
+    function selectPage(page) {
+      currentPage = page;
+      updateHero();
+      updatePageList();
+      renderNotes(allNotes[page] || []);
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toast._tid);
+      toast._tid = setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    function renderNotes(notes) {
+      notesList.innerHTML = '';
+      if (notes.length === 0) {
+        notesList.innerHTML = '<div class="empty">暂无提醒</div>';
+      } else {
+        notes.forEach((text, idx) => {
+          const item = document.createElement('div');
+          item.className = 'note-item';
+          item.innerHTML = `
+            <span class="note-index">${String(idx + 1).padStart(2, '0')}.</span>
+            <span class="note-text">${escapeHtml(text)}</span>
+            <button class="note-delete" data-index="${idx}">✕</button>
+          `;
+          item.querySelector('.note-delete').addEventListener('click', () => deleteNote(idx));
+          notesList.appendChild(item);
+        });
+      }
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    async function addNote() {
+      const text = addInput.value.trim();
+      if (!text || !currentPage) return;
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: String(currentPage), text })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        addInput.value = '';
+        allNotes[currentPage] = data.notes;
+        renderNotes(data.notes);
+        updateHero();
+        updatePageList();
+        showToast('已添加');
+      }
+    }
+
+    async function deleteNote(index) {
+      const res = await fetch(API, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: String(currentPage), index })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        allNotes[currentPage] = data.notes;
+        renderNotes(data.notes);
+        updateHero();
+        updatePageList();
+        showToast('已删除');
+      }
+    }
+
+    addBtn.addEventListener('click', addNote);
+    addInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addNote();
+    });
+
+    async function init() {
+      const res = await fetch(API);
+      allNotes = await res.json();
+      buildPageList();
+      selectPage(1);
+    }
+
+    init();
+  </script>
+</body>
+</html>

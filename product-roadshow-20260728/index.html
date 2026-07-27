@@ -4,213 +4,281 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>觅火 MIIFIRE 产品路演</title>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/3.0.23/tailwind.min.js"></script>
-  <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Noto Sans SC', 'Inter', sans-serif;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-
+      min-height: 100dvh;
     }
+
     .slide {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16 / 9;
       position: relative;
+      overflow: hidden;
+      padding: 6.875vw 10vw;
+      background:
+        radial-gradient(ellipse at 30% 70%, rgba(180,150,100,0.03) 0%, transparent 50%),
+        #0a0a0a;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 4rem;
-      background: linear-gradient(135deg, #0d1117 0%, #0a0e13 100%);
-      border-radius: 16px;
+    }
 
-    }
-    .bg-glow {
+    /* ====== 左上角 Logo ====== */
+    .brand {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.2;
-      pointer-events: none;
+      top: 1.8vw;
+      left: 3.5vw;
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+      opacity: 0.75;
+      transition: opacity 0.3s;
+      text-decoration: none;
     }
-    .glow-1 { width: 350px; height: 350px; background: #1e6fff; top: -100px; right: -80px; }
-    .glow-2 { width: 280px; height: 280px; background: #7c3aed; bottom: -60px; left: -80px; }
-    .content { position: relative; z-index: 10; text-align: center; width: 100%; }
-    .title {
-      font-size: 3rem;
-      font-weight: 900;
-      margin-bottom: 1rem;
-      letter-spacing: 0.03em;
+    .brand:hover { opacity: 1; }
+    .brand img { height: 2.5vw; filter: brightness(0.95) saturate(0.4); }
+    .brand span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1.25vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
     }
-    .title .highlight {
-      background: linear-gradient(135deg, #4da3ff, #a78bfa);
+
+    /* ====== 目录双列 ====== */
+    .toc {
+      display: flex;
+      gap: 0;
+    }
+    .toc-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .toc-divider {
+      flex-shrink: 0;
+      width: 0.04vw;
+      background: rgba(212,184,122,0.14);
+      margin: 0 3vw;
+    }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      padding: 0.9vh 0;
+      text-decoration: none;
+      border-bottom: 0.04vw solid rgba(212,184,122,0.08);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .toc-col:first-child .toc-item:last-child,
+    .toc-col:last-child .toc-item:last-child {
+      border-bottom: none;
+    }
+    .toc-item:hover {
+      background: rgba(212,184,122,0.025);
+    }
+    .toc-num {
+      flex-shrink: 0;
+      width: 3.5vw;
+      font-size: 0.875vw;
+      font-weight: 300;
+      background: linear-gradient(180deg,
+        rgba(212,184,122,0.40) 0%,
+        rgba(212,184,122,0.25) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.06em;
+      transition: 0.3s;
+    }
+    .toc-item:hover .toc-num {
+      background: linear-gradient(180deg,
+        rgba(212,184,122,0.70) 0%,
+        rgba(212,184,122,0.48) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .subtitle {
-      font-size: 1rem;
-      font-weight: 300;
-      color: #6b7280;
-      margin-bottom: 3rem;
-      letter-spacing: 0.05em;
-    }
-    .page-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      justify-content: center;
-    }
-    .page-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      color: #9ca3af;
-      text-decoration: none;
-      font-size: 0.9rem;
+    .toc-text {
+      flex: 1;
+      font-size: 1.25vw;
       font-weight: 400;
-      transition: all 0.3s ease;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.06em;
+      transition: color 0.3s;
     }
-    .page-link:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.16);
-      color: #fff;
+    .toc-item:hover .toc-text {
+      color: rgba(255,255,255,0.72);
     }
-    .page-link .num {
-      font-weight: 700;
-      color: rgba(77, 163, 255, 0.8);
+    /* hover 时右侧金色指示短线 */
+    .toc-item::after {
+      content: '';
+      position: absolute;
+      right: 0.2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0.04vw;
+      background: rgba(212,184,122,0.45);
+      transition: width 0.3s ease;
     }
-    .slideshow-link {
-      display: inline-block;
-      margin-bottom: 2rem;
-      padding: 0.5rem 1.4rem;
-      border: 1px solid rgba(212,184,122,0.35);
-      border-radius: 20px;
-      color: #d4b87a;
+    .toc-item:hover::after {
+      width: 1.8vw;
+    }
+
+    /* ====== 右上角导航 ====== */
+    .top-nav {
+      position: absolute;
+      top: 1.8vw;
+      right: 3.5vw;
+      display: flex;
+      gap: 2vw;
+    }
+    .top-nav a {
+      font-size: 0.9vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.25);
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      transition: all 0.3s;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
     }
-    .slideshow-link:hover {
-      background: rgba(212,184,122,0.08);
-      border-color: rgba(212,184,122,0.6);
+    .top-nav a:hover {
+      color: #d4b87a;
     }
-    .footer-note {
-      margin-top: 3rem;
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.12);
-      letter-spacing: 0.1em;
+    .top-nav a .arrow {
+      color: rgba(212,184,122,0.35);
+      margin-left: 0.2vw;
+    }
+
+    /* ====== Meta ====== */
+    .meta {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 3.5vw;
+      font-size: 0.73vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      letter-spacing: 0.16em;
     }
   </style>
 </head>
 <body>
   <div class="slide">
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
-    <div class="content">
-      <h1 class="title">产品<span class="highlight">路演</span></h1>
-      <p class="subtitle">PPT 目录</p>
-      <a href="/ppt/slides.html" class="slideshow-link">上下翻页浏览 →</a>
-      <div class="page-list">
-        <a href="/ppt/1" class="page-link">
-          <span class="num">01</span>
-          <span>前情回顾</span>
+
+    <a href="index.html" class="brand">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="toc">
+      <div class="toc-col">
+        <a href="slides.html?page=1" class="toc-item">
+          <span class="toc-num">01</span>
+          <span class="toc-text">前情回顾</span>
         </a>
-        <a href="/ppt/2" class="page-link">
-          <span class="num">02</span>
-          <span>不要给我讲虚头巴脑的东西</span>
+        <a href="slides.html?page=2" class="toc-item">
+          <span class="toc-num">02</span>
+          <span class="toc-text">不要给我讲虚头巴脑的东西</span>
         </a>
-        <a href="/ppt/3" class="page-link">
-          <span class="num">03</span>
-          <span>方向 · 实操 · 路线</span>
+        <a href="slides.html?page=3" class="toc-item">
+          <span class="toc-num">03</span>
+          <span class="toc-text">方向 · 实操 · 路线</span>
         </a>
-        <a href="/ppt/4" class="page-link">
-          <span class="num">04</span>
-          <span>网红 · 老板 · 稀里糊涂</span>
+        <a href="slides.html?page=4" class="toc-item">
+          <span class="toc-num">04</span>
+          <span class="toc-text">网红 · 老板 · 稀里糊涂</span>
         </a>
-        <a href="/ppt/5" class="page-link">
-          <span class="num">05</span>
-          <span>老板拍短视频要直奔着信任去</span>
+        <a href="slides.html?page=5" class="toc-item">
+          <span class="toc-num">05</span>
+          <span class="toc-text">老板拍短视频要直奔着信任去</span>
         </a>
-        <a href="/ppt/6" class="page-link">
-          <span class="num">06</span>
-          <span>我把大部分弯路都走了一遍</span>
+        <a href="slides.html?page=6" class="toc-item">
+          <span class="toc-num">06</span>
+          <span class="toc-text">我把大部分弯路都走了一遍</span>
         </a>
-        <a href="/ppt/7" class="page-link">
-          <span class="num">07</span>
-          <span>普通人 · 聪明人 · 最聪明的人</span>
+        <a href="slides.html?page=7" class="toc-item">
+          <span class="toc-num">07</span>
+          <span class="toc-text">普通人 · 聪明人 · 最聪明的人</span>
         </a>
-        <a href="/ppt/8" class="page-link">
-          <span class="num">08</span>
-          <span>什么叫埋头苦干？</span>
+        <a href="slides.html?page=8" class="toc-item">
+          <span class="toc-num">08</span>
+          <span class="toc-text">什么叫埋头苦干？</span>
         </a>
-        <a href="/ppt/9" class="page-link">
-          <span class="num">09</span>
-          <span>你的信用是怎么累积的</span>
+        <a href="slides.html?page=9" class="toc-item">
+          <span class="toc-num">09</span>
+          <span class="toc-text">你的信用是怎么累积的</span>
         </a>
-        <a href="/ppt/10" class="page-link">
-          <span class="num">10</span>
-          <span>方案设计 · 验收工地</span>
+        <a href="slides.html?page=10" class="toc-item">
+          <span class="toc-num">10</span>
+          <span class="toc-text">方案设计 · 验收工地</span>
         </a>
-        <a href="/ppt/11" class="page-link">
-          <span class="num">11</span>
-          <span>和客户谈方案 · 材料验收</span>
-        </a>
-        <a href="/ppt/12" class="page-link">
-          <span class="num">12</span>
-          <span>其他行业其实也是一样</span>
-        </a>
-        <a href="/ppt/13" class="page-link">
-          <span class="num">13</span>
-          <span>过程里有什么</span>
-        </a>
-        <a href="/ppt/14" class="page-link">
-          <span class="num">14</span>
-          <span>讲故事的八要素</span>
-        </a>
-        <a href="/ppt/15" class="page-link">
-          <span class="num">15</span>
-          <span>从嘴说到眼见</span>
-        </a>
-        <a href="/ppt/16" class="page-link">
-          <span class="num">16</span>
-          <span>开采手段和生产机器</span>
-        </a>
-        <a href="/ppt/17" class="page-link">
-          <span class="num">17</span>
-          <span>AI 是杠杆，不是引擎</span>
-        </a>
-        <a href="/ppt/18" class="page-link">
-          <span class="num">18</span>
-          <span>真实、真诚远胜于专业拍剪</span>
-        </a>
-        <a href="/ppt/19" class="page-link">
-          <span class="num">19</span>
-          <span>能获得信任的短视频，才叫超级传单</span>
-        </a>
-        <a href="/ppt/20" class="page-link">
-          <span class="num">20</span>
-          <span>超级传单的魅力</span>
-        </a>
-        <a href="/ppt/21" class="page-link">
-          <span class="num">21</span>
-          <span>你起身，能带走了什么</span>
+        <a href="slides.html?page=11" class="toc-item">
+          <span class="toc-num">11</span>
+          <span class="toc-text">和客户谈方案 · 材料验收</span>
         </a>
       </div>
-      <div class="footer-note">互联网大厂 · 产品路演</div>
+
+      <div class="toc-divider"></div>
+
+      <div class="toc-col">
+        <a href="slides.html?page=12" class="toc-item">
+          <span class="toc-num">12</span>
+          <span class="toc-text">其他行业其实也是一样</span>
+        </a>
+        <a href="slides.html?page=13" class="toc-item">
+          <span class="toc-num">13</span>
+          <span class="toc-text">过程里有什么</span>
+        </a>
+        <a href="slides.html?page=14" class="toc-item">
+          <span class="toc-num">14</span>
+          <span class="toc-text">讲故事的八要素</span>
+        </a>
+        <a href="slides.html?page=15" class="toc-item">
+          <span class="toc-num">15</span>
+          <span class="toc-text">从嘴说到眼见</span>
+        </a>
+        <a href="slides.html?page=16" class="toc-item">
+          <span class="toc-num">16</span>
+          <span class="toc-text">开采手段和生产机器</span>
+        </a>
+        <a href="slides.html?page=17" class="toc-item">
+          <span class="toc-num">17</span>
+          <span class="toc-text">AI 是杠杆，不是引擎</span>
+        </a>
+        <a href="slides.html?page=18" class="toc-item">
+          <span class="toc-num">18</span>
+          <span class="toc-text">真实、真诚远胜于专业拍剪</span>
+        </a>
+        <a href="slides.html?page=19" class="toc-item">
+          <span class="toc-num">19</span>
+          <span class="toc-text">能获得信任的短视频，才叫超级传单</span>
+        </a>
+        <a href="slides.html?page=20" class="toc-item">
+          <span class="toc-num">20</span>
+          <span class="toc-text">超级传单的魅力</span>
+        </a>
+        <a href="slides.html?page=21" class="toc-item">
+          <span class="toc-num">21</span>
+          <span class="toc-text">你起身，能带走了什么</span>
+        </a>
+      </div>
     </div>
+
+    <div class="top-nav">
+      <a href="slides.html">开始翻阅<span class="arrow">→</span></a>
+      <a href="notes-editor.html">演讲备注<span class="arrow">→</span></a>
+    </div>
+
+    <div class="meta">2026.07.28</div>
   </div>
 </body>
 </html>

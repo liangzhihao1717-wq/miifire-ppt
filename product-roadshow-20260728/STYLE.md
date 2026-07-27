@@ -32,10 +32,10 @@
 **预览方式：在 ppt 目录启动本地 HTTP 服务器**
 
 ```bash
-cd "/Users/liangzhihao/Desktop/miifire-ppt/product-roadshow-20260728" && python3 -m http.server 8080
+cd "/Users/liangzhihao/Desktop/miifire-ppt/product-roadshow-20260728" && node api-server.js
 ```
 
-然后浏览器访问 `http://localhost:8080/13.html`（把 13 换成对应页码）。
+然后浏览器访问 `http://localhost:8765/13.html`（把 13 换成对应页码）。
 
 **为什么不能直接双击 HTML 文件打开？**
 - 页面内的 `<a href="/ppt/">` 等绝对路径需要 HTTP 服务器才能正常解析
@@ -273,26 +273,40 @@ slide.style.transform = baseTx;
 
 **翻页笔兼容：** 同时监听 `ArrowUp/ArrowDown/ArrowLeft/ArrowRight/PageUp/PageDown`，覆盖市面上主流翻页笔的按键映射。
 
-**防连翻架构（`requestFlip` 单一入口，三道防线）：**
+**防连翻架构（`requestFlip` 单一入口，原子 ID）：**
 
 ```
-wheel / keydown / touch → requestFlip(dir)      ← 所有来源唯一入口
+wheel / keydown / touch → requestFlip(dir, false)    ← 滚轮/键盘（受 _busy + 2s 冷却限制）
                               │
-                          ① _busy? → 阻塞        ← 动画安全（transitionend 驱动释放）
-                          ② 距上次 < 2000ms? → 阻塞 ← 防惯性 + 防触控板幽灵 ArrowDown
-                          ③ 同页? → 跳过
+                         _busy? → 阻塞
+                         距上次 < 2000ms? → 阻塞
                               │
-                          ④ executeFlip()        ← 翻页
+                         executeFlip(p, dir)          ← 原子 ID 保底
+
+
+corner buttons → requestFlip(dir, true)              ← 明确意图（跳过 _busy + 冷却）
+                              │
+                         executeFlip(p, dir)          ← 原子 ID 保底
+
+
+drawer thumb → executeFlip(p, dir)                   ← 直接调用（跳过所有判据）
+                              │
+                         原子 ID 保底
 ```
+
+**`_flipId` 原子 ID 机制：**
+
+每次 `executeFlip()` 生成唯一递增 ID。`transitionend` 和 700ms 兜底 timer 只释放对应 ID 的 `_busy` 锁。快速连续点击时，旧翻页动画的回调不会误释放新翻页的 `_busy`，避免滚动穿透。
 
 **设计原则：**
 
 | 层 | 机制 | 职责 |
 |---|------|------|
 | CSS | `overflow: hidden; overscroll-behavior: none; touch-action: none` | 从浏览器底层禁止一切原生滚动 |
-| 摄入层 | `wheel`/`keydown`/`touch` 事件处理器 | 所有来源统一调 `requestFlip()`，零内联逻辑 |
-| 判据层 | `requestFlip()` — `_busy` 布尔锁 + `_flipAt` 时间戳 | 单一入口，统一判据，无状态分裂 |
-| 执行层 | `executeFlip()` | `fetch` → DOM 替换 → `transitionend` 释锁（700ms 兜底） |
+| 摄入层 | `wheel`/`keydown`/`touch` 事件处理器 | 统一调 `requestFlip(dir, false)` |
+| 按钮层 | 角按钮 `requestFlip(dir, true)` / 抽屉 `executeFlip()` | 明确用户意图，不受判据限制 |
+| 判据层 | `requestFlip()` — `_busy` 布尔锁 + `_flipAt` 时间戳 | 仅对非明确意图（滚轮/键盘）生效 |
+| 执行层 | `executeFlip()` | `fetch` → DOM 替换 → `transitionend` 释锁（700ms 兜底），原子 ID 防竞态 |
 
 **为什么冷却必须放在 `requestFlip` 而非单独事件层：**
 macOS 触控板两指滑动在 JS 不可控层同时发射 `wheel` 和 `ArrowDown` 键盘事件，是两个独立事件源。若只在 wheel handler 做冷却，ArrowDown 幽灵事件在动画结束后（`_busy` 释放时）仍能穿透触发连翻。冷却必须覆盖所有输入来源的汇合点。
@@ -310,7 +324,8 @@ macOS 触控板两指滑动在 JS 不可控层同时发射 `wheel` 和 `ArrowDow
 - 尺寸 `8vw × 8vw`，`background: transparent`，完全不可见
 - `z-index: 100`，位于帷幕和 slide 之上
 - 帷幕期间不响应点击
-- 调用 `requestFlip(dir, true)`，`immediate` 参数绕过 `_flipAt` 时间戳冷却（按钮是明确用户意图，不是惯性事件），但仍受 `_busy` 动画锁保护
+- 调用 `requestFlip(dir, true)`，`immediate` 参数同时绕过 `_busy` 动画锁和 `_flipAt` 时间戳冷却
+- 并发安全由 `_flipId` 原子 ID 保底，快速连点不会出现竞态
 
 ---
 
@@ -326,13 +341,15 @@ macOS 触控板两指滑动在 JS 不可控层同时发射 `wheel` 和 `ArrowDow
 | 鼠标移出抽屉面板 | 不自动折叠 |
 | 点击抽屉外的遮罩层 | 抽屉折叠 |
 | 按 Escape | 抽屉折叠 |
-| 点击某一页缩略图 | 跳转到该页，抽屉不自动关闭 |
+| 点击某一页缩略图 | 直接调用 `executeFlip()` 跳转，跳过 `_busy` 和 `_flipAt` 所有判据 |
+| 快速连续点击 | 每次点击立即生效，`_flipId` 原子 ID 防竞态，旧动画回调自动失效 |
 | 在抽屉列表上滚轮 | 仅滚动列表，不触发 PPT 翻页 |
 
 **实现要点：**
 
 - 抽屉面板 `position: fixed`，`z-index: 200`，位于翻页按钮之上
-- 使用 `transform: translateX(-100%)` → `translateX(0)` 做滑入滑出，`cubic-bezier(0.16, 1, 0.3, 1)` 缓动
+- 使用 `transform: translateX(-100%)` → `translateX(0)` 做滑入滑出，`cubic-bezier(0.16, 1, 0.3, 1)` 缓动，动画 0.35s
+- 抽屉缩略图点击不检查 `_busy`，直接调用 `executeFlip()`，动画中也能立即响应新点击
 - 抽屉面板的 `wheel` 事件必须 `e.stopPropagation()`，阻止冒泡到 document 触发翻页
 - 遮罩层 `#drawer-container .backdrop` 覆盖全屏，`display: none` → `display: block` 随展开切换
 
@@ -380,3 +397,69 @@ cd /Users/liangzhihao/Desktop/miifire-ppt && node generate-thumbs.js <项目目�
 ```
 
 列表项由 JS 动态生成，每项包含 `<img src="thumbs/N.png">` 和 `<span>第 N 页</span>`，点击调用 `executeFlip()` 跳转。
+
+---
+
+### 右侧演讲提醒
+
+翻页时从 API 拉取当前页的演讲提醒，在右下角以小圆点展示。每条提醒一个圆点，hover 弹出横向气泡显示提醒文字。
+
+**交互规则：**
+
+| 行为 | 结果 |
+|------|------|
+| 当前页有提醒时 | 右下角显示金色实心小圆点（每条一个） |
+| 鼠标悬停圆点 | 圆点变亮 + 放大，左侧弹出气泡显示提醒文字 |
+| 鼠标移出圆点 | 气泡消失，圆点恢复 |
+| 翻到有提醒的页面 | 圆点自动出现 |
+| 翻到无提醒的页面 | 圆点消失 |
+
+**视觉设计：**
+
+- 圆点：8px 实心圆，默认 `rgba(212,184,122,0.15)`，hover `0.35` + 光晕
+- 容器：`position: fixed; bottom: 8vh; right: 0`，宽度 40px，`padding-right: 20px`（不贴边）
+- 圆点垂直排列，间距 2.2vh，靠右对齐
+- 气泡：深色底 `rgba(14,14,14,0.97)`，圆角 4px，`white-space: nowrap`，从圆点向左弹出
+- 触摸区：`::before` 伪元素上下左右各扩展 10px
+
+**提醒数据流：**
+
+```
+notes-editor.html → POST/DELETE /api/notes → notes.json ← GET /api/notes → slides.html
+```
+
+**提醒编辑（notes-editor.html）：**
+
+- 选择页码 → 查看/编辑该页提醒
+- 每条提醒可单独删除
+- 输入框 + 「添加」按钮添加新提醒
+- 自动保存到 `notes.json`，无需手动导出
+
+**本地开发服务器（api-server.js）：**
+
+```bash
+cd product-roadshow-20260728 && node api-server.js
+```
+
+一个命令同时提供静态文件服务和 API 端点，替代 `python3 -m http.server`：
+
+| 端点 | 功能 |
+|------|------|
+| `GET /api/notes?page=5` | 查询某一页的提醒 |
+| `POST /api/notes` | 添加提醒 `{ page: "5", text: "..." }` |
+| `DELETE /api/notes` | 删除提醒 `{ page: "5", index: 0 }` |
+
+**数据存储（notes.json）：**
+
+```json
+{
+  "5": ["提醒第一条", "提醒第二条"],
+  "7": ["这一页只有一条提醒"]
+}
+```
+
+页码为 key，值为字符串数组。每页可以有多条提醒，无忧虑无拖慢。
+
+**部署上线：**
+
+`api-server.js` 在服务器以 pm2 常驻运行，nginx 反向代理 `/api/` 至此进程。所有设备访问同一份 `notes.json`，天然跨设备同步。
