@@ -132,7 +132,14 @@
       slide.style.transformOrigin = 'center center';
     }
 
+    let _cooldown = 0;
+
     function load(p, dir) {
+      // 全局冷却：任何来源的翻页请求，1000ms 内只执行一次
+      const now = Date.now();
+      if (now - _cooldown < 1000) return;
+      _cooldown = now;
+
       p = Math.max(1, Math.min(TOTAL, p));
       if (p === current || loading) return;
       loading = true;
@@ -222,32 +229,19 @@
     // 窗口大小变化时重新适配
     window.addEventListener('resize', fitSlide);
 
-    // 滚轮翻页（时间戳硬冷却，800ms 内只响应一次）
-    let lastWheel = 0;
+    // 滚轮翻页
     document.addEventListener('wheel', (e) => {
       e.preventDefault();
-      if (loading) return;
-      const now = Date.now();
-      if (now - lastWheel < 800) return;
-      lastWheel = now;
       if (e.deltaY > 0) load(current + 1, 1);
       else load(current - 1, -1);
     }, { passive: false });
 
     // 键盘（支持翻页笔：上下左右箭头 + PageUp/PageDown）
-    let lastKey = 0;
     document.addEventListener('keydown', (e) => {
       const key = e.key;
-      if (key !== 'ArrowUp' && key !== 'ArrowDown' && key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'PageUp' && key !== 'PageDown') {
-        if (key === 's' || key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
-        return;
-      }
-      if (loading) return;
-      const now = Date.now();
-      if (now - lastKey < 500) return;
-      lastKey = now;
       if (key === 'ArrowUp'   || key === 'ArrowLeft'  || key === 'PageUp')   load(current - 1, -1);
       if (key === 'ArrowDown' || key === 'ArrowRight' || key === 'PageDown') load(current + 1, 1);
+      if (key === 's' || key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
     });
 
     // 触摸滑动
