@@ -7,7 +7,13 @@
   <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
     #stage {
       position: fixed;
       top: 0; left: 0;
@@ -18,6 +24,7 @@
       justify-content: center;
       transition: opacity 0.25s ease;
       transform-origin: center center;
+      overflow: hidden;
     }
 
     /* 方形屏补偿：屏幕硬件把 16:9 拉伸到 1:1，CSS 预先压扁对冲 */
@@ -84,6 +91,30 @@
 
     /* 动画结束后彻底隐藏 */
     #curtain.done { display: none; }
+
+    /* 左上角隐形翻页按钮（上一页） */
+    #prev-btn {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8vw; height: 8vw;
+      z-index: 100;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 右下角隐形翻页按钮（下一页） */
+    #next-btn {
+      position: fixed;
+      bottom: 0; right: 0;
+      width: 8vw; height: 8vw;
+      z-index: 100;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+    }
   </style>
 </head>
 <body>
@@ -99,52 +130,40 @@
   </div>
 
   <div id="stage"></div>
+  <div id="prev-btn"></div>
+  <div id="next-btn"></div>
 
   <script>
     const TOTAL = 21;
     let current = 1;
     let currentStyle = null;
-    let loading = false;
 
     const stage = document.getElementById('stage');
 
-    // 把整个 slide 等比缩小到浏览器窗口里，像一张完整显示的图片
+    // ——————————————————————————————
+    // 执行层
+    // ——————————————————————————————
+
     function fitSlide() {
       const slide = stage.querySelector('.slide');
       if (!slide) return;
-
-      // 清除之前的 transform，让浏览器自然渲染
       slide.style.width = '';
       slide.style.height = '';
       slide.style.transform = '';
-
-      // 读取 slide 的自然尺寸
       const sw = slide.offsetWidth;
       const sh = slide.offsetHeight;
-
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-
-      // 算出需要缩小到多少才能完全装进视口
       const scale = Math.min(vw / sw, vh / sh, 1) * 0.92;
-
       slide.style.transform = `scale(${scale})`;
       slide.style.transformOrigin = 'center center';
     }
 
-    let _cooldown = 0;
+    let _busy = false;
+    let _flipAt = 0;
 
-    function load(p, dir) {
-      // 全局冷却：任何来源的翻页请求，1000ms 内只执行一次
-      const now = Date.now();
-      if (now - _cooldown < 1000) return;
-      _cooldown = now;
-
-      p = Math.max(1, Math.min(TOTAL, p));
-      if (p === current || loading) return;
-      loading = true;
+    function executeFlip(p, dir) {
       current = p;
-
       stage.style.opacity = '0';
 
       fetch(p + '.html')
@@ -171,12 +190,9 @@
 
           fitSlide();
 
-          // 翻页滑动动向：下翻从下方滑入，上翻从上方滑入
           const slide = stage.querySelector('.slide');
-          const baseTx = slide.style.transform; // 如 "scale(0.92)"
+          const baseTx = slide.style.transform;
           const ty = dir > 0 ? '100px' : '-100px';
-
-          // 提取当前 scale 值，叠加缩小 + 位移
           const scaleMatch = baseTx.match(/scale\(([^)]+)\)/);
           const s = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
 
@@ -184,32 +200,107 @@
           slide.style.transform = `scale(${s * 0.96}) translateY(${ty})`;
           stage.style.opacity = '1';
 
-          // 强制回流后播放滑入动画
           slide.offsetHeight;
           slide.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
           slide.style.transform = baseTx;
 
-          setTimeout(() => { slide.style.transition = ''; loading = false; }, 600);
+          // 锁释放由 transitionend 驱动，与渲染状态严格同步
+          let released = false;
+          const done = () => {
+            if (released) return;
+            released = true;
+            slide.style.transition = '';
+            slide.removeEventListener('transitionend', onEnd);
+            _busy = false;
+          };
+          const onEnd = (e) => {
+            // 只响应 slide 自身的 transform 过渡，忽略子元素冒泡上来的事件
+            if (e.target !== slide || e.propertyName !== 'transform') return;
+            done();
+          };
+          slide.addEventListener('transitionend', onEnd);
+          // 兜底：700ms 后强制释放，防止 transitionend 不触发
+          setTimeout(done, 700);
         })
         .catch(() => {
           stage.style.opacity = '1';
-          loading = false;
+          _busy = false;
         });
     }
 
-    // 帷幕拉开
+    // ——————————————————————————————
+    // 摄入层
+    // ——————————————————————————————
+
+    function requestFlip(dir, immediate) {
+      if (_busy) return;
+      if (!immediate) {
+        const now = Date.now();
+        if (now - _flipAt < 2000) return;
+      }
+      const p = Math.max(1, Math.min(TOTAL, current + dir));
+      if (p === current) return;
+      _flipAt = Date.now();
+      _busy = true;
+      executeFlip(p, dir);
+    }
+
+    // ——————————————————————————————
+    // 事件绑定
+    // ——————————————————————————————
+
+    // 滚轮
+    document.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      requestFlip(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    document.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if (key === 'ArrowUp'   || key === 'ArrowLeft'  || key === 'PageUp')   requestFlip(-1);
+      if (key === 'ArrowDown' || key === 'ArrowRight' || key === 'PageDown') requestFlip(1);
+      if (key === 's' || key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
+    });
+
+    // 左上角隐形按钮 → 上一页（绕过冷却，点击即翻）
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      const curtain = document.getElementById('curtain');
+      if (curtain && !curtain.classList.contains('done')) return;
+      requestFlip(-1, true);
+    });
+
+    // 右下角隐形按钮 → 下一页（绕过冷却，点击即翻）
+    document.getElementById('next-btn').addEventListener('click', () => {
+      const curtain = document.getElementById('curtain');
+      if (curtain && !curtain.classList.contains('done')) return;
+      requestFlip(1, true);
+    });
+
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
+    document.addEventListener('touchend', (e) => {
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) > 50) requestFlip(dy > 0 ? 1 : -1);
+    });
+
+    window.addEventListener('resize', fitSlide);
+
+    // ——————————————————————————————
+    // 帷幕
+    // ——————————————————————————————
+
     function openCurtain() {
       const curtain = document.getElementById('curtain');
       if (curtain.classList.contains('open')) return;
       curtain.classList.add('open');
-      // 动画 0.9s 结束后移除帷幕
       setTimeout(() => { curtain.classList.add('done'); }, 1000);
     }
-
-    // 点击帷幕任意位置开幕
     document.getElementById('curtain').addEventListener('click', openCurtain);
 
-    // 首屏加载
+    // ——————————————————————————————
+    // 首屏
+    // ——————————————————————————————
+
     fetch('1.html')
       .then(r => r.text())
       .then(html => {
@@ -225,36 +316,6 @@
         stage.innerHTML = doc.body.innerHTML;
         fitSlide();
       });
-
-    // 窗口大小变化时重新适配
-    window.addEventListener('resize', fitSlide);
-
-    // 滚轮翻页
-    document.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (e.deltaY > 0) load(current + 1, 1);
-      else load(current - 1, -1);
-    }, { passive: false });
-
-    // 键盘（支持翻页笔：上下左右箭头 + PageUp/PageDown）
-    document.addEventListener('keydown', (e) => {
-      const key = e.key;
-      if (key === 'ArrowUp'   || key === 'ArrowLeft'  || key === 'PageUp')   load(current - 1, -1);
-      if (key === 'ArrowDown' || key === 'ArrowRight' || key === 'PageDown') load(current + 1, 1);
-      if (key === 's' || key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
-    });
-
-    // 触摸滑动
-    let touchStartY = 0;
-    document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
-    document.addEventListener('touchend', (e) => {
-      if (loading) return;
-      const dy = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > 50) {
-        if (dy > 0) load(current + 1, 1);
-        else load(current - 1, -1);
-      }
-    });
   </script>
 </body>
 </html>

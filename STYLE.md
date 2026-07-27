@@ -273,7 +273,41 @@ slide.style.transform = baseTx;
 
 **翻页笔兼容：** 同时监听 `ArrowUp/ArrowDown/ArrowLeft/ArrowRight/PageUp/PageDown`，覆盖市面上主流翻页笔的按键映射。
 
-**防连翻：**
-- 滚轮事件设 1 秒节流（`wheelTimer`）
-- `loading` 锁：加载期间忽略所有翻页事件
-- 翻页动效时长 0.55s，期间 `loading = true`，动效结束后解锁
+**防连翻架构（`requestFlip` 单一入口，三道防线）：**
+
+```
+wheel / keydown / touch → requestFlip(dir)      ← 所有来源唯一入口
+                              │
+                          ① _busy? → 阻塞        ← 动画安全（transitionend 驱动释放）
+                          ② 距上次 < 2000ms? → 阻塞 ← 防惯性 + 防触控板幽灵 ArrowDown
+                          ③ 同页? → 跳过
+                              │
+                          ④ executeFlip()        ← 翻页
+```
+
+**设计原则：**
+
+| 层 | 机制 | 职责 |
+|---|------|------|
+| CSS | `overflow: hidden; overscroll-behavior: none; touch-action: none` | 从浏览器底层禁止一切原生滚动 |
+| 摄入层 | `wheel`/`keydown`/`touch` 事件处理器 | 所有来源统一调 `requestFlip()`，零内联逻辑 |
+| 判据层 | `requestFlip()` — `_busy` 布尔锁 + `_flipAt` 时间戳 | 单一入口，统一判据，无状态分裂 |
+| 执行层 | `executeFlip()` | `fetch` → DOM 替换 → `transitionend` 释锁（700ms 兜底） |
+
+**为什么冷却必须放在 `requestFlip` 而非单独事件层：**
+macOS 触控板两指滑动在 JS 不可控层同时发射 `wheel` 和 `ArrowDown` 键盘事件，是两个独立事件源。若只在 wheel handler 做冷却，ArrowDown 幽灵事件在动画结束后（`_busy` 释放时）仍能穿透触发连翻。冷却必须覆盖所有输入来源的汇合点。
+
+### 隐形翻页按钮
+
+左上角和右下角各有一个不可见的点击区域，用于触屏/鼠标翻页：
+
+| 位置 | 触发方向 | 参数 |
+|------|---------|------|
+| 左上角 `#prev-btn` | 上一页 | `requestFlip(-1, true)` |
+| 右下角 `#next-btn` | 下一页 | `requestFlip(1, true)` |
+
+**设计规则：**
+- 尺寸 `8vw × 8vw`，`background: transparent`，完全不可见
+- `z-index: 100`，位于帷幕和 slide 之上
+- 帷幕期间不响应点击
+- 调用 `requestFlip(dir, true)`，`immediate` 参数绕过 `_flipAt` 时间戳冷却（按钮是明确用户意图，不是惯性事件），但仍受 `_busy` 动画锁保护
