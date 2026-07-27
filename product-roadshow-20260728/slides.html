@@ -235,48 +235,66 @@
       color: rgba(255,255,255,0.6);
     }
 
-    /* ====== 右侧提醒 —— 小圆点 ====== */
-    #notes-dots {
+    /* ====== 右侧竖线刻度尺 ====== */
+    #notes-ruler {
       position: fixed;
-      bottom: 8vh; right: 0;
-      width: 40px;
+      top: 8vh; right: 3vw;
+      width: 16px;
+      height: 84vh;
       z-index: 200;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      padding-right: 20px;
-      gap: 2.2vh;
+      pointer-events: none;
+      display: none;
+    }
+    #notes-ruler.show {
+      display: block;
+    }
+    #notes-ruler .ruler-line {
+      position: absolute;
+      top: 0; right: 0;
+      width: 1px; height: 100%;
+      background: rgba(212,184,122,0.06);
+    }
+    /* 刻度：朝左的短横线 */
+    .ruler-tick {
+      position: absolute;
+      right: 0;
+      height: 1px;
+      background: rgba(212,184,122,0.14);
       pointer-events: none;
     }
-    .note-mark {
+    .ruler-tick.major {
       width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(212,184,122,0.15);
-      border: none;
-      cursor: pointer;
-      pointer-events: auto;
-      position: relative;
-      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-      flex-shrink: 0;
     }
-    /* 扩大触摸区 */
-    .note-mark::before {
+    .ruler-tick.minor {
+      width: 4px;
+    }
+    /* 备注标记：金色实心小圆点，覆盖在刻度上 */
+    .ruler-note {
+      position: absolute;
+      left: 12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(212,184,122,0.25);
+      pointer-events: auto;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .ruler-note::before {
       content: '';
       position: absolute;
-      top: -10px; left: -10px;
-      right: -10px; bottom: -10px;
-      border-radius: 50%;
+      top: -8px; left: -8px;
+      right: -8px; bottom: -8px;
     }
-    .note-mark:hover {
-      background: rgba(212,184,122,0.35);
-      transform: scale(1.4);
-      box-shadow: 0 0 6px rgba(212,184,122,0.12);
+    .ruler-note:hover {
+      background: rgba(212,184,122,0.5);
+      transform: translateY(-50%) scale(1.4);
+      box-shadow: 0 0 8px rgba(212,184,122,0.12);
     }
-    /* 气泡 */
-    .note-bubble {
+    .ruler-note .ruler-bubble {
       position: absolute;
-      right: calc(100% + 12px);
+      right: calc(100% + 10px);
       top: 50%;
       transform: translateY(-50%);
       background: rgba(14,14,14,0.97);
@@ -293,7 +311,7 @@
       letter-spacing: 0.04em;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
-    .note-mark:hover .note-bubble {
+    .ruler-note:hover .ruler-bubble {
       opacity: 1;
     }
   </style>
@@ -323,7 +341,9 @@
     </div>
   </div>
 
-  <div id="notes-dots"></div>
+  <div id="notes-ruler">
+    <div class="ruler-line"></div>
+  </div>
 
   <script>
     const TOTAL = 21;
@@ -594,32 +614,68 @@
     });
 
     // ——————————————————————————————
-    // 右侧提醒 —— 侧边短刻线
+    // 右侧竖线刻度尺
     // ——————————————————————————————
 
-    const notesDots = document.getElementById('notes-dots');
+    const notesRuler = document.getElementById('notes-ruler');
+
+    function posToPct(pos) {
+      if (pos === '开篇') return 5;
+      if (pos === '结尾') return 95;
+      const m = String(pos).match(/^(\d+)%$/);
+      return m ? parseInt(m[1], 10) : 50;
+    }
+
+    // 初始化：生成所有刻度（0% ~ 100%，每 5% 一个）
+    (function buildRuler() {
+      for (let p = 0; p <= 100; p += 5) {
+        const tick = document.createElement('div');
+        tick.className = p % 10 === 0 ? 'ruler-tick major' : 'ruler-tick minor';
+        tick.style.top = p + '%';
+        notesRuler.appendChild(tick);
+      }
+    })();
 
     async function loadNotes(page) {
       try {
         const res = await fetch('/api/notes?page=' + page);
         const data = await res.json();
-        const notes = data[page] || [];
-        renderMarks(notes);
+        const notes = (data[page] || []).map(n => typeof n === 'string' ? { text: n, pos: '50%' } : n);
+        renderRuler(notes);
       } catch {
-        notesDots.innerHTML = '';
+        renderRuler([]);
       }
     }
 
-    function renderMarks(notes) {
-      notesDots.innerHTML = '';
-      notes.forEach((text) => {
+    function renderRuler(notes) {
+      // 移除旧标记，恢复所有刻度
+      notesRuler.querySelectorAll('.ruler-note').forEach(n => n.remove());
+      notesRuler.querySelectorAll('.ruler-tick').forEach(t => t.style.display = '');
+
+      if (notes.length === 0) {
+        notesRuler.classList.remove('show');
+        return;
+      }
+
+      notesRuler.classList.add('show');
+
+      notes.forEach(note => {
+        const pct = posToPct(note.pos);
+
+        // 圆点位置不显示刻度横线
+        const tick = notesRuler.querySelector(`.ruler-tick[style*="top: ${pct}%"]`);
+        if (tick) tick.style.display = 'none';
+
         const mark = document.createElement('div');
-        mark.className = 'note-mark';
+        mark.className = 'ruler-note';
+        mark.style.top = pct + '%';
+
         const bubble = document.createElement('div');
-        bubble.className = 'note-bubble';
-        bubble.textContent = text;
+        bubble.className = 'ruler-bubble';
+        bubble.textContent = note.text;
         mark.appendChild(bubble);
-        notesDots.appendChild(mark);
+
+        notesRuler.appendChild(mark);
       });
     }
 

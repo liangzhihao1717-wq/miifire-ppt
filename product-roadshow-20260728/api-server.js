@@ -62,17 +62,17 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // POST /api/notes  body: { page: 5, text: "提醒内容" }
+  // POST /api/notes  body: { page: 5, text: "提醒内容", pos: "50%" }
   if (url.pathname === '/api/notes' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
-        const { page, text } = JSON.parse(body);
+        const { page, text, pos } = JSON.parse(body);
         if (!page || !text) throw new Error('缺少 page 或 text');
         const notes = readNotes();
         if (!notes[page]) notes[page] = [];
-        notes[page].push(text);
+        notes[page].push({ text, pos: pos || '50%' });
         writeNotes(notes);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ ok: true, notes: notes[page] }));

@@ -112,18 +112,6 @@
       color: rgba(255,255,255,0.55);
       letter-spacing: 0.06em;
     }
-    .hero .overlay .notes-dot {
-      width: 0.5vw;
-      height: 0.5vw;
-      border-radius: 50%;
-      background: rgba(212,184,122,0.7);
-      display: none;
-      margin-bottom: 0.8vh;
-    }
-    .hero.has-notes .overlay .notes-dot {
-      display: block;
-    }
-
     /* 右侧：可滚动的页面列表 */
     .page-panel {
       display: flex;
@@ -133,7 +121,7 @@
       max-height: 305px;
     }
     .page-panel-label {
-      font-size: 0.65vw;
+      font-size: 0.85vw;
       font-weight: 400;
       color: rgba(255,255,255,0.12);
       letter-spacing: 0.08em;
@@ -157,12 +145,12 @@
       display: flex;
       align-items: center;
       gap: 0.7vw;
-      padding: 0.5vh 0.5vw;
+      padding: 1.2vh 0.5vw;
       cursor: pointer;
       border-radius: 1px;
       transition: background 0.2s, opacity 0.25s;
       opacity: 0.35;
-      margin-bottom: 0.15vh;
+      margin-bottom: 0.8vh;
     }
     .page-item:hover {
       opacity: 0.7;
@@ -213,17 +201,6 @@
     }
     .page-item.active .item-title {
       color: rgba(255,255,255,0.6);
-    }
-    .page-item .item-dot {
-      flex-shrink: 0;
-      width: 0.35vw;
-      height: 0.35vw;
-      border-radius: 50%;
-      background: rgba(212,184,122,0.6);
-      display: none;
-    }
-    .page-item.has-notes .item-dot {
-      display: block;
     }
 
     /* ====== 分割线 ====== */
@@ -328,10 +305,100 @@
       white-space: nowrap;
       letter-spacing: 0.06em;
     }
+    .pos-group {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      border: 0.04vw solid rgba(255,255,255,0.06);
+      border-radius: 2px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .pos-group.open {
+      border-color: rgba(212,184,122,0.35);
+    }
+    .pos-label {
+      font-size: 0.85vw;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      padding: 1vh 0 1vh 0.6vw;
+      flex-shrink: 0;
+    }
+    .custom-select {
+      display: flex;
+      align-items: center;
+      gap: 0.4vw;
+      padding: 1vh 0.6vw;
+      cursor: pointer;
+      flex: 1;
+      min-width: 3vw;
+    }
+    .custom-select .selected-value {
+      font-size: 0.85vw;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+      flex: 1;
+    }
+    .custom-select .arrow {
+      font-size: 0.6vw;
+      color: rgba(212,184,122,0.3);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .pos-group.open .arrow {
+      transform: rotate(180deg);
+    }
+    .options-panel {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 4px;
+      background: rgba(16,16,16,0.98);
+      border: 1px solid rgba(212,184,122,0.15);
+      border-radius: 2px;
+      padding: 0.6vw;
+      z-index: 100;
+      min-width: 100%;
+    }
+    .pos-group.open .options-panel {
+      display: block;
+    }
+    .opt-row {
+      display: flex;
+      gap: 0;
+    }
+    .opt-row span {
+      flex: 1;
+      text-align: center;
+      padding: 0.5vh 0.6vw;
+      font-size: 0.78vw;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      border-radius: 1px;
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .opt-row span:hover {
+      background: rgba(212,184,122,0.08);
+      color: rgba(255,255,255,0.6);
+    }
+    .opt-row span.active {
+      color: #d4b87a;
+      background: rgba(212,184,122,0.1);
+    }
     .add-form button:hover {
       background: rgba(212,184,122,0.15);
       border-color: rgba(212,184,122,0.35);
       color: #d4b87a;
+    }
+    .note-pos {
+      font-size: 0.72vw;
+      color: rgba(212,184,122,0.28);
+      margin-left: 0.4vw;
+      letter-spacing: 0.04em;
     }
 
     /* Toast */
@@ -379,13 +446,12 @@
             <span class="page-num" id="hero-num">01</span>
             <span class="page-title" id="hero-title">前情回顾</span>
           </div>
-          <span class="notes-dot"></span>
         </div>
       </div>
 
       <!-- 右侧：可滚动页面列表 -->
       <div class="page-panel">
-        <div class="page-panel-label">所有页面</div>
+        <div class="page-panel-label" id="page-panel-label">共 21 个页面</div>
         <div class="page-list" id="page-list"></div>
       </div>
     </div>
@@ -395,6 +461,18 @@
     <!-- 编辑区 -->
     <div class="add-form">
       <input type="text" id="add-input" placeholder="输入提醒内容，回车添加" maxlength="80">
+      <div class="pos-group" id="pos-group">
+        <span class="pos-label">讲述位置</span>
+        <div class="custom-select" id="pos-select">
+          <span class="selected-value" id="pos-selected" data-val="开篇">本页开头</span>
+          <span class="arrow">▾</span>
+          <div class="options-panel" id="pos-options">
+            <div class="opt-row"><span data-val="开篇" class="active">本页开头</span><span data-val="10%">10%</span><span data-val="15%">15%</span><span data-val="20%">20%</span><span data-val="25%">25%</span><span data-val="30%">30%</span><span data-val="35%">35%</span></div>
+            <div class="opt-row"><span data-val="40%">40%</span><span data-val="45%">45%</span><span data-val="50%">50%</span><span data-val="55%">55%</span><span data-val="60%">60%</span><span data-val="65%">65%</span><span data-val="70%">70%</span></div>
+            <div class="opt-row"><span data-val="75%">75%</span><span data-val="80%">80%</span><span data-val="85%">85%</span><span data-val="90%">90%</span><span data-val="95%">95%</span><span data-val="结尾">本页结尾</span></div>
+          </div>
+        </div>
+      </div>
       <button id="add-btn">添加</button>
     </div>
     <div class="notes-list" id="notes-list"></div>
@@ -415,6 +493,30 @@
     const addInput = document.getElementById('add-input');
     const addBtn = document.getElementById('add-btn');
     const toast = document.getElementById('toast');
+    const posGroup = document.getElementById('pos-group');
+    const posSelected = document.getElementById('pos-selected');
+    const posOptions = document.getElementById('pos-options');
+
+    // 自定义下拉选择器
+    posGroup.addEventListener('click', (e) => {
+      e.stopPropagation();
+      posGroup.classList.toggle('open');
+    });
+
+    posOptions.addEventListener('click', (e) => {
+      const span = e.target.closest('span[data-val]');
+      if (!span) return;
+      const val = span.dataset.val;
+      posSelected.textContent = val;
+      posSelected.dataset.val = val;
+      posOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
+      span.classList.add('active');
+      posGroup.classList.remove('open');
+    });
+
+    document.addEventListener('click', () => {
+      posGroup.classList.remove('open');
+    });
 
     let currentPage = 1;
     let allNotes = {};
@@ -442,7 +544,6 @@
             <span class="item-num">${String(i).padStart(2, '0')}</span>
             <span class="item-title">${pageTitles[i - 1]}</span>
           </div>
-          <span class="item-dot"></span>
         `;
 
         item.addEventListener('click', () => selectPage(i));
@@ -454,15 +555,12 @@
       heroImg.src = 'thumbs/' + currentPage + '.png';
       heroNum.textContent = String(currentPage).padStart(2, '0');
       heroTitle.textContent = pageTitles[currentPage - 1];
-      const hasNotes = allNotes[currentPage] && allNotes[currentPage].length > 0;
-      hero.classList.toggle('has-notes', hasNotes);
     }
 
     function updatePageList() {
       document.querySelectorAll('.page-item').forEach(item => {
         const p = parseInt(item.dataset.page);
         item.classList.toggle('active', p === currentPage);
-        item.classList.toggle('has-notes', allNotes[p] && allNotes[p].length > 0);
       });
     }
 
@@ -485,12 +583,14 @@
       if (notes.length === 0) {
         notesList.innerHTML = '<div class="empty">暂无提醒</div>';
       } else {
-        notes.forEach((text, idx) => {
+        notes.forEach((note, idx) => {
+          const text = typeof note === 'string' ? note : note.text;
+          const pos = typeof note === 'string' ? '50%' : (note.pos || '50%');
           const item = document.createElement('div');
           item.className = 'note-item';
           item.innerHTML = `
             <span class="note-index">${String(idx + 1).padStart(2, '0')}.</span>
-            <span class="note-text">${escapeHtml(text)}</span>
+            <span class="note-text">${escapeHtml(text)} <span class="note-pos">讲述位置 ${pos}</span></span>
             <button class="note-delete" data-index="${idx}">✕</button>
           `;
           item.querySelector('.note-delete').addEventListener('click', () => deleteNote(idx));
@@ -507,11 +607,12 @@
 
     async function addNote() {
       const text = addInput.value.trim();
+      const pos = posSelected.dataset.val || '50%';
       if (!text || !currentPage) return;
       const res = await fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page: String(currentPage), text })
+        body: JSON.stringify({ page: String(currentPage), text, pos })
       });
       const data = await res.json();
       if (data.ok) {
