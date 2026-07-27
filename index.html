@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>觅火 MIIFIRE PPT 项目目录</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      color: #e0ded5;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6vh 8vw;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 6vh;
+    }
+    .header .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2vw;
+      margin-bottom: 1.5vh;
+    }
+    .header img {
+      height: 3vw;
+      filter: brightness(0.95) saturate(0.4);
+    }
+    .header h1 {
+      font-size: 2.5vw;
+      font-weight: 900;
+      color: #ece9e0;
+      letter-spacing: 0.06em;
+    }
+    .header .subtitle {
+      font-size: 1vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.12em;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 5vh;
+    }
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2vh;
+    }
+    .project-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5vh 2vw;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 2px;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .project-card:hover {
+      border-color: rgba(212,184,122,0.3);
+      background: rgba(255,255,255,0.02);
+    }
+    .project-card .name {
+      font-size: 1.3vw;
+      font-weight: 700;
+      color: #ece9e0;
+      letter-spacing: 0.04em;
+    }
+    .project-card .date {
+      font-size: 0.85vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.4vh;
+    }
+    .project-card .arrow {
+      font-size: 1.2vw;
+      color: rgba(255,255,255,0.2);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .project-card:hover .arrow {
+      color: #d4b87a;
+      transform: translateX(4px);
+    }
+    .footer {
+      margin-top: 8vh;
+      text-align: center;
+      font-size: 0.75vw;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-row">
+        <img src="product-roadshow-20260728/logo.png" alt="MIIFIRE">
+        <h1>觅火 MIIFIRE</h1>
+      </div>
+      <div class="subtitle">PPT 项目目录</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="project-list">
+      <a class="project-card" href="product-roadshow-20260728/">
+        <div>
+          <div class="name">产品路演</div>
+          <div class="date">2026-07-28</div>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+
+    <div class="footer">
+      miifire-ppt &copy; 2026
+    </div>
+  </div>
+</body>
+</html>
