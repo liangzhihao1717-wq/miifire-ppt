@@ -176,8 +176,7 @@
           slide.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
           slide.style.transform = baseTx;
 
-          setTimeout(() => { slide.style.transition = ''; }, 600);
-          loading = false;
+          setTimeout(() => { slide.style.transition = ''; loading = false; }, 600);
         })
         .catch(() => {
           stage.style.opacity = '1';
