@@ -26,37 +26,45 @@
       overflow: hidden;
       padding: 6.875vw 10vw;
       background:
-        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .columns {
-      display: flex;
-      gap: 3vw;
-      align-items: stretch;
-    }
-
-    .col-card {
-      flex: 1;
+    .content {
       display: flex;
       flex-direction: column;
-      gap: 1.6vw;
+      gap: 0;
     }
 
-    .col-divider {
-      flex-shrink: 0;
-      width: 0.05vw;
-      background: rgba(255,255,255,0.15);
-    }
-
-    .scene-name {
-      font-size: 2.25vw;
+    .title {
+      font-size: 4vw;
       font-weight: 900;
+      color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 0.3vw;
+      margin-bottom: 0.75vw;
+    }
+
+    .divider {
+      width: 25vw;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 2.75vw;
+    }
+
+    .formula {
+      display: flex;
+      align-items: center;
+      gap: 1.875vw;
+      margin-bottom: 4.375vw;
+    }
+
+    .formula .term {
+      font-size: 2.5vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
       background: linear-gradient(135deg,
         #e2c988 0%,
         #f5e6c8 25%,
@@ -70,33 +78,39 @@
       background-clip: text;
     }
 
-    .field {
+    .formula .times {
+      font-size: 1.75vw;
+      color: rgba(255,255,255,0.30);
+      font-weight: 300;
+    }
+
+    .example {
       display: flex;
-      flex-direction: column;
-      gap: 0.2vw;
+      gap: 1.75vw;
+      align-items: flex-start;
     }
 
-    .field .label {
+    .example::before {
+      content: '▶';
+      flex-shrink: 0;
       font-size: 0.875vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.30);
+      margin-top: 0.44vw;
     }
 
-    .field .text {
-      font-size: 1.31vw;
-      font-weight: 400;
-      color: rgba(255,255,255,0.68);
+    .example .text {
+      font-size: 1.5vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.70);
       letter-spacing: 0.04em;
-      line-height: 1.7;
+      line-height: 1.8;
+      max-width: 70vw;
     }
 
-    .field .sell {
-      font-size: 1.31vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.82);
-      letter-spacing: 0.04em;
-      line-height: 1.7;
+    .example .text em {
+      font-style: normal;
+      color: #d4b87a;
+      font-weight: 700;
     }
 
     /* Logo */
@@ -140,45 +154,23 @@
       <span>觅火 MIIFIRE</span>
     </a>
 
-    <div class="columns">
+    <div class="content">
 
-      <div class="col-card">
-        <div class="scene-name">方案设计</div>
+      <div class="title">你的信用是怎么累积的</div>
 
-        <div class="field">
-          <div class="label">画面</div>
-          <div class="text">拍全公司开会讨论，屏幕上是客户的效果图</div>
-        </div>
+      <div class="divider"></div>
 
-        <div class="field">
-          <div class="label">内容</div>
-          <div class="text">设计师逐项讲解布局逻辑、动线规划、风格定位，团队现场碰撞修改</div>
-        </div>
-
-        <div class="field">
-          <div class="label">传递的卖点</div>
-          <div class="sell">有完整设计团队，方案经过多轮打磨</div>
-        </div>
+      <div class="formula">
+        <span class="term">具象过程</span>
+        <span class="times">✖</span>
+        <span class="term">心智密度</span>
+        <span class="times">✖</span>
+        <span class="term">时间长度</span>
       </div>
 
-      <div class="col-divider"></div>
-
-      <div class="col-card">
-        <div class="scene-name">和客户谈方案</div>
-
-        <div class="field">
-          <div class="label">画面</div>
-          <div class="text">在公司或者工地上和客户面对面沟通</div>
-        </div>
-
-        <div class="field">
-          <div class="label">内容</div>
-          <div class="text">拿着图纸逐项解释每一个设计决策的原因，解释不同材料的价格差异和效果差异</div>
-        </div>
-
-        <div class="field">
-          <div class="label">传递的卖点</div>
-          <div class="sell">专业度高、透明报价、为客户考虑</div>
+      <div class="example">
+        <div class="text">
+          跟客户说「<em>我装修做得好</em>」，不如让客户看<em>我怎么验收工地</em>。<br>前者是推销，后者是展示。
         </div>
       </div>
 

@@ -26,7 +26,7 @@
       padding: 6.875vw 10vw;
       overflow: hidden;
       background:
-        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
@@ -36,63 +36,95 @@
     .content {
       display: flex;
       flex-direction: column;
-      gap: 1.5vw;
+      height: 100%;
+      justify-content: center;
+      gap: 3.5vw;
     }
 
-    .subtitle {
-      font-size: 1.625vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.48);
-      letter-spacing: 0.08em;
-    }
-
-    .title {
-      font-size: 4vw;
+    .top-title {
+      font-size: 2.75vw;
       font-weight: 900;
       color: #e0ded5;
-      letter-spacing: 0.06em;
-      line-height: 1.25;
+      letter-spacing: 0.12em;
     }
-    .title .gold {
+
+    .columns {
+      display: flex;
+      gap: 6.25vw;
+    }
+    .col { flex: 1; }
+
+    .col-label {
+      font-size: 2vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25vw;
+    }
+
+    .chain { display: flex; flex-direction: column; gap: 0.81vw; }
+    .chain-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75vw;
+    }
+    .arrow {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+    .text {
+      font-size: 1.31vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+    }
+
+    .conclusion {
+      font-size: 2.75vw;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-top: 1vw;
+    }
+    .conclusion.gold {
       background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .points {
-      display: flex;
-      gap: 3.75vw;
-      margin-top: 3.125vw;
+    .divider {
+      width: 100%;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.2);
     }
-    .point {
+
+    .bottom-label {
+      font-size: 1.75vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1em;
+      margin-bottom: 1vw;
+    }
+    .bottom-chain {
       display: flex;
-      align-items: stretch;
+      align-items: center;
       gap: 1.5vw;
     }
-    .point::before {
-      content: '';
-      width: 0.23vw;
-      flex-shrink: 0;
-      background: linear-gradient(180deg, #d4b87a, rgba(180,150,100,0.15));
-      border-radius: 0.08vw;
+    .bottom-chain .arrow {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
     }
-    .point .body {
-      display: flex;
-      flex-direction: column;
-      gap: 0.625vw;
+    .bottom-chain .text {
+      font-size: 1.375vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.05em;
     }
-    .point .label {
-      font-size: 1.19vw;
-      font-weight: 700;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.1em;
-    }
-    .point .desc {
-      font-size: 2vw;
-      font-weight: 900;
-      color: #e0ded5;
-      letter-spacing: 0.08em;
+    .dot {
+      font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
     }
 
     .brand {
@@ -137,24 +169,68 @@
 
     <div class="content">
 
-      <div class="subtitle">手里有什么牌，怎么摸怎么打</div>
+      <div class="top-title">网红群体 · 老板群体 · 稀里糊涂群体</div>
 
-      <div class="title">
-        老板拍短视频要直奔着 <span class="gold">信任</span> 去
+      <div class="columns">
+        <div class="col">
+          <div class="col-label">网红群体</div>
+          <div class="chain">
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">为了流量做</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">12 个小时全用来研究博眼球</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">反差 / 剧情 / 故事 / 冲突 / 搞笑</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">天然带有营销杠杆</span>
+            </div>
+          </div>
+          <div class="conclusion gold">流量 &gt; 信用</div>
+        </div>
+
+        <div class="col">
+          <div class="col-label">老板群体</div>
+          <div class="chain">
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">为了成交做</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">12 个小时用来维持经营</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">做生意 / 做服务（情绪价值服务）</span>
+            </div>
+            <div class="chain-item">
+              <span class="arrow">→</span>
+              <span class="text">天然具有经营场景</span>
+            </div>
+          </div>
+          <div class="conclusion gold">信用 &gt; 流量</div>
+        </div>
       </div>
 
-      <div class="points">
-        <div class="point">
-          <div class="body">
-            <div class="label">定位原点</div>
-            <div class="desc">你的经营场景</div>
-          </div>
-        </div>
-        <div class="point">
-          <div class="body">
-            <div class="label">核心优势</div>
-            <div class="desc">你能见到客户</div>
-          </div>
+      <div class="divider"></div>
+
+      <div>
+        <div class="bottom-label">稀里糊涂群体</div>
+        <div class="bottom-chain">
+          <span class="text">先做流量再成交客户</span>
+          <span class="arrow">→</span>
+          <span class="text">讲干货</span>
+          <span class="dot">·</span>
+          <span class="text">拍剧情</span>
+          <span class="dot">·</span>
+          <span class="text">拍广告</span>
         </div>
       </div>
 

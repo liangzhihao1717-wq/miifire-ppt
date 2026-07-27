@@ -16,6 +16,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100dvh;
+
     }
 
     .slide {
@@ -23,90 +24,108 @@
       aspect-ratio: 16 / 9;
       position: relative;
       padding: 6.875vw 10vw;
+      overflow: hidden;
       background:
         radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      overflow: hidden;
     }
 
     .content {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
       height: 100%;
     }
 
-    /* ====== 六词横排 + 分类标尺 ====== */
-    .words-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 3vw;
-      margin-bottom: 1.5vw;
+    /* ====== 左侧 ====== */
+    .left {
+      flex: 0 0 72%;
+      padding-right: 5vw;
     }
 
-    .group-block {
+    /* 拒绝行 — 极简横删 */
+    .deny-row {
       display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.75vw;
+      gap: 2vw;
+      margin-bottom: 3.75vw;
     }
-    .group-block .words {
-      display: flex;
-      gap: 2.5vw;
-      justify-content: center;
+    .deny-tag {
+      font-size: 1.125vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 0.08em;
+      text-decoration: line-through;
+      text-decoration-thickness: 0.08vw;
+      text-decoration-color: rgba(255,255,255,0.18);
     }
 
-    .vline {
-      width: 0.08vw;
-      background: rgba(255,255,255,0.15);
-      align-self: stretch;
-      flex-shrink: 0;
-    }
-    .group-block .bar {
-      height: 0.23vw;
-      background: rgba(255,255,255,0.3);
-    }
-    .group-block .label {
-      text-align: center;
-      font-size: 2.25vw;
+    /* 一级标题 */
+    h1 {
+      font-size: 4.5vw;
       font-weight: 900;
-      letter-spacing: 0.14em;
-      margin-top: 0.4vw;
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      color: #e8e8e4;
+      margin-bottom: 2.5vw;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .word-card {
-      text-align: center;
-      flex-shrink: 0;
+    /* 二级标题 */
+    .sub {
+      font-size: 1.75vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.375vw;
     }
-    .word-card .num {
-      font-size: 1.56vw;
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.08em;
-      margin-bottom: 0.4vw;
-    }
-    .word-card .cn {
-      font-size: 2.625vw;
+    .sub strong {
       font-weight: 900;
-      color: #ece9e0;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
+      font-size: 3.75vw;
+      line-height: 1;
+      background: linear-gradient(180deg, #b48b3a 0%, #f5e6c8 40%, #e2c988 50%, #f5e6c8 60%, #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ====== 右侧三条 ====== */
+    .right {
+      flex: 0 0 28%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pillar {
+      padding: 1.75vw 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vw;
+      border-bottom: 0.08vw solid rgba(255,255,255,0.06);
+    }
+    .pillar:last-child { border-bottom: none; }
+    .pillar .num {
+      font-size: 0.875vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+    }
+    .pillar .word {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 3vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.1em;
+      line-height: 1;
     }
 
     /* Logo */
@@ -152,57 +171,34 @@
 
     <div class="content">
 
-      <div class="words-row">
-
-        <div class="group-block">
-          <div class="words">
-            <div class="word-card">
-              <div class="num">01</div>
-              <div class="cn">超级传单</div>
-            </div>
-            <div class="word-card">
-              <div class="num">02</div>
-              <div class="cn">信任来源</div>
-            </div>
-          </div>
-          <div class="bar"></div>
-          <div class="label">方 向</div>
+      <div class="left">
+        <div class="deny-row">
+          <span class="deny-tag">账号定位</span>
+          <span class="deny-tag">人设选题</span>
+          <span class="deny-tag">流量打法</span>
+          <span class="deny-tag">AI获客</span>
         </div>
 
-        <div class="vline"></div>
+        <h1>不要给我讲<br><em>虚头巴脑</em>的东西</h1>
 
-        <div class="group-block">
-          <div class="words">
-            <div class="word-card">
-              <div class="num">03</div>
-              <div class="cn">开采手段</div>
-            </div>
-            <div class="word-card">
-              <div class="num">04</div>
-              <div class="cn">生产机器</div>
-            </div>
-            <div class="word-card">
-              <div class="num">05</div>
-              <div class="cn">简单拍剪</div>
-            </div>
-          </div>
-          <div class="bar"></div>
-          <div class="label">实 操</div>
+        <div class="sub">
+          不要扯别的，我要<strong>落</strong>
         </div>
+      </div>
 
-        <div class="vline"></div>
-
-        <div class="group-block">
-          <div class="words">
-            <div class="word-card">
-              <div class="num">06</div>
-              <div class="cn">阶梯地图</div>
-            </div>
-          </div>
-          <div class="bar"></div>
-          <div class="label">路 线</div>
+      <div class="right">
+        <div class="pillar">
+          <div class="num">01 —</div>
+          <div class="word">文案</div>
         </div>
-
+        <div class="pillar">
+          <div class="num">02 —</div>
+          <div class="word">拍摄</div>
+        </div>
+        <div class="pillar">
+          <div class="num">03 —</div>
+          <div class="word">剪辑</div>
+        </div>
       </div>
 
     </div>

@@ -26,7 +26,7 @@
       overflow: hidden;
       padding: 6.875vw 10vw;
       background:
-        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
@@ -36,7 +36,7 @@
     .content {
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 2.5vw;
     }
 
     .title {
@@ -44,44 +44,13 @@
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 0.75vw;
+      margin-bottom: 1vw;
     }
 
-    .divider {
-      width: 25vw;
-      height: 0.16vw;
-      background: rgba(255,255,255,0.18);
-      margin-bottom: 2.75vw;
-    }
-
-    .formula {
+    .examples {
       display: flex;
-      align-items: center;
-      gap: 1.875vw;
-      margin-bottom: 4.375vw;
-    }
-
-    .formula .term {
-      font-size: 2.5vw;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .formula .times {
-      font-size: 1.75vw;
-      color: rgba(255,255,255,0.30);
-      font-weight: 300;
+      flex-direction: column;
+      gap: 2.75vw;
     }
 
     .example {
@@ -104,13 +73,13 @@
       color: rgba(255,255,255,0.70);
       letter-spacing: 0.04em;
       line-height: 1.8;
-      max-width: 70vw;
     }
 
-    .example .text em {
-      font-style: normal;
-      color: #d4b87a;
-      font-weight: 700;
+    .divider {
+      width: 100%;
+      height: 0.05vw;
+      background: rgba(255,255,255,0.18);
+      margin: 0.75vw 0;
     }
 
     /* Logo */
@@ -156,21 +125,26 @@
 
     <div class="content">
 
-      <div class="title">你的信用是怎么累积的</div>
+      <div class="title">什么叫埋头苦干？</div>
 
-      <div class="divider"></div>
+      <div class="examples">
+        <div class="example">
+          <div class="text">你有没有发现调整型的内衣肩带都特别的宽？很多姐妹为了好看，喜欢穿一些细肩带的内衣...</div>
+        </div>
+        <div class="example">
+          <div class="text">夏天胸小的姐妹听我一句劝，别用乳贴去代替你的内衣。胸小一旦下垂，比大胸垮还显老...</div>
+        </div>
+        <div class="example">
+          <div class="text">臀，它是身体的地基。老话常说，屁股凉，子宫寒。现在人久坐不动，臀部淤堵不通，往上腰酸胀痛...</div>
+        </div>
 
-      <div class="formula">
-        <span class="term">具象过程</span>
-        <span class="times">✖</span>
-        <span class="term">心智密度</span>
-        <span class="times">✖</span>
-        <span class="term">时间长度</span>
-      </div>
+        <div class="divider"></div>
 
-      <div class="example">
-        <div class="text">
-          跟客户说「<em>我装修做得好</em>」，不如让客户看<em>我怎么验收工地</em>。<br>前者是推销，后者是展示。
+        <div class="example">
+          <div class="text">柜子应该用什么板材？颗粒板、多层板、生态板、欧松板，各有什么优缺点，适合用在什么地方...</div>
+        </div>
+        <div class="example">
+          <div class="text">这是刚刚完工的工地。墙面平整度、阴阳角顺直、瓷砖空鼓率、收口细节，每一项都给你拍清楚...</div>
         </div>
       </div>
 

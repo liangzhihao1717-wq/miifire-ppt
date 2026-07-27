@@ -23,10 +23,10 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       position: relative;
-      overflow: hidden;
       padding: 6.875vw 10vw;
+      overflow: hidden;
       background:
-        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
@@ -36,74 +36,63 @@
     .content {
       display: flex;
       flex-direction: column;
-      gap: 2.5vw;
+      gap: 1.5vw;
+    }
+
+    .subtitle {
+      font-size: 1.625vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.08em;
     }
 
     .title {
-      font-size: 4.25vw;
+      font-size: 4vw;
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      line-height: 1.2;
+      line-height: 1.25;
+    }
+    .title .gold {
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .traps {
+    .points {
       display: flex;
-      gap: 1vw;
+      gap: 3.75vw;
+      margin-top: 3.125vw;
     }
-    .trap {
-      font-size: 1.25vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.06em;
-      text-decoration: line-through;
-      text-decoration-color: rgba(255,255,255,0.18);
-      text-decoration-thickness: 0.08vw;
-    }
-
-    .lessons {
+    .point {
       display: flex;
-      flex-direction: column;
-      gap: 2.25vw;
+      align-items: stretch;
+      gap: 1.5vw;
     }
-    .lesson {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.75vw;
-    }
-    .lesson .bar {
+    .point::before {
+      content: '';
       width: 0.23vw;
       flex-shrink: 0;
-      align-self: stretch;
-      background: linear-gradient(180deg, rgba(212,184,122,0.5), rgba(180,150,100,0.05));
+      background: linear-gradient(180deg, #d4b87a, rgba(180,150,100,0.15));
       border-radius: 0.08vw;
-      min-height: 100%;
     }
-    .lesson .keyword {
-      font-size: 1.56vw;
-      font-weight: 900;
-      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-      min-width: 6.25vw;
+    .point .body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625vw;
     }
-    .lesson .text {
-      font-size: 1.56vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.05em;
-      line-height: 1.55;
-      padding-top: 0.06vw;
-    }
-    .lesson .text .gold {
-      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .point .label {
+      font-size: 1.19vw;
       font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+    }
+    .point .desc {
+      font-size: 2vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.08em;
     }
 
     .brand {
@@ -148,29 +137,24 @@
 
     <div class="content">
 
-      <div class="title">我把大部分弯路都走了一遍</div>
+      <div class="subtitle">手里有什么牌，怎么摸怎么打</div>
 
-      <div class="traps">
-        <span class="trap">流量</span>
-        <span class="trap">人设</span>
-        <span class="trap">高级感</span>
+      <div class="title">
+        老板拍短视频要直奔着 <span class="gold">信任</span> 去
       </div>
 
-      <div class="lessons">
-        <div class="lesson">
-          <span class="bar"></span>
-          <span class="keyword">流量</span>
-          <span class="text">有流量的，一旦脱离 <span class="gold">基础身份</span> 和 <span class="gold">经营场景</span>，意义其实没有想象中那么大</span>
+      <div class="points">
+        <div class="point">
+          <div class="body">
+            <div class="label">定位原点</div>
+            <div class="desc">你的经营场景</div>
+          </div>
         </div>
-        <div class="lesson">
-          <span class="bar"></span>
-          <span class="keyword">人设</span>
-          <span class="text">人设不是设计出来的，也不是演出来的，人设是真实的你，人设是一种结果</span>
-        </div>
-        <div class="lesson">
-          <span class="bar"></span>
-          <span class="keyword">高级感</span>
-          <span class="text">刻意营造的高级感，<span class="gold">叫好不叫座</span></span>
+        <div class="point">
+          <div class="body">
+            <div class="label">核心优势</div>
+            <div class="desc">你能见到客户</div>
+          </div>
         </div>
       </div>
 

@@ -26,76 +26,77 @@
       overflow: hidden;
       padding: 6.875vw 10vw;
       background:
-        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .content {
+    .columns {
+      display: flex;
+      gap: 3vw;
+      align-items: stretch;
+    }
+
+    .col-card {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 1.6vw;
     }
 
-    .title {
-      font-size: 4vw;
-      font-weight: 900;
-      color: #e0ded5;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.75vw;
-    }
-
-    .divider {
-      width: 25vw;
-      height: 0.16vw;
-      background: rgba(255,255,255,0.18);
-      margin-bottom: 2.75vw;
-    }
-
-    .examples {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5vw;
-      margin-bottom: 2.75vw;
-    }
-
-    .example {
-      display: flex;
-      gap: 1.25vw;
-      align-items: flex-start;
-    }
-
-    .example::before {
-      content: '▶';
+    .col-divider {
       flex-shrink: 0;
+      width: 0.05vw;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .scene-name {
+      font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3vw;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2vw;
+    }
+
+    .field .label {
       font-size: 0.875vw;
-      color: rgba(255,255,255,0.30);
-      margin-top: 0.4vw;
-    }
-
-    .example .text {
-      font-size: 1.5vw;
       font-weight: 500;
-      color: rgba(255,255,255,0.70);
-      letter-spacing: 0.04em;
-      line-height: 1.8;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.10em;
     }
 
-    .conclusion {
-      font-size: 1.44vw;
+    .field .text {
+      font-size: 1.31vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+    }
+
+    .field .sell {
+      font-size: 1.31vw;
       font-weight: 500;
-      color: rgba(255,255,255,0.78);
+      color: rgba(255,255,255,0.82);
       letter-spacing: 0.04em;
-      line-height: 1.85;
-      max-width: 65vw;
-    }
-
-    .conclusion em {
-      font-style: normal;
-      color: #d4b87a;
-      font-weight: 700;
+      line-height: 1.7;
     }
 
     /* Logo */
@@ -139,25 +140,46 @@
       <span>觅火 MIIFIRE</span>
     </a>
 
-    <div class="content">
+    <div class="columns">
 
-      <div class="title">其他行业其实也是一样</div>
+      <div class="col-card">
+        <div class="scene-name">材料验收</div>
 
-      <div class="divider"></div>
-
-      <div class="examples">
-        <div class="example">
-          <div class="text">大酒店不会说自己的菜好，而是拍客人走了以后，我们检查服务</div>
+        <div class="field">
+          <div class="label">画面</div>
+          <div class="text">在仓库或工地门口，拆开刚到货的材料</div>
         </div>
-        <div class="example">
-          <div class="text">给客户做皮肤检测和分析、产品 / 设备的开箱和上架流程、员工手法培训考核</div>
+
+        <div class="field">
+          <div class="label">内容</div>
+          <div class="text">检查材料规格、品牌、型号是否和合同一致，发现不对当场退换</div>
+        </div>
+
+        <div class="field">
+          <div class="label">传递的卖点</div>
+          <div class="sell">不偷工减料，对材料有标准</div>
         </div>
       </div>
 
-      <div class="divider"></div>
+      <div class="col-divider"></div>
 
-      <div class="conclusion">
-        今天不管是什么行业的老板，最好的广告从来不是坐在镜头前跟客户说「<em>我服务很好、产品很好、售后很好</em>」。最好的广告，就是把你生产经营的场景拆解下来，变成内容产出素材。让客户自然感知到<em>你在用心经营</em>，你的产品和服务自然就不会差。
+      <div class="col-card">
+        <div class="scene-name">验收工地</div>
+
+        <div class="field">
+          <div class="label">画面</div>
+          <div class="text">老板或监理站在正在施工的工地现场</div>
+        </div>
+
+        <div class="field">
+          <div class="label">内容</div>
+          <div class="text">逐项检查水电走线、瓷砖平整度、吊顶接缝，发现问题当场叫工人过来沟通整改</div>
+        </div>
+
+        <div class="field">
+          <div class="label">传递的卖点</div>
+          <div class="sell">验收标准严格，对每个细节都有要求</div>
+        </div>
       </div>
 
     </div>

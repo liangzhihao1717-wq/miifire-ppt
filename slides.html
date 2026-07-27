@@ -17,6 +17,12 @@
       align-items: center;
       justify-content: center;
       transition: opacity 0.25s ease;
+      transform-origin: center center;
+    }
+
+    /* 方形屏补偿：屏幕硬件把 16:9 拉伸到 1:1，CSS 预先压扁对冲 */
+    #stage.square {
+      transform: scaleY(0.5625);
     }
 
     /* ====== 帷幕加载特效 ====== */
@@ -95,7 +101,7 @@
   <div id="stage"></div>
 
   <script>
-    const TOTAL = 19;
+    const TOTAL = 20;
     let current = 1;
     let currentStyle = null;
     let loading = false;
@@ -230,6 +236,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  || e.key === 'PageUp')   load(current - 1, -1);
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') load(current + 1, 1);
+      if (e.key === 's' || e.key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
     });
 
     // 触摸滑动

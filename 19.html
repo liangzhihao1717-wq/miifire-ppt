@@ -44,47 +44,40 @@
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 1vw;
+      margin-bottom: 0.75vw;
+    }
+
+    .title .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .divider {
       width: 25vw;
       height: 0.16vw;
       background: rgba(255,255,255,0.18);
-      margin-bottom: 3vw;
+      margin-bottom: 2.5vw;
     }
 
-    .takeaways {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5vw;
-      margin-bottom: 3vw;
-    }
-
-    .takeaway {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5vw;
-    }
-
-    .takeaway .num {
-      font-size: 1.1vw;
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(255,255,255,0.28);
-      letter-spacing: 0.06em;
-      min-width: 2vw;
-    }
-
-    .takeaway .text {
-      font-size: 1.6vw;
+    .trait {
+      font-size: 1.8vw;
       font-weight: 500;
-      color: rgba(255,255,255,0.68);
-      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5vw;
       line-height: 1.6;
     }
 
-    .takeaway .text .gold {
+    .trait .gold {
       font-weight: 700;
       background: linear-gradient(135deg,
         #e2c988 0%,
@@ -99,12 +92,89 @@
       background-clip: text;
     }
 
-    .closing-line {
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      margin-bottom: 2.5vw;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8vw;
+    }
+
+    .insight {
       font-size: 1.1vw;
       font-weight: 400;
       color: rgba(255,255,255,0.35);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       font-style: italic;
+    }
+
+    .flow {
+      font-size: 1.3vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+
+    .flow .gold {
+      font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .formula-line {
+      font-size: 1.3vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+    }
+
+    .formula-line .gold {
+      font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .golden {
+      font-size: 2vw;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+      text-align: left;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     /* Logo */
@@ -150,30 +220,36 @@
 
     <div class="content">
 
-      <div class="title">你起身，能带走了什么</div>
+      <div class="title"><span class="gold">超级传单</span>的魅力</div>
 
       <div class="divider"></div>
 
-      <div class="takeaways">
-        <div class="takeaway">
-          <span class="num">01</span>
-          <span class="text">不用学专业拍剪、不用搞人设，<span class="gold">信任</span>才是你唯一正确的方向</span>
+      <div class="trait">
+        它对信用的增值，是<span class="gold">持续叠加</span>的，是<span class="gold">涌现</span>的
+      </div>
+
+      <div class="cols">
+        <div class="col">
+          <div class="insight">—— 乌合之众，人，是受别人影响的</div>
+          <div class="flow">
+            你要让营销齿轮<span class="gold">转起来</span>，花花轿子众人抬，<br>
+            人抬人高，<span class="gold">带动用户从众心理</span>，这就是流量的魅力
+          </div>
         </div>
-        <div class="takeaway">
-          <span class="num">02</span>
-          <span class="text"><span class="gold">真实</span>远胜于专业，你的经营场景就是最好的内容矿</span>
-        </div>
-        <div class="takeaway">
-          <span class="num">03</span>
-          <span class="text">觅火 = 把我的<span class="gold">方法论</span>变成你的杠杆，你录音，它出稿</span>
-        </div>
-        <div class="takeaway">
-          <span class="num">04</span>
-          <span class="text">超级传单的信用增值是<span class="gold">涌现</span>的，齿轮一旦转起来，不认识你的人也会对你产生信任</span>
+        <div class="col">
+          <div class="formula-line">
+            带动从众心理 = <span class="gold">大量不认识你的人对你产生信任</span>
+          </div>
+          <div class="flow">
+            日复一日的讲故事，日复一日的发超级传单，<br>
+            不断推动这个<span class="gold">齿轮</span>，不断推动用户从众心理的产生
+          </div>
         </div>
       </div>
 
-      <div class="closing-line">—— 认识你的人对你产生信任是种子，不认识你的人对你产生信任才是营销</div>
+      <div class="golden">
+        认识你的人对你产生信任是种子，不认识你的人对你产生信任才是营销
+      </div>
 
     </div>
 

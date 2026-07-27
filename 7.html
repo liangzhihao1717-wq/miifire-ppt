@@ -26,7 +26,7 @@
       overflow: hidden;
       padding: 6.875vw 10vw;
       background:
-        radial-gradient(ellipse at 20% 80%, rgba(180,150,100,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
@@ -36,50 +36,72 @@
     .content {
       display: flex;
       flex-direction: column;
-      gap: 2.5vw;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
     }
 
-    .title {
-      font-size: 4vw;
-      font-weight: 900;
-      color: #e0ded5;
+    .lead {
+      font-size: 2.25vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
       letter-spacing: 0.06em;
-      margin-bottom: 1vw;
-    }
-
-    .examples {
-      display: flex;
-      flex-direction: column;
-      gap: 2.75vw;
-    }
-
-    .example {
-      display: flex;
-      gap: 1.75vw;
-      align-items: flex-start;
-    }
-
-    .example::before {
-      content: '▶';
-      flex-shrink: 0;
-      font-size: 0.875vw;
-      color: rgba(255,255,255,0.30);
-      margin-top: 0.44vw;
-    }
-
-    .example .text {
-      font-size: 1.5vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.70);
-      letter-spacing: 0.04em;
-      line-height: 1.8;
+      margin-bottom: 0.75vw;
     }
 
     .divider {
-      width: 100%;
-      height: 0.05vw;
+      width: 25vw;
+      height: 0.16vw;
       background: rgba(255,255,255,0.18);
-      margin: 0.75vw 0;
+      margin-bottom: 5.625vw;
+    }
+
+    .stages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4.375vw;
+    }
+
+    .stage {
+      text-align: center;
+    }
+
+    .who {
+      font-size: 1.625vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.10em;
+      margin-bottom: 1.5vw;
+    }
+
+    .what {
+      font-size: 2.75vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.10em;
+      white-space: nowrap;
+    }
+
+    .what .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Arrow */
+    .arrow {
+      font-size: 1.75vw;
+      color: rgba(255,255,255,0.25);
+      font-weight: 300;
     }
 
     /* Logo */
@@ -125,27 +147,35 @@
 
     <div class="content">
 
-      <div class="title">什么叫埋头苦干？</div>
+      <div class="lead">拍什么，米饭馒头从哪来</div>
 
-      <div class="examples">
-        <div class="example">
-          <div class="text">你有没有发现调整型的内衣肩带都特别的宽？很多姐妹为了好看，喜欢穿一些细肩带的内衣...</div>
-        </div>
-        <div class="example">
-          <div class="text">夏天胸小的姐妹听我一句劝，别用乳贴去代替你的内衣。胸小一旦下垂，比大胸垮还显老...</div>
-        </div>
-        <div class="example">
-          <div class="text">臀，它是身体的地基。老话常说，屁股凉，子宫寒。现在人久坐不动，臀部淤堵不通，往上腰酸胀痛...</div>
+      <div class="divider"></div>
+
+      <div class="stages">
+
+        <div class="stage">
+          <div class="who">普通人</div>
+          <div class="what">埋头苦干</div>
         </div>
 
-        <div class="divider"></div>
+        <div class="arrow-block">
+          <span class="arrow">→</span>
+        </div>
 
-        <div class="example">
-          <div class="text">柜子应该用什么板材？颗粒板、多层板、生态板、欧松板，各有什么优缺点，适合用在什么地方...</div>
+        <div class="stage">
+          <div class="who">聪明人</div>
+          <div class="what">展示结果</div>
         </div>
-        <div class="example">
-          <div class="text">这是刚刚完工的工地。墙面平整度、阴阳角顺直、瓷砖空鼓率、收口细节，每一项都给你拍清楚...</div>
+
+        <div class="arrow-block">
+          <span class="arrow">→</span>
         </div>
+
+        <div class="stage">
+          <div class="who">最聪明的人</div>
+          <div class="what"><span class="gold">呈现过程</span></div>
+        </div>
+
       </div>
 
     </div>

@@ -16,7 +16,6 @@
       align-items: center;
       justify-content: center;
       min-height: 100dvh;
-
     }
 
     .slide {
@@ -24,109 +23,93 @@
       aspect-ratio: 16 / 9;
       position: relative;
       padding: 6.875vw 10vw;
-      overflow: hidden;
       background:
         radial-gradient(ellipse at 80% 30%, rgba(180,150,100,0.04) 0%, transparent 50%),
         #0a0a0a;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
     }
 
     .content {
       display: flex;
       flex-direction: column;
-      height: 100%;
-      justify-content: center;
-      gap: 3.5vw;
-    }
-
-    .top-title {
-      font-size: 2.75vw;
-      font-weight: 900;
-      color: #e0ded5;
-      letter-spacing: 0.12em;
-    }
-
-    .columns {
-      display: flex;
-      gap: 6.25vw;
-    }
-    .col { flex: 1; }
-
-    .col-label {
-      font-size: 2vw;
-      font-weight: 900;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.1em;
-      margin-bottom: 1.25vw;
-    }
-
-    .chain { display: flex; flex-direction: column; gap: 0.81vw; }
-    .chain-item {
-      display: flex;
       align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    /* ====== 六词横排 + 分类标尺 ====== */
+    .words-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 3vw;
+      margin-bottom: 1.5vw;
+    }
+
+    .group-block {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
       gap: 0.75vw;
     }
-    .arrow {
-      font-size: 1.06vw;
-      color: rgba(255,255,255,0.35);
-      flex-shrink: 0;
-    }
-    .text {
-      font-size: 1.31vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.05em;
-      line-height: 1.5;
+    .group-block .words {
+      display: flex;
+      gap: 2.5vw;
+      justify-content: center;
     }
 
-    .conclusion {
-      font-size: 2.75vw;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      margin-top: 1vw;
+    .vline {
+      width: 0.08vw;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+      flex-shrink: 0;
     }
-    .conclusion.gold {
-      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+    .group-block .bar {
+      height: 0.23vw;
+      background: rgba(255,255,255,0.3);
+    }
+    .group-block .label {
+      text-align: center;
+      font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      margin-top: 0.4vw;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .divider {
-      width: 100%;
-      height: 0.16vw;
-      background: rgba(255,255,255,0.2);
+    .word-card {
+      text-align: center;
+      flex-shrink: 0;
     }
-
-    .bottom-label {
-      font-size: 1.75vw;
+    .word-card .num {
+      font-size: 1.56vw;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4vw;
+    }
+    .word-card .cn {
+      font-size: 2.625vw;
       font-weight: 900;
-      color: rgba(255,255,255,0.65);
-      letter-spacing: 0.1em;
-      margin-bottom: 1vw;
-    }
-    .bottom-chain {
-      display: flex;
-      align-items: center;
-      gap: 1.5vw;
-    }
-    .bottom-chain .arrow {
-      font-size: 1.06vw;
-      color: rgba(255,255,255,0.35);
-    }
-    .bottom-chain .text {
-      font-size: 1.375vw;
-      font-weight: 500;
-      color: rgba(255,255,255,0.62);
-      letter-spacing: 0.05em;
-    }
-    .dot {
-      font-size: 1.06vw;
-      color: rgba(255,255,255,0.35);
+      color: #ece9e0;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
     }
 
+    /* Logo */
     .brand {
       position: absolute;
       top: 1.8vw;
@@ -169,69 +152,57 @@
 
     <div class="content">
 
-      <div class="top-title">网红群体 · 老板群体 · 稀里糊涂群体</div>
+      <div class="words-row">
 
-      <div class="columns">
-        <div class="col">
-          <div class="col-label">网红群体</div>
-          <div class="chain">
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">为了流量做</span>
+        <div class="group-block">
+          <div class="words">
+            <div class="word-card">
+              <div class="num">01</div>
+              <div class="cn">超级传单</div>
             </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">12 个小时全用来研究博眼球</span>
-            </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">反差 / 剧情 / 故事 / 冲突 / 搞笑</span>
-            </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">天然带有营销杠杆</span>
+            <div class="word-card">
+              <div class="num">02</div>
+              <div class="cn">信任来源</div>
             </div>
           </div>
-          <div class="conclusion gold">流量 &gt; 信用</div>
+          <div class="bar"></div>
+          <div class="label">方 向</div>
         </div>
 
-        <div class="col">
-          <div class="col-label">老板群体</div>
-          <div class="chain">
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">为了成交做</span>
+        <div class="vline"></div>
+
+        <div class="group-block">
+          <div class="words">
+            <div class="word-card">
+              <div class="num">03</div>
+              <div class="cn">开采手段</div>
             </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">12 个小时用来维持经营</span>
+            <div class="word-card">
+              <div class="num">04</div>
+              <div class="cn">生产机器</div>
             </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">做生意 / 做服务（情绪价值服务）</span>
-            </div>
-            <div class="chain-item">
-              <span class="arrow">→</span>
-              <span class="text">天然具有经营场景</span>
+            <div class="word-card">
+              <div class="num">05</div>
+              <div class="cn">简单拍剪</div>
             </div>
           </div>
-          <div class="conclusion gold">信用 &gt; 流量</div>
+          <div class="bar"></div>
+          <div class="label">实 操</div>
         </div>
-      </div>
 
-      <div class="divider"></div>
+        <div class="vline"></div>
 
-      <div>
-        <div class="bottom-label">稀里糊涂群体</div>
-        <div class="bottom-chain">
-          <span class="text">先做流量再成交客户</span>
-          <span class="arrow">→</span>
-          <span class="text">讲干货</span>
-          <span class="dot">·</span>
-          <span class="text">拍剧情</span>
-          <span class="dot">·</span>
-          <span class="text">拍广告</span>
+        <div class="group-block">
+          <div class="words">
+            <div class="word-card">
+              <div class="num">06</div>
+              <div class="cn">阶梯地图</div>
+            </div>
+          </div>
+          <div class="bar"></div>
+          <div class="label">路 线</div>
         </div>
+
       </div>
 
     </div>
