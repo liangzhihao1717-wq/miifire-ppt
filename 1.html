@@ -113,10 +113,22 @@
 
     /* --- 列表区 --- */
     .list-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 8vw;
-      row-gap: 2vw;
+      display: flex;
+      gap: 0;
+    }
+
+    .list-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2vw;
+    }
+
+    .col-rule {
+      flex-shrink: 0;
+      width: 0.04vw;
+      background: rgba(212,184,122,0.18);
+      margin: 0 4vw;
     }
 
     .list-item {
@@ -196,45 +208,57 @@
       <div class="rule"></div>
 
       <div class="list-grid">
-        <div class="list-item">
-          <span class="num">01</span>
-          <span class="text">痛点讲述</span>
+        <div class="list-col">
+          <div class="list-item">
+            <span class="num">01</span>
+            <span class="text">痛点讲述</span>
+          </div>
+          <div class="list-item">
+            <span class="num">02</span>
+            <span class="text">原料筹措</span>
+          </div>
+          <div class="list-item">
+            <span class="num">03</span>
+            <span class="text">产品 / 服务功能</span>
+          </div>
+          <div class="list-item">
+            <span class="num">04</span>
+            <span class="text">价值主张</span>
+          </div>
         </div>
-        <div class="list-item">
-          <span class="num">06</span>
-          <span class="text">稀缺证明 / 成果证明</span>
+
+        <div class="col-rule"></div>
+
+        <div class="list-col">
+          <div class="list-item">
+            <span class="num">05</span>
+            <span class="text">客户故事</span>
+          </div>
+          <div class="list-item">
+            <span class="num">06</span>
+            <span class="text">稀缺/成果证明</span>
+          </div>
+          <div class="list-item">
+            <span class="num">07</span>
+            <span class="text">客户证明</span>
+          </div>
         </div>
-        <div class="list-item">
-          <span class="num">02</span>
-          <span class="text">原料筹措</span>
-        </div>
-        <div class="list-item">
-          <span class="num">07</span>
-          <span class="text">客户证明</span>
-        </div>
-        <div class="list-item">
-          <span class="num">03</span>
-          <span class="text">产品 / 服务功能</span>
-        </div>
-        <div class="list-item">
-          <span class="num">08</span>
-          <span class="text">Vlog证明</span>
-        </div>
-        <div class="list-item">
-          <span class="num">04</span>
-          <span class="text">价值主张</span>
-        </div>
-        <div class="list-item">
-          <span class="num">09</span>
-          <span class="text">事件发生</span>
-        </div>
-        <div class="list-item">
-          <span class="num">05</span>
-          <span class="text">客户故事</span>
-        </div>
-        <div class="list-item">
-          <span class="num">10</span>
-          <span class="text">花絮集锦</span>
+
+        <div class="col-rule"></div>
+
+        <div class="list-col">
+          <div class="list-item">
+            <span class="num">08</span>
+            <span class="text">Vlog证明</span>
+          </div>
+          <div class="list-item">
+            <span class="num">09</span>
+            <span class="text">事件发生</span>
+          </div>
+          <div class="list-item">
+            <span class="num">10</span>
+            <span class="text">花絮集锦</span>
+          </div>
         </div>
       </div>
 

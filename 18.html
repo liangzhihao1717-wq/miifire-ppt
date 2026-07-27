@@ -39,58 +39,15 @@
       gap: 0;
     }
 
-    .data-row {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5vw;
-      margin-bottom: 1.5vw;
-    }
-
-    .data-num {
-      font-size: 5vw;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-    }
-
-    .data-num.big {
-      background: linear-gradient(135deg,
-        #e2c988 0%,
-        #f5e6c8 25%,
-        #d4b87a 40%,
-        #c9a050 50%,
-        #d4b87a 60%,
-        #f5e6c8 75%,
-        #b48b3a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .data-num.dim {
-      color: rgba(255,255,255,0.25);
-    }
-
-    .data-num.mid {
-      color: rgba(255,255,255,0.45);
-    }
-
-    .data-desc {
-      font-size: 1.1vw;
-      font-weight: 400;
-      color: rgba(255,255,255,0.40);
-      letter-spacing: 0.05em;
-    }
-
-    .definition {
-      font-size: 3vw;
+    .title {
+      font-size: 4vw;
       font-weight: 900;
       color: #e0ded5;
       letter-spacing: 0.06em;
-      margin-bottom: 2.5vw;
-      line-height: 1.3;
+      margin-bottom: 0.75vw;
     }
 
-    .definition .gold {
+    .title .gold {
       background: linear-gradient(135deg,
         #e2c988 0%,
         #f5e6c8 25%,
@@ -108,14 +65,92 @@
       width: 25vw;
       height: 0.16vw;
       background: rgba(255,255,255,0.18);
-      margin-bottom: 2vw;
+      margin-bottom: 2.75vw;
     }
 
-    .closing {
-      font-size: 1.5vw;
-      font-weight: 500;
+    .cards {
+      display: flex;
+      gap: 3vw;
+      margin-bottom: 2.5vw;
+    }
+
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8vw;
+    }
+
+    .card .label {
+      font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card .label .note {
+      font-size: 0.9vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      background: none;
+      -webkit-text-fill-color: rgba(255,255,255,0.35);
+      letter-spacing: 0.04em;
+      margin-left: 0.3vw;
+    }
+
+    .card .desc {
+      font-size: 1.25vw;
+      font-weight: 400;
       color: rgba(255,255,255,0.68);
       letter-spacing: 0.04em;
+      line-height: 1.7;
+    }
+
+    .modes {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      font-size: 1.75vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
+    }
+
+    .modes .sep {
+      color: rgba(255,255,255,0.20);
+      font-weight: 300;
+      margin: 0 0.3vw;
+    }
+
+    .modes .num {
+      font-size: 1.3vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.22);
+      margin-right: 0.2vw;
+    }
+
+    .modes .gold {
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     /* Logo */
@@ -161,24 +196,34 @@
 
     <div class="content">
 
-      <div class="data-row">
-        <span class="data-num big">1000</span>
-        <span class="data-desc">条视频</span>
-        <span class="data-num dim">→</span>
-        <span class="data-num mid">200</span>
-        <span class="data-desc">条带来客户</span>
-        <span class="data-num dim">→</span>
-        <span class="data-num mid">20</span>
-        <span class="data-desc">条带来很多客户</span>
-      </div>
-
-      <div class="definition">
-        能获得<span class="gold">信任</span>的短视频，<br>才叫<span class="gold">超级传单</span>
-      </div>
+      <div class="title"><span class="gold">真实、真诚</span>远胜于专业拍剪</div>
 
       <div class="divider"></div>
 
-      <div class="closing">这是我们拍短视频的唯一正确方向</div>
+      <div class="cards">
+        <div class="card">
+          <div class="label">A 镜<span class="note">（A-roll）</span></div>
+          <div class="desc">你怎么打视频通话，你就怎么拍口播</div>
+        </div>
+        <div class="card">
+          <div class="label">B 镜<span class="note">（B-roll）</span></div>
+          <div class="desc">不专业的拍摄画面，不需要学运镜，才有真实感</div>
+        </div>
+      </div>
+
+      <div class="modes">
+        <span>要么</span>
+        <span class="gold">A 镜拍口播</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">B 镜拼画面</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">A 镜插 B 镜</span>
+        <span class="sep">、</span>
+        <span>要么</span>
+        <span class="gold">A 镜叠 B 镜</span>
+      </div>
 
     </div>
 
