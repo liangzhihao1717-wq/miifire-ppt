@@ -498,6 +498,11 @@
     // 鼠标移到左边缘触发首次加载
     document.getElementById('drawer-container').addEventListener('mouseenter', loadDrawerThumbnails);
 
+    // 抽屉面板内滚轮只滚动列表，不翻页
+    drawerList.addEventListener('wheel', (e) => {
+      e.stopPropagation();
+    });
+
     function updateDrawerActive() {
       drawerItems.forEach(entry => {
         entry.el.classList.toggle('active', parseInt(entry.el.dataset.page) === current);
