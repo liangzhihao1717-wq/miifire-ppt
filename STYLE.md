@@ -158,3 +158,122 @@ background-clip: text;
 - 旁边跟「觅火 MIIFIRE」，宋体 0.8rem / 600 字重
 - 整体透明度 75%，hover 到 100%
 - 点击回到 PPT 目录页（`/ppt/`）
+
+---
+
+## 翻页容器 `slides.html`
+
+`slides.html` 是 PPT 的翻页浏览模式，通过 `fetch()` 动态加载每一页 HTML，实现纯上下滑动翻页。
+
+---
+
+### 开幕特效（帷幕拉开）
+
+打开 `slides.html` 后显示黑底帷幕，**点击任意位置**后两扇帷幕向左右滑开，露出第一页 PPT。
+
+- 帷幕底色 `#0a0a0a`，与页面底色一致，拉开后无缝衔接
+- 帷幕中央显示觅火 logo + 「点击开始」提示
+- 点击后：logo 淡出，左帘向左、右帘向右滑出（0.9s 缓动曲线）
+- 动画结束后帷幕从 DOM 移除
+- 防重复点击：拉开后不再响应
+
+**帷幕 CSS 关键约束：**
+- `#curtain` 使用 `pointer-events: auto; cursor: pointer`，接收点击
+- 面板动画使用 `transition: transform 0.9s cubic-bezier(0.7, 0, 0.3, 1)`
+- 单次使用，不循环，不持续占用渲染管线
+
+---
+
+### 等比缩放策略
+
+**核心原则：每一页都像一张完整显示的图片——整页等比缩放，logo 和文字绝不互相挤压、绝不裁切。**
+
+**实现方式：`transform: scale()`**
+
+1. 让每页 slide 按 CSS 自然渲染（`width: 100%` + `aspect-ratio: 16/9`）
+2. 用 JS 读取 slide 的 `offsetWidth` / `offsetHeight`（自然尺寸）
+3. 与 `window.innerWidth` / `window.innerHeight` 做对比，算出缩放比例
+4. 应用 `transform: scale()` + `transformOrigin: center center`，整页等比缩小
+
+**缩放公式：**
+
+```javascript
+// 先让 slide 按自然尺寸渲染
+slide.style.width = '';
+slide.style.height = '';
+slide.style.transform = '';
+
+const sw = slide.offsetWidth;   // slide 自然宽度
+const sh = slide.offsetHeight;  // slide 自然高度
+const vw = window.innerWidth;   // 浏览器可视区域宽度
+const vh = window.innerHeight;  // 浏览器可视区域高度
+
+// 算出能完整装进视口的最小缩放比，再留 8% 呼吸空间
+const scale = Math.min(vw / sw, vh / sh, 1) * 0.92;
+
+slide.style.transform = `scale(${scale})`;
+slide.style.transformOrigin = 'center center';
+```
+
+**关键约束：**
+
+- `#stage` 容器使用 `width: 100%; height: 100%`，**禁止使用 `dvh`**（不同浏览器对动态视口高度的实现不一致）
+- `#stage` **禁止 `overflow: hidden`**，避免裁切缩放后的内容
+- 缩放比乘 0.92 留出呼吸空间，确保 slide 四边都有黑边，内容绝不贴边
+- 窗口 resize 时必须重新执行 `fitSlide()`
+- 每次翻页（新 slide 注入后）必须重新执行 `fitSlide()`
+- **绝不调整 slide 内部元素的尺寸或位置**——只能通过 `transform: scale()` 整体缩放
+
+---
+
+### 翻页动效
+
+翻页时新页面带滑动 + 缩放动效入场，方向与翻页方向一致：
+
+- **向下翻**：新页面从下方 100px 处缩小到 96% 滑入归位
+- **向上翻**：新页面从上方 100px 处缩小到 96% 滑入归位
+
+**动画参数：**
+- 缩放范围：`96% → 100%`
+- 位移量：`100px`
+- 时长：`0.55s`
+- 缓动曲线：`cubic-bezier(0.16, 1, 0.3, 1)`（弹簧减速，收尾有轻微回弹感）
+- 结合 `#stage` 的 `opacity 0.25s` 淡入淡出，形成立体入场效果
+
+**实现：**
+```javascript
+// fitSlide() 之后
+const slide = stage.querySelector('.slide');
+const baseTx = slide.style.transform; // "scale(0.92)"
+const ty = dir > 0 ? '100px' : '-100px';
+const scaleMatch = baseTx.match(/scale\(([^)]+)\)/);
+const s = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
+
+slide.style.transition = 'none';
+slide.style.transform = `scale(${s * 0.96}) translateY(${ty})`;
+stage.style.opacity = '1';
+
+slide.offsetHeight; // 强制回流
+slide.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
+slide.style.transform = baseTx;
+```
+
+---
+
+### 翻页方式
+
+支持以下翻页方式，均传递方向参数：
+
+| 方式 | 上一页 | 下一页 |
+|------|--------|--------|
+| 鼠标滚轮 | 上滚 | 下滚 |
+| 键盘 | ↑ / ← / PageUp | ↓ / → / PageDown |
+| 翻页笔 | PageUp / ArrowUp | PageDown / ArrowDown |
+| 触摸板/触摸屏 | 下滑 | 上滑 |
+
+**翻页笔兼容：** 同时监听 `ArrowUp/ArrowDown/ArrowLeft/ArrowRight/PageUp/PageDown`，覆盖市面上主流翻页笔的按键映射。
+
+**防连翻：**
+- 滚轮事件设 1 秒节流（`wheelTimer`）
+- `loading` 锁：加载期间忽略所有翻页事件
+- 翻页动效时长 0.55s，期间 `loading = true`，动效结束后解锁

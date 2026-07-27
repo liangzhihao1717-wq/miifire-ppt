@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>觅火 MIIFIRE 产品路演</title>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+    #stage {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.25s ease;
+    }
+
+    /* ====== 帷幕加载特效 ====== */
+    #curtain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 9999;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    #curtain .panel {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: #0a0a0a;
+      transition: transform 0.9s cubic-bezier(0.7, 0, 0.3, 1);
+    }
+    #curtain .panel.left  { left: 0; }
+    #curtain .panel.right { right: 0; }
+
+    /* 帷幕中央 Logo */
+    #curtain .curtain-logo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2vw;
+      z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+    #curtain .curtain-logo img {
+      height: 4vw;
+      filter: brightness(0.95) saturate(0.4);
+    }
+    #curtain .curtain-logo span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1.6vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+    }
+    #curtain .curtain-logo .hint {
+      font-size: 0.9vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.12em;
+      margin-top: 0.6vw;
+    }
+    #curtain.open .curtain-logo { opacity: 0; }
+
+    /* 拉开：左帘向左、右帘向右 */
+    #curtain.open .panel.left  { transform: translateX(-100%); }
+    #curtain.open .panel.right { transform: translateX(100%); }
+    #curtain.open::after { opacity: 0; }
+
+    /* 动画结束后彻底隐藏 */
+    #curtain.done { display: none; }
+  </style>
+</head>
+<body>
+
+  <div id="curtain">
+    <div class="panel left"></div>
+    <div class="panel right"></div>
+    <div class="curtain-logo">
+      <img src="logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+      <span class="hint">点击开始</span>
+    </div>
+  </div>
+
+  <div id="stage"></div>
+
+  <script>
+    const TOTAL = 19;
+    let current = 1;
+    let currentStyle = null;
+    let loading = false;
+
+    const stage = document.getElementById('stage');
+
+    // 把整个 slide 等比缩小到浏览器窗口里，像一张完整显示的图片
+    function fitSlide() {
+      const slide = stage.querySelector('.slide');
+      if (!slide) return;
+
+      // 清除之前的 transform，让浏览器自然渲染
+      slide.style.width = '';
+      slide.style.height = '';
+      slide.style.transform = '';
+
+      // 读取 slide 的自然尺寸
+      const sw = slide.offsetWidth;
+      const sh = slide.offsetHeight;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // 算出需要缩小到多少才能完全装进视口
+      const scale = Math.min(vw / sw, vh / sh, 1) * 0.92;
+
+      slide.style.transform = `scale(${scale})`;
+      slide.style.transformOrigin = 'center center';
+    }
+
+    function load(p, dir) {
+      p = Math.max(1, Math.min(TOTAL, p));
+      if (p === current || loading) return;
+      loading = true;
+      current = p;
+
+      stage.style.opacity = '0';
+
+      fetch(p + '.html')
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+
+          if (currentStyle) currentStyle.remove();
+          const styles = doc.querySelectorAll('style');
+          let combined = '';
+          styles.forEach(s => {
+            combined += s.textContent.replace(/body\b/g, '#stage');
+          });
+          currentStyle = document.createElement('style');
+          currentStyle.textContent = combined;
+          document.head.appendChild(currentStyle);
+
+          stage.innerHTML = doc.body.innerHTML;
+
+          const brand = stage.querySelector('.brand');
+          if (brand && brand.getAttribute('href') === '/ppt/') {
+            brand.href = 'index.html';
+          }
+
+          fitSlide();
+
+          // 翻页滑动动向：下翻从下方滑入，上翻从上方滑入
+          const slide = stage.querySelector('.slide');
+          const baseTx = slide.style.transform; // 如 "scale(0.92)"
+          const ty = dir > 0 ? '100px' : '-100px';
+
+          // 提取当前 scale 值，叠加缩小 + 位移
+          const scaleMatch = baseTx.match(/scale\(([^)]+)\)/);
+          const s = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
+
+          slide.style.transition = 'none';
+          slide.style.transform = `scale(${s * 0.96}) translateY(${ty})`;
+          stage.style.opacity = '1';
+
+          // 强制回流后播放滑入动画
+          slide.offsetHeight;
+          slide.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
+          slide.style.transform = baseTx;
+
+          setTimeout(() => { slide.style.transition = ''; }, 600);
+          loading = false;
+        })
+        .catch(() => {
+          stage.style.opacity = '1';
+          loading = false;
+        });
+    }
+
+    // 帷幕拉开
+    function openCurtain() {
+      const curtain = document.getElementById('curtain');
+      if (curtain.classList.contains('open')) return;
+      curtain.classList.add('open');
+      // 动画 0.9s 结束后移除帷幕
+      setTimeout(() => { curtain.classList.add('done'); }, 1000);
+    }
+
+    // 点击帷幕任意位置开幕
+    document.getElementById('curtain').addEventListener('click', openCurtain);
+
+    // 首屏加载
+    fetch('1.html')
+      .then(r => r.text())
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const styles = doc.querySelectorAll('style');
+        let combined = '';
+        styles.forEach(s => {
+          combined += s.textContent.replace(/body\b/g, '#stage');
+        });
+        currentStyle = document.createElement('style');
+        currentStyle.textContent = combined;
+        document.head.appendChild(currentStyle);
+        stage.innerHTML = doc.body.innerHTML;
+        fitSlide();
+      });
+
+    // 窗口大小变化时重新适配
+    window.addEventListener('resize', fitSlide);
+
+    // 滚轮翻页（loading 期间完全忽略）
+    let wheelTimer = null;
+    document.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (loading || wheelTimer) return;
+      wheelTimer = setTimeout(() => { wheelTimer = null; }, 1000);
+      if (e.deltaY > 0) load(current + 1, 1);
+      else load(current - 1, -1);
+    }, { passive: false });
+
+    // 键盘（支持翻页笔：上下左右箭头 + PageUp/PageDown）
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  || e.key === 'PageUp')   load(current - 1, -1);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') load(current + 1, 1);
+    });
+
+    // 触摸滑动
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
+    document.addEventListener('touchend', (e) => {
+      if (loading) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) > 50) {
+        if (dy > 0) load(current + 1, 1);
+        else load(current - 1, -1);
+      }
+    });
+  </script>
+</body>
+</html>

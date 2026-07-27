@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第 10 页</title>
+  <title>觅火 MIIFIRE 产品路演</title>
   <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      min-height: 100dvh;
 
     }
 
@@ -33,39 +33,30 @@
       justify-content: center;
     }
 
-    .table {
+    .columns {
+      display: flex;
+      gap: 3vw;
+      align-items: stretch;
+    }
+
+    .col-card {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 1.6vw;
     }
 
-    .header-row {
-      display: grid;
-      grid-template-columns: 11.25vw 0.65fr 1fr 1fr;
-      gap: 2.5vw;
-      padding-bottom: 1.25vw;
-      border-bottom: 0.16vw solid rgba(255,255,255,0.22);
-    }
-    .header-row .col {
-      font-size: 1.125vw;
-      font-weight: 600;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.08em;
+    .col-divider {
+      flex-shrink: 0;
+      width: 0.05vw;
+      background: rgba(255,255,255,0.15);
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: 11.25vw 0.65fr 1fr 1fr;
-      gap: 2.5vw;
-      padding: 2.5vw 0;
-      border-bottom: 0.08vw solid rgba(255,255,255,0.08);
-    }
-    .row:last-child { border-bottom: none; }
-
-    .row .scene-name {
-      font-size: 1.56vw;
-      font-weight: 700;
+    .scene-name {
+      font-size: 2.25vw;
+      font-weight: 900;
       letter-spacing: 0.06em;
+      margin-bottom: 0.3vw;
       background: linear-gradient(135deg,
         #e2c988 0%,
         #f5e6c8 25%,
@@ -79,18 +70,31 @@
       background-clip: text;
     }
 
-    .row .col {
-      font-size: 1.44vw;
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2vw;
+    }
+
+    .field .label {
+      font-size: 0.875vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.10em;
+    }
+
+    .field .text {
+      font-size: 1.31vw;
       font-weight: 400;
-      color: rgba(255,255,255,0.62);
+      color: rgba(255,255,255,0.68);
       letter-spacing: 0.04em;
       line-height: 1.7;
     }
 
-    .row .sell {
-      font-size: 1.44vw;
+    .field .sell {
+      font-size: 1.31vw;
       font-weight: 500;
-      color: rgba(255,255,255,0.78);
+      color: rgba(255,255,255,0.82);
       letter-spacing: 0.04em;
       line-height: 1.7;
     }
@@ -136,27 +140,46 @@
       <span>觅火 MIIFIRE</span>
     </a>
 
-    <div class="table">
+    <div class="columns">
 
-      <div class="header-row">
-        <div class="col">场景</div>
-        <div class="col">画面</div>
-        <div class="col">内容</div>
-        <div class="col">传递的卖点</div>
-      </div>
-
-      <div class="row">
-        <div class="scene-name">和客户谈方案</div>
-        <div class="col">在公司或者工地上和客户面对面沟通</div>
-        <div class="col">拿着图纸逐项解释每一个设计决策的原因，解释不同材料的价格差异和效果差异</div>
-        <div class="sell">专业度高、透明报价、为客户考虑</div>
-      </div>
-
-      <div class="row">
+      <div class="col-card">
         <div class="scene-name">材料验收</div>
-        <div class="col">在仓库或工地门口，拆开刚到货的材料</div>
-        <div class="col">检查材料规格、品牌、型号是否和合同一致，发现不对当场退换</div>
-        <div class="sell">不偷工减料，对材料有标准</div>
+
+        <div class="field">
+          <div class="label">画面</div>
+          <div class="text">在仓库或工地门口，拆开刚到货的材料</div>
+        </div>
+
+        <div class="field">
+          <div class="label">内容</div>
+          <div class="text">检查材料规格、品牌、型号是否和合同一致，发现不对当场退换</div>
+        </div>
+
+        <div class="field">
+          <div class="label">传递的卖点</div>
+          <div class="sell">不偷工减料，对材料有标准</div>
+        </div>
+      </div>
+
+      <div class="col-divider"></div>
+
+      <div class="col-card">
+        <div class="scene-name">验收工地</div>
+
+        <div class="field">
+          <div class="label">画面</div>
+          <div class="text">老板或监理站在正在施工的工地现场</div>
+        </div>
+
+        <div class="field">
+          <div class="label">内容</div>
+          <div class="text">逐项检查水电走线、瓷砖平整度、吊顶接缝，发现问题当场叫工人过来沟通整改</div>
+        </div>
+
+        <div class="field">
+          <div class="label">传递的卖点</div>
+          <div class="sell">验收标准严格，对每个细节都有要求</div>
+        </div>
       </div>
 
     </div>
