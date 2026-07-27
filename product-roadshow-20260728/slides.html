@@ -115,6 +115,122 @@
       border: none;
       -webkit-tap-highlight-color: transparent;
     }
+
+    /* ====== 左侧抽屉页面列表 ====== */
+    #drawer-container {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100%;
+      z-index: 200;
+    }
+    #drawer-container .trigger {
+      position: absolute;
+      top: 0; left: 0;
+      width: 20px;
+      height: 100%;
+      z-index: 1;
+    }
+    #drawer-container .panel {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 16vw;
+      min-width: 220px;
+      max-width: 280px;
+      background: rgba(10,10,10,0.97);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #drawer-container:hover .panel {
+      transform: translateX(0);
+    }
+    #drawer-container .panel-header {
+      padding: 2vh 1.2vw 1.2vh;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    #drawer-container .panel-header span {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 0.85vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+    }
+    #drawer-container .panel-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1vh 0.8vw;
+    }
+    #drawer-container .panel-list::-webkit-scrollbar {
+      width: 3px;
+    }
+    #drawer-container .panel-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+    #drawer-container .drawer-item {
+      padding: 0.8vh 0.6vw;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s ease;
+      border-left: 2px solid transparent;
+      margin-bottom: 0.6vh;
+    }
+    #drawer-container .drawer-item:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    #drawer-container .drawer-item.active {
+      background: rgba(212,184,122,0.06);
+      border-left-color: #d4b87a;
+    }
+    #drawer-container .drawer-item.active .drawer-label {
+      color: #d4b87a;
+      font-weight: 700;
+    }
+    #drawer-container .drawer-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 1px;
+      border: 1px solid rgba(255,255,255,0.04);
+      background: #0a0a0a;
+      position: relative;
+    }
+    #drawer-container .drawer-thumb iframe {
+      border: none;
+      pointer-events: none;
+      transform-origin: 0 0;
+      position: absolute;
+      top: 0; left: 0;
+    }
+    #drawer-container .drawer-thumb .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 1vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.06);
+    }
+    #drawer-container .drawer-label {
+      display: block;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 0.7vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.04em;
+      padding: 0.5vh 0.2vw 0;
+      transition: color 0.2s ease;
+    }
+    #drawer-container .drawer-item:hover .drawer-label {
+      color: rgba(255,255,255,0.6);
+    }
   </style>
 </head>
 <body>
@@ -132,6 +248,14 @@
   <div id="stage"></div>
   <div id="prev-btn"></div>
   <div id="next-btn"></div>
+
+  <div id="drawer-container">
+    <div class="trigger"></div>
+    <div class="panel">
+      <div class="panel-header"><span>页面列表</span></div>
+      <div class="panel-list" id="drawer-list"></div>
+    </div>
+  </div>
 
   <script>
     const TOTAL = 21;
@@ -189,6 +313,8 @@
           }
 
           fitSlide();
+
+          updateDrawerActive();
 
           const slide = stage.querySelector('.slide');
           const baseTx = slide.style.transform;
@@ -296,6 +422,94 @@
       setTimeout(() => { curtain.classList.add('done'); }, 1000);
     }
     document.getElementById('curtain').addEventListener('click', openCurtain);
+
+    // ——————————————————————————————
+    // 抽屉页面列表
+    // ——————————————————————————————
+
+    const drawerList = document.getElementById('drawer-list');
+    const drawerItems = [];
+    let _drawerLoaded = false;
+
+    // 先生成占位结构（不含 iframe）
+    for (let i = 1; i <= TOTAL; i++) {
+      const item = document.createElement('div');
+      item.className = 'drawer-item';
+      item.dataset.page = i;
+
+      const thumb = document.createElement('div');
+      thumb.className = 'drawer-thumb';
+      const placeholder = document.createElement('div');
+      placeholder.className = 'placeholder';
+      placeholder.textContent = i;
+      thumb.appendChild(placeholder);
+      item.appendChild(thumb);
+
+      const label = document.createElement('span');
+      label.className = 'drawer-label';
+      label.textContent = '第 ' + i + ' 页';
+      item.appendChild(label);
+
+      item.addEventListener('click', () => {
+        const curtain = document.getElementById('curtain');
+        if (curtain && !curtain.classList.contains('done')) return;
+        if (_busy || i === current) return;
+        _flipAt = Date.now();
+        _busy = true;
+        executeFlip(i, i > current ? 1 : -1);
+      });
+
+      drawerList.appendChild(item);
+      drawerItems.push({ el: item, thumb: thumb, placeholder: placeholder });
+    }
+
+    // 抽屉首次打开时加载缩略图（延迟避免同时加载 21 个 iframe）
+    function loadDrawerThumbnails() {
+      if (_drawerLoaded) return;
+      _drawerLoaded = true;
+
+      drawerItems.forEach((entry, idx) => {
+        setTimeout(() => {
+          const page = idx + 1;
+          const iframe = document.createElement('iframe');
+          iframe.src = page + '.html';
+          iframe.scrolling = 'no';
+          iframe.width = '1280';
+          iframe.height = '720';
+          entry.thumb.appendChild(iframe);
+
+          // 按缩略图容器实际宽度计算缩放比
+          const tw = entry.thumb.offsetWidth;
+          if (tw > 0) {
+            const scale = tw / 1280;
+            iframe.style.transform = `scale(${scale})`;
+            iframe.style.width = '1280px';
+            iframe.style.height = '720px';
+          }
+
+          // iframe 加载完成后移除占位符
+          iframe.addEventListener('load', () => {
+            entry.placeholder.remove();
+          });
+        }, idx * 120); // 每 120ms 加载一个，避免瞬间并发
+      });
+    }
+
+    // 鼠标移到左边缘触发首次加载
+    document.getElementById('drawer-container').addEventListener('mouseenter', loadDrawerThumbnails);
+
+    function updateDrawerActive() {
+      drawerItems.forEach(entry => {
+        entry.el.classList.toggle('active', parseInt(entry.el.dataset.page) === current);
+      });
+      const active = drawerList.querySelector('.drawer-item.active');
+      if (active) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    // 初始化第一页高亮
+    updateDrawerActive();
 
     // ——————————————————————————————
     // 首屏
