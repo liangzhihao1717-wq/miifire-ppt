@@ -123,42 +123,14 @@
       height: 100%;
       z-index: 200;
     }
-    /* 左边缘可见标签：始终显示，点击展开/关闭 */
+    /* 左边缘触发区：30px 宽不可见，鼠标进入即展开 */
     #drawer-container .tab {
       position: absolute;
       top: 0; left: 0;
-      width: 8px;
+      width: 30px;
       height: 100%;
       cursor: pointer;
       z-index: 2;
-      background: rgba(255,255,255,0.04);
-      transition: background 0.2s ease, width 0.2s ease;
-    }
-    #drawer-container .tab:hover {
-      background: rgba(255,255,255,0.08);
-      width: 12px;
-    }
-    /* 标签上的视觉暗示：中间一个小三角标记 */
-    #drawer-container .tab::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 0; height: 0;
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
-      border-right: 6px solid rgba(255,255,255,0.25);
-      transition: border-color 0.2s ease;
-    }
-    #drawer-container .tab:hover::after {
-      border-right-color: rgba(255,255,255,0.5);
-    }
-    #drawer-container.open .tab::after {
-      border-right: none;
-      border-left: 6px solid rgba(255,255,255,0.25);
-    }
-    #drawer-container.open .tab:hover::after {
-      border-left-color: rgba(255,255,255,0.5);
     }
     /* 遮罩层：抽屉展开时覆盖右侧，点击关闭 */
     #drawer-container .backdrop {
@@ -186,7 +158,7 @@
       flex-direction: column;
       overflow: hidden;
       z-index: 1;
-      padding-left: 8px;
+      padding-left: 30px;
     }
     #drawer-container.open .panel {
       transform: translateX(0);
@@ -243,23 +215,11 @@
       background: #0a0a0a;
       position: relative;
     }
-    #drawer-container .drawer-thumb iframe {
-      border: none;
-      pointer-events: none;
-      transform-origin: 0 0;
-      position: absolute;
-      top: 0; left: 0;
-    }
-    #drawer-container .drawer-thumb .placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
-      font-size: 1vw;
-      font-weight: 900;
-      color: rgba(255,255,255,0.06);
+    #drawer-container .drawer-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     #drawer-container .drawer-label {
       display: block;
@@ -476,12 +436,9 @@
     const drawerTab = drawerContainer.querySelector('.tab');
     const drawerBackdrop = drawerContainer.querySelector('.backdrop');
     const drawerItems = [];
-    let _drawerLoaded = false;
 
     function openDrawer() {
-      if (drawerContainer.classList.contains('open')) return;
       drawerContainer.classList.add('open');
-      if (!_drawerLoaded) loadDrawerThumbnails();
     }
 
     function closeDrawer() {
@@ -492,7 +449,12 @@
       drawerContainer.classList.contains('open') ? closeDrawer() : openDrawer();
     }
 
-    // 标签点击 → 切换
+    // 鼠标移到左边缘触发区 → 自动展开
+    drawerTab.addEventListener('mouseenter', () => {
+      openDrawer();
+    });
+
+    // 标签点击 → 切换（兼容触屏）
     drawerTab.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleDrawer();
@@ -510,7 +472,7 @@
       }
     });
 
-    // 生成页面向列表项（结构：缩略图容器 + 页码标签）
+    // 生成页面向列表项（结构：缩略图 <img> + 页码标签）
     for (let i = 1; i <= TOTAL; i++) {
       const item = document.createElement('div');
       item.className = 'drawer-item';
@@ -518,10 +480,10 @@
 
       const thumb = document.createElement('div');
       thumb.className = 'drawer-thumb';
-      const placeholder = document.createElement('div');
-      placeholder.className = 'placeholder';
-      placeholder.textContent = i;
-      thumb.appendChild(placeholder);
+      const img = document.createElement('img');
+      img.src = 'thumbs/' + i + '.png';
+      img.alt = '第 ' + i + ' 页';
+      thumb.appendChild(img);
       item.appendChild(thumb);
 
       const label = document.createElement('span');
@@ -537,45 +499,15 @@
         _flipAt = Date.now();
         _busy = true;
         executeFlip(i, i > current ? 1 : -1);
-        closeDrawer();
+        // 不自动关闭，等用户鼠标移开才折叠
       });
 
       drawerList.appendChild(item);
-      drawerItems.push({ el: item, thumb: thumb, placeholder: placeholder });
-    }
-
-    // 首次展开时加载缩略图 iframe（每 120ms 一个，避免并发）
-    function loadDrawerThumbnails() {
-      if (_drawerLoaded) return;
-      _drawerLoaded = true;
-
-      drawerItems.forEach((entry, idx) => {
-        setTimeout(() => {
-          const page = idx + 1;
-          const iframe = document.createElement('iframe');
-          iframe.src = page + '.html';
-          iframe.scrolling = 'no';
-          iframe.width = '1280';
-          iframe.height = '720';
-          entry.thumb.appendChild(iframe);
-
-          const tw = entry.thumb.offsetWidth;
-          if (tw > 0) {
-            const scale = tw / 1280;
-            iframe.style.transform = `scale(${scale})`;
-            iframe.style.width = '1280px';
-            iframe.style.height = '720px';
-          }
-
-          iframe.addEventListener('load', () => {
-            entry.placeholder.remove();
-          });
-        }, idx * 120);
-      });
+      drawerItems.push({ el: item, thumb: thumb });
     }
 
     // 抽屉面板内滚轮只滚动列表，不翻页
-    drawerList.addEventListener('wheel', (e) => {
+    drawerContainer.querySelector('.panel').addEventListener('wheel', (e) => {
       e.stopPropagation();
     });
 

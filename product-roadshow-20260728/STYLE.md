@@ -311,3 +311,72 @@ macOS 触控板两指滑动在 JS 不可控层同时发射 `wheel` 和 `ArrowDow
 - `z-index: 100`，位于帷幕和 slide 之上
 - 帷幕期间不响应点击
 - 调用 `requestFlip(dir, true)`，`immediate` 参数绕过 `_flipAt` 时间戳冷却（按钮是明确用户意图，不是惯性事件），但仍受 `_busy` 动画锁保护
+
+---
+
+### 左侧抽屉页面列表
+
+鼠标移到屏幕最左侧 30px 触发带内时，自动从左侧滑出一个抽屉面板，展示所有页面的缩略图列表。
+
+**交互规则：**
+
+| 行为 | 结果 |
+|------|------|
+| 鼠标移入左边缘 30px | 抽屉自动展开 |
+| 鼠标移出抽屉面板 | 不自动折叠 |
+| 点击抽屉外的遮罩层 | 抽屉折叠 |
+| 按 Escape | 抽屉折叠 |
+| 点击某一页缩略图 | 跳转到该页，抽屉不自动关闭 |
+| 在抽屉列表上滚轮 | 仅滚动列表，不触发 PPT 翻页 |
+
+**实现要点：**
+
+- 抽屉面板 `position: fixed`，`z-index: 200`，位于翻页按钮之上
+- 使用 `transform: translateX(-100%)` → `translateX(0)` 做滑入滑出，`cubic-bezier(0.16, 1, 0.3, 1)` 缓动
+- 抽屉面板的 `wheel` 事件必须 `e.stopPropagation()`，阻止冒泡到 document 触发翻页
+- 遮罩层 `#drawer-container .backdrop` 覆盖全屏，`display: none` → `display: block` 随展开切换
+
+**缩略图：静态 PNG（正统做法）**
+
+抽屉列表的每一页缩略图使用预生成的静态 PNG 图片，**不使用 iframe 加载整页 HTML**。
+
+原因：
+- iframe 每加载一页就是一次完整的 DOM + CSS + 字体渲染，21 页即 21 个完整文档实例，内存开销巨大
+- iframe 懒加载有延迟，首展开时需要逐帧创建，用户体验差
+- 静态 PNG 缩略图零延时加载，零额外内存，浏览器原生 `<img>` 解码
+
+**生成缩略图：**
+
+```bash
+cd /Users/liangzhihao/Desktop/miifire-ppt && node generate-thumbs.js <项目目录名>
+```
+
+脚本使用 Puppeteer 无头 Chrome 逐页截图，再用 `sips` 缩放到 320×180，输出到项目的 `thumbs/` 目录。
+
+**CSS 样式：**
+
+```css
+#drawer-container .drawer-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+```
+
+`object-fit: cover` 确保缩略图铺满容器且保持 16:9 比例，不拉伸变形。
+
+**DOM 结构：**
+
+```html
+<div id="drawer-container">
+  <div class="tab"></div>          <!-- 左边缘触发带，30px 宽 -->
+  <div class="backdrop"></div>      <!-- 遮罩层，展开时覆盖右侧 -->
+  <div class="panel">
+    <div class="panel-header"><span>页面列表</span></div>
+    <div class="panel-list" id="drawer-list"></div>
+  </div>
+</div>
+```
+
+列表项由 JS 动态生成，每项包含 `<img src="thumbs/N.png">` 和 `<span>第 N 页</span>`，点击调用 `executeFlip()` 跳转。
