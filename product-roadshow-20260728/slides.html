@@ -435,36 +435,25 @@
             return;
           }
 
-          const baseTx = slide.style.transform;
-          const ty = dir > 0 ? '100px' : '-100px';
-          const scaleMatch = baseTx.match(/scale\(([^)]+)\)/);
-          const s = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
-
-          slide.style.transition = 'none';
-          slide.style.transform = `scale(${s * 0.96}) translateY(${ty})`;
+          // 渐隐渐现
+          stage.style.transition = 'none';
+          stage.style.opacity = '0';
+          stage.offsetHeight;
+          stage.style.transition = 'opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
           stage.style.opacity = '1';
 
-          slide.offsetHeight;
-          slide.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
-          slide.style.transform = baseTx;
-
-          // 锁释放由 transitionend 驱动，与渲染状态严格同步
           let released = false;
           const done = () => {
             if (released) return;
             released = true;
-            slide.style.transition = '';
-            slide.removeEventListener('transitionend', onEnd);
+            stage.style.transition = '';
             if (_flipId === thisFlipId) _busy = false;
           };
-          const onEnd = (e) => {
-            // 只响应 slide 自身的 transform 过渡，忽略子元素冒泡上来的事件
-            if (e.target !== slide || e.propertyName !== 'transform') return;
+          stage.addEventListener('transitionend', (e) => {
+            if (e.target !== stage || e.propertyName !== 'opacity') return;
             done();
-          };
-          slide.addEventListener('transitionend', onEnd);
-          // 兜底：700ms 后强制释放，防止 transitionend 不触发
-          setTimeout(done, 700);
+          });
+          setTimeout(done, 500);
         })
         .catch(() => {
           stage.style.opacity = '1';
