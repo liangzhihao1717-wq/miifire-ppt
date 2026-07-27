@@ -123,12 +123,53 @@
       height: 100%;
       z-index: 200;
     }
-    #drawer-container .trigger {
+    /* 左边缘可见标签：始终显示，点击展开/关闭 */
+    #drawer-container .tab {
       position: absolute;
       top: 0; left: 0;
-      width: 20px;
+      width: 8px;
       height: 100%;
-      z-index: 1;
+      cursor: pointer;
+      z-index: 2;
+      background: rgba(255,255,255,0.04);
+      transition: background 0.2s ease, width 0.2s ease;
+    }
+    #drawer-container .tab:hover {
+      background: rgba(255,255,255,0.08);
+      width: 12px;
+    }
+    /* 标签上的视觉暗示：中间一个小三角标记 */
+    #drawer-container .tab::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0; height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 6px solid rgba(255,255,255,0.25);
+      transition: border-color 0.2s ease;
+    }
+    #drawer-container .tab:hover::after {
+      border-right-color: rgba(255,255,255,0.5);
+    }
+    #drawer-container.open .tab::after {
+      border-right: none;
+      border-left: 6px solid rgba(255,255,255,0.25);
+    }
+    #drawer-container.open .tab:hover::after {
+      border-left-color: rgba(255,255,255,0.5);
+    }
+    /* 遮罩层：抽屉展开时覆盖右侧，点击关闭 */
+    #drawer-container .backdrop {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      display: none;
+    }
+    #drawer-container.open .backdrop {
+      display: block;
     }
     #drawer-container .panel {
       position: absolute;
@@ -140,12 +181,14 @@
       background: rgba(10,10,10,0.97);
       border-right: 1px solid rgba(255,255,255,0.08);
       transform: translateX(-100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      z-index: 1;
+      padding-left: 8px;
     }
-    #drawer-container:hover .panel {
+    #drawer-container.open .panel {
       transform: translateX(0);
     }
     #drawer-container .panel-header {
@@ -250,7 +293,8 @@
   <div id="next-btn"></div>
 
   <div id="drawer-container">
-    <div class="trigger"></div>
+    <div class="tab"></div>
+    <div class="backdrop"></div>
     <div class="panel">
       <div class="panel-header"><span>页面列表</span></div>
       <div class="panel-list" id="drawer-list"></div>
@@ -427,11 +471,46 @@
     // 抽屉页面列表
     // ——————————————————————————————
 
+    const drawerContainer = document.getElementById('drawer-container');
     const drawerList = document.getElementById('drawer-list');
+    const drawerTab = drawerContainer.querySelector('.tab');
+    const drawerBackdrop = drawerContainer.querySelector('.backdrop');
     const drawerItems = [];
     let _drawerLoaded = false;
 
-    // 先生成占位结构（不含 iframe）
+    function openDrawer() {
+      if (drawerContainer.classList.contains('open')) return;
+      drawerContainer.classList.add('open');
+      if (!_drawerLoaded) loadDrawerThumbnails();
+    }
+
+    function closeDrawer() {
+      drawerContainer.classList.remove('open');
+    }
+
+    function toggleDrawer() {
+      drawerContainer.classList.contains('open') ? closeDrawer() : openDrawer();
+    }
+
+    // 标签点击 → 切换
+    drawerTab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDrawer();
+    });
+
+    // 遮罩点击 → 关闭
+    drawerBackdrop.addEventListener('click', () => {
+      closeDrawer();
+    });
+
+    // Escape 键 → 关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawerContainer.classList.contains('open')) {
+        closeDrawer();
+      }
+    });
+
+    // 生成页面向列表项（结构：缩略图容器 + 页码标签）
     for (let i = 1; i <= TOTAL; i++) {
       const item = document.createElement('div');
       item.className = 'drawer-item';
@@ -450,20 +529,22 @@
       label.textContent = '第 ' + i + ' 页';
       item.appendChild(label);
 
-      item.addEventListener('click', () => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
         const curtain = document.getElementById('curtain');
         if (curtain && !curtain.classList.contains('done')) return;
         if (_busy || i === current) return;
         _flipAt = Date.now();
         _busy = true;
         executeFlip(i, i > current ? 1 : -1);
+        closeDrawer();
       });
 
       drawerList.appendChild(item);
       drawerItems.push({ el: item, thumb: thumb, placeholder: placeholder });
     }
 
-    // 抽屉首次打开时加载缩略图（延迟避免同时加载 21 个 iframe）
+    // 首次展开时加载缩略图 iframe（每 120ms 一个，避免并发）
     function loadDrawerThumbnails() {
       if (_drawerLoaded) return;
       _drawerLoaded = true;
@@ -478,7 +559,6 @@
           iframe.height = '720';
           entry.thumb.appendChild(iframe);
 
-          // 按缩略图容器实际宽度计算缩放比
           const tw = entry.thumb.offsetWidth;
           if (tw > 0) {
             const scale = tw / 1280;
@@ -487,16 +567,12 @@
             iframe.style.height = '720px';
           }
 
-          // iframe 加载完成后移除占位符
           iframe.addEventListener('load', () => {
             entry.placeholder.remove();
           });
-        }, idx * 120); // 每 120ms 加载一个，避免瞬间并发
+        }, idx * 120);
       });
     }
-
-    // 鼠标移到左边缘触发首次加载
-    document.getElementById('drawer-container').addEventListener('mouseenter', loadDrawerThumbnails);
 
     // 抽屉面板内滚轮只滚动列表，不翻页
     drawerList.addEventListener('wheel', (e) => {
