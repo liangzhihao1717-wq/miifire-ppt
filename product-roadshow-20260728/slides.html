@@ -123,11 +123,11 @@
       height: 100%;
       z-index: 200;
     }
-    /* 左边缘触发区：30px 宽不可见，鼠标进入即展开 */
+    /* 左边缘触发区：8px 宽不可见，鼠标进入即展开 */
     #drawer-container .tab {
       position: absolute;
       top: 0; left: 0;
-      width: 30px;
+      width: 2px;
       height: 100%;
       cursor: pointer;
       z-index: 2;
@@ -158,7 +158,7 @@
       flex-direction: column;
       overflow: hidden;
       z-index: 1;
-      padding-left: 30px;
+      padding-left: 0.4vw;
     }
     #drawer-container.open .panel {
       transform: translateX(0);
@@ -188,6 +188,7 @@
       border-radius: 2px;
     }
     #drawer-container .drawer-item {
+      position: relative;
       padding: 0.8vh 0.6vw;
       cursor: pointer;
       border-radius: 2px;
@@ -233,6 +234,19 @@
     }
     #drawer-container .drawer-item:hover .drawer-label {
       color: rgba(255,255,255,0.6);
+    }
+    #drawer-container .drawer-note-dot {
+      position: absolute;
+      top: 0.7vh;
+      right: 0.55vw;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(212,184,122,0.35);
+      display: none;
+    }
+    #drawer-container .drawer-note-dot.show {
+      display: block;
     }
 
     /* ====== 右侧竖线刻度尺 ====== */
@@ -336,7 +350,7 @@
     <div class="tab"></div>
     <div class="backdrop"></div>
     <div class="panel">
-      <div class="panel-header"><span>页面列表</span></div>
+      <div class="panel-header"><span id="drawer-label">共 21 页</span></div>
       <div class="panel-list" id="drawer-list"></div>
     </div>
   </div>
@@ -378,6 +392,7 @@
     let _busy = false;
     let _flipAt = 0;
     let _flipId = 0;
+    let _allNotes = {};
 
     function executeFlip(p, dir) {
       const thisFlipId = ++_flipId;
@@ -593,6 +608,10 @@
       label.textContent = '第 ' + i + ' 页';
       item.appendChild(label);
 
+      const dot = document.createElement('span');
+      dot.className = 'drawer-note-dot';
+      item.appendChild(dot);
+
       item.addEventListener('click', (e) => {
         e.stopPropagation();
         const curtain = document.getElementById('curtain');
@@ -641,9 +660,13 @@
         const res = await fetch('/api/notes?page=' + page);
         const data = await res.json();
         const notes = (data[page] || []).map(n => typeof n === 'string' ? { text: n, pos: '50%' } : n);
+        _allNotes[page] = notes;
         renderRuler(notes);
+        updateDrawerDots();
       } catch {
+        _allNotes[page] = [];
         renderRuler([]);
+        updateDrawerDots();
       }
     }
 
@@ -689,12 +712,31 @@
       }
     }
 
+    function updateDrawerDots() {
+      drawerItems.forEach(entry => {
+        const page = entry.el.dataset.page;
+        const dot = entry.el.querySelector('.drawer-note-dot');
+        const notes = _allNotes[page];
+        if (notes && notes.length > 0) {
+          dot.classList.add('show');
+        } else {
+          dot.classList.remove('show');
+        }
+      });
+    }
+
     // 初始化第一页高亮
     updateDrawerActive();
 
     // ——————————————————————————————
     // 首屏
     // ——————————————————————————————
+
+    // 启动时预加载全部备注数据，用于抽屉圆点标记
+    fetch('/api/notes').then(r => r.json()).then(notes => {
+      _allNotes = notes;
+      updateDrawerDots();
+    });
 
     executeFlip(startPage, 0);
   </script>
