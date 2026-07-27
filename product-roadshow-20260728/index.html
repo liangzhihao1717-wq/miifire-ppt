@@ -143,15 +143,21 @@
       display: flex;
       gap: 2vw;
     }
-    .top-nav a {
+    .top-nav a,
+    .top-nav button {
       font-size: 0.9vw;
       font-weight: 400;
+      font-family: inherit;
+      background: none;
+      border: none;
       color: rgba(255,255,255,0.25);
       text-decoration: none;
+      cursor: pointer;
       letter-spacing: 0.08em;
       transition: color 0.3s;
     }
-    .top-nav a:hover {
+    .top-nav a:hover,
+    .top-nav button:hover {
       color: #d4b87a;
     }
     .top-nav a .arrow {
@@ -275,10 +281,24 @@
 
     <div class="top-nav">
       <a href="notes-editor.html">演讲备注<span class="arrow">→</span></a>
-      <a href="slides.html">开始翻阅<span class="arrow">→</span></a>
+      <a href="slides.html?page=1&fullscreen">开始翻阅<span class="arrow">→</span></a>
     </div>
 
     <div class="meta">2026.07.28</div>
   </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F') {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
+  </script>
 </body>
 </html>

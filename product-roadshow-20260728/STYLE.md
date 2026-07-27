@@ -589,3 +589,19 @@ cd product-roadshow-20260728 && node api-server.js
   cd product-roadshow-YYYYMMDD && node gen-thumbs.js
   ```
 - 缩略图用于：目录页抽屉、notes-editor 大图预览和列表、slides.html 抽屉
+
+---
+
+### 全屏快捷键
+
+所有页面（`index.html`、`slides.html`、`notes-editor.html`）均支持 **F 键**切换浏览器全屏。
+
+**实现要点：**
+- 使用浏览器原生 Fullscreen API（`document.documentElement.requestFullscreen()` / `document.exitFullscreen()`）
+- 按 F 键进入全屏，再按 F 键退出全屏
+- 输入框聚焦时（`INPUT`、`TEXTAREA`）不触发，避免干扰文字输入
+- `preventDefault()` 阻止浏览器默认行为（如搜索框聚焦）
+
+**设计原则：**
+- 无可见按钮，纯键盘操作，不占用屏幕视觉空间
+- 适合演讲场景：翻页笔翻页 + F 键切换全屏，手势流畅

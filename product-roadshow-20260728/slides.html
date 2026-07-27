@@ -520,6 +520,22 @@
       requestFlip(1, true);
     });
 
+    // 按 F 键切换全屏
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F') {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
     let touchStartY = 0;
     document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
     document.addEventListener('touchend', (e) => {
@@ -537,7 +553,13 @@
       const curtain = document.getElementById('curtain');
       if (curtain.classList.contains('open')) return;
       curtain.classList.add('open');
-      setTimeout(() => { curtain.classList.add('done'); }, 1000);
+      setTimeout(() => {
+        curtain.classList.add('done');
+        // 从目录「开始翻阅」进入时自动全屏
+        if (new URLSearchParams(window.location.search).has('fullscreen')) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+      }, 1000);
     }
     document.getElementById('curtain').addEventListener('click', openCurtain);
 
