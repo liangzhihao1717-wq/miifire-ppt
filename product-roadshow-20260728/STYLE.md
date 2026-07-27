@@ -32,7 +32,7 @@
 **预览方式：在 ppt 目录启动本地 HTTP 服务器**
 
 ```bash
-cd "/Users/liangzhihao/Desktop/觅火 MIIFIRE Agent 创作应用/ppt" && python3 -m http.server 8080
+cd "/Users/liangzhihao/Desktop/miifire-ppt/product-roadshow-20260728" && python3 -m http.server 8080
 ```
 
 然后浏览器访问 `http://localhost:8080/13.html`（把 13 换成对应页码）。
