@@ -222,21 +222,32 @@
     // 窗口大小变化时重新适配
     window.addEventListener('resize', fitSlide);
 
-    // 滚轮翻页（loading 期间完全忽略）
-    let wheelTimer = null;
+    // 滚轮翻页（时间戳硬冷却，800ms 内只响应一次）
+    let lastWheel = 0;
     document.addEventListener('wheel', (e) => {
       e.preventDefault();
-      if (loading || wheelTimer) return;
-      wheelTimer = setTimeout(() => { wheelTimer = null; }, 1000);
+      if (loading) return;
+      const now = Date.now();
+      if (now - lastWheel < 800) return;
+      lastWheel = now;
       if (e.deltaY > 0) load(current + 1, 1);
       else load(current - 1, -1);
     }, { passive: false });
 
     // 键盘（支持翻页笔：上下左右箭头 + PageUp/PageDown）
+    let lastKey = 0;
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  || e.key === 'PageUp')   load(current - 1, -1);
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') load(current + 1, 1);
-      if (e.key === 's' || e.key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
+      const key = e.key;
+      if (key !== 'ArrowUp' && key !== 'ArrowDown' && key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'PageUp' && key !== 'PageDown') {
+        if (key === 's' || key === 'S') { e.preventDefault(); stage.classList.toggle('square'); }
+        return;
+      }
+      if (loading) return;
+      const now = Date.now();
+      if (now - lastKey < 500) return;
+      lastKey = now;
+      if (key === 'ArrowUp'   || key === 'ArrowLeft'  || key === 'PageUp')   load(current - 1, -1);
+      if (key === 'ArrowDown' || key === 'ArrowRight' || key === 'PageDown') load(current + 1, 1);
     });
 
     // 触摸滑动
