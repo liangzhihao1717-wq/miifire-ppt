@@ -393,6 +393,7 @@
     let _flipAt = 0;
     let _flipId = 0;
     let _allNotes = {};
+    const PROJECT = (() => { const m = location.pathname.match(/\/ppt\/([^/]+)\//); return m ? m[1] : ''; })();
 
     function executeFlip(p, dir) {
       const thisFlipId = ++_flipId;
@@ -668,7 +669,7 @@
 
     async function loadNotes(page) {
       try {
-        const res = await fetch('/api/notes?page=' + page);
+        const res = await fetch('/api/notes?project=' + encodeURIComponent(PROJECT) + '&page=' + page);
         const data = await res.json();
         const notes = (data[page] || []).map(n => typeof n === 'string' ? { text: n, pos: '50%' } : n);
         _allNotes[page] = notes;
@@ -744,7 +745,7 @@
     // ——————————————————————————————
 
     // 启动时预加载全部备注数据，用于抽屉圆点标记
-    fetch('/api/notes').then(r => r.json()).then(notes => {
+    fetch('/api/notes?project=' + encodeURIComponent(PROJECT)).then(r => r.json()).then(notes => {
       _allNotes = notes;
       updateDrawerDots();
     });

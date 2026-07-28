@@ -421,9 +421,80 @@
       z-index: 10;
     }
     .toast.show { opacity: 1; }
+
+    /* ====== 锁屏 ====== */
+    #lockscreen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    #lockscreen.hidden { opacity: 0; visibility: hidden; }
+    #lockscreen .lock-box {
+      display: flex; flex-direction: column; align-items: center; gap: 1.2vh;
+    }
+    #lockscreen .lock-icon {
+      width: 2vw; height: 2vw;
+      color: rgba(212,184,122,0.25);
+      margin-bottom: 1vh;
+    }
+    #lockscreen .lock-title {
+      font-size: 1.4vw; font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.1em;
+    }
+    #lockscreen .lock-subtitle {
+      font-size: 0.72vw; font-weight: 300;
+      color: rgba(255,255,255,0.1);
+      letter-spacing: 0.06em;
+      margin-bottom: 2vh;
+    }
+    #lockscreen .lock-input {
+      background: rgba(255,255,255,0.03);
+      border: 0.04vw solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95vw;
+      font-family: inherit;
+      padding: 1vh 1.5vw;
+      border-radius: 2px;
+      outline: none;
+      text-align: center;
+      width: 14vw;
+      transition: border-color 0.3s;
+      letter-spacing: 0.08em;
+    }
+    #lockscreen .lock-input:focus {
+      border-color: rgba(212,184,122,0.35);
+    }
+    #lockscreen .lock-input::placeholder {
+      color: rgba(255,255,255,0.06);
+    }
+    #lockscreen .lock-input.wrong {
+      animation: lock-shake 0.3s ease;
+      border-color: rgba(212,184,122,0.08);
+    }
+    @keyframes lock-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
   </style>
 </head>
 <body>
+  <div id="lockscreen">
+    <div class="lock-box">
+      <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="5" y="11" width="14" height="11" rx="2"/>
+        <circle cx="12" cy="16" r="1"/>
+        <path d="M8 11V7a4 4 0 118 0v4" stroke-linecap="round"/>
+      </svg>
+      <div class="lock-title">演讲者入口</div>
+      <div class="lock-subtitle">只有演讲者本人可以编辑备注</div>
+      <input type="password" id="lock-input" class="lock-input" placeholder="输入演讲密钥" autocomplete="off">
+    </div>
+  </div>
+
   <div class="container">
 
     <div class="top-bar">
@@ -482,7 +553,33 @@
 
   <script>
     const TOTAL = 21;
-    const API = '/api/notes';
+    const PROJECT = (() => { const m = location.pathname.match(/\/ppt\/([^/]+)\//); return m ? m[1] : ''; })();
+    const API_BASE = '/api/notes?project=' + encodeURIComponent(PROJECT);
+    let NOTES_KEY = sessionStorage.getItem('miifire_notes_key') || '';
+
+    // 锁屏
+    const lockscreen = document.getElementById('lockscreen');
+    const lockInput = document.getElementById('lock-input');
+
+    if (NOTES_KEY) {
+      lockscreen.style.display = 'none';
+    } else {
+      lockInput.focus();
+    }
+
+    lockInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const val = lockInput.value.trim();
+      if (!val) {
+        lockInput.classList.add('wrong');
+        setTimeout(() => lockInput.classList.remove('wrong'), 300);
+        return;
+      }
+      sessionStorage.setItem('miifire_notes_key', val);
+      NOTES_KEY = val;
+      lockscreen.classList.add('hidden');
+      init();
+    });
 
     const hero = document.getElementById('hero');
     const heroImg = document.getElementById('hero-img');
@@ -609,10 +706,10 @@
       const text = addInput.value.trim();
       const pos = posSelected.dataset.val || '50%';
       if (!text || !currentPage) return;
-      const res = await fetch(API, {
+      const res = await fetch('/api/notes', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page: String(currentPage), text, pos })
+        headers: { 'Content-Type': 'application/json', 'x-notes-key': NOTES_KEY },
+        body: JSON.stringify({ project: PROJECT, page: String(currentPage), text, pos })
       });
       const data = await res.json();
       if (data.ok) {
@@ -626,10 +723,10 @@
     }
 
     async function deleteNote(index) {
-      const res = await fetch(API, {
+      const res = await fetch('/api/notes', {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page: String(currentPage), index })
+        headers: { 'Content-Type': 'application/json', 'x-notes-key': NOTES_KEY },
+        body: JSON.stringify({ project: PROJECT, page: String(currentPage), index })
       });
       const data = await res.json();
       if (data.ok) {
@@ -647,13 +744,13 @@
     });
 
     async function init() {
-      const res = await fetch(API);
+      const res = await fetch(API_BASE);
       allNotes = await res.json();
       buildPageList();
       selectPage(1);
     }
 
-    init();
+    if (NOTES_KEY) init();
 
     // F 键切换全屏
     document.addEventListener('keydown', (e) => {

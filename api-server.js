@@ -1,14 +1,17 @@
-// 本地开发服务器：静态文件 + 演讲提醒 API
+// PPT 演讲备注 API 服务（生产环境）
 // 用法: node api-server.js
 // 端口: 8765
+// Docker: DATA_DIR=/data 挂载各项目 notes.json
+//
+// 数据路径: $DATA_DIR/{project}/notes.json
+// 若 project 为空，默认取 $DEFAULT_PROJECT 或 __dirname 的目录名
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8765;
-// 本地：DATA_DIR 为 PPT 根目录（miifire-ppt/），DEFAULT_PROJECT 为当前目录名
-const DATA_DIR = process.env.DATA_DIR || path.dirname(__dirname);
+const PORT = parseInt(process.env.PORT || '8765', 10);
+const DATA_DIR = process.env.DATA_DIR || __dirname;
 const DEFAULT_PROJECT = process.env.DEFAULT_PROJECT || path.basename(__dirname);
 const NOTES_PASSWORD = process.env.NOTES_PASSWORD;
 
@@ -41,15 +44,6 @@ function json(res, code, data) {
   res.end(JSON.stringify(data));
 }
 
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css',
-  '.js': 'application/javascript',
-  '.json': 'application/json',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-};
-
 const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
@@ -67,6 +61,7 @@ const server = http.createServer((req, res) => {
   if (url.pathname === '/api/notes' && req.method === 'GET') {
     const project = resolveProject(url.searchParams.get('project'));
     const page = url.searchParams.get('page');
+
     const notes = readNotes(project);
     if (page) {
       json(res, 200, { [page]: notes[page] || [] });
@@ -88,6 +83,7 @@ const server = http.createServer((req, res) => {
         const { project: rawProject, page, text, pos } = JSON.parse(body);
         const project = resolveProject(rawProject);
         if (!page || !text) return json(res, 400, { error: '缺少 page 或 text' });
+
         const notes = readNotes(project);
         if (!notes[page]) notes[page] = [];
         notes[page].push({ text, pos: pos || '50%' });
@@ -112,6 +108,7 @@ const server = http.createServer((req, res) => {
         const { project: rawProject, page, index } = JSON.parse(body);
         const project = resolveProject(rawProject);
         if (page == null || index == null) return json(res, 400, { error: '缺少 page 或 index' });
+
         const notes = readNotes(project);
         if (notes[page]) {
           notes[page].splice(index, 1);
@@ -126,25 +123,11 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // 静态文件
-  let filePath = path.join(__dirname, url.pathname === '/' ? 'slides.html' : url.pathname);
-  try {
-    if (fs.statSync(filePath).isDirectory()) {
-      filePath = path.join(filePath, 'index.html');
-    }
-    const content = fs.readFileSync(filePath);
-    const ext = path.extname(filePath);
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
-    res.end(content);
-  } catch {
-    res.writeHead(404);
-    res.end('Not Found');
-  }
+  res.writeHead(404);
+  res.end('Not Found');
 });
 
 server.listen(PORT, () => {
-  console.log(`本地服务: http://localhost:${PORT}`);
-  console.log(`提醒编辑: http://localhost:${PORT}/notes-editor.html`);
-  console.log(`翻页预览: http://localhost:${PORT}/slides.html`);
-  console.log(`数据目录: ${DATA_DIR}/${DEFAULT_PROJECT}/`);
+  console.log(`ppt-api 已启动: http://0.0.0.0:${PORT}`);
+  console.log(`数据目录: ${DATA_DIR}`);
 });
