@@ -69,7 +69,7 @@
       display: grid;
       grid-template-columns: 56fr 44fr;
       align-items: start;
-      gap: 2vw;
+      gap: 0.6vw;
       margin-bottom: 3vh;
     }
 
@@ -78,6 +78,8 @@
       position: relative;
       overflow: hidden;
       border-radius: 2px;
+      border: 1px solid rgba(212,184,122,0.08);
+      box-shadow: 0 0 20px rgba(212,184,122,0.04);
     }
     .hero img {
       width: 100%;
@@ -117,8 +119,12 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      height: 27vw;
-      max-height: 305px;
+      height: 27.55vw;
+      max-height: 313px;
+      border: 1px solid rgba(212,184,122,0.08);
+      border-radius: 2px;
+      padding: 1.2vh 0.8vw;
+      box-shadow: 0 0 20px rgba(212,184,122,0.04);
     }
     .page-panel-label {
       font-size: 0.85vw;
@@ -131,7 +137,6 @@
     .page-list {
       flex: 1;
       overflow-y: auto;
-      padding-right: 0.5vw;
     }
     .page-list::-webkit-scrollbar {
       width: 2px;
@@ -166,6 +171,7 @@
       aspect-ratio: 16 / 9;
       border-radius: 1px;
       overflow: hidden;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.04);
     }
     .page-item .thumb-mini img {
       width: 100%;
@@ -213,6 +219,10 @@
 
     /* ====== 编辑区 ====== */
     .notes-list {
+      border: 1px solid rgba(212,184,122,0.08);
+      border-radius: 2px;
+      box-shadow: 0 0 20px rgba(212,184,122,0.04);
+      padding: 1vh 0.8vw;
       min-height: 4vh;
     }
     .empty {
@@ -269,8 +279,6 @@
       display: flex;
       gap: 0.8vw;
       margin-bottom: 2vh;
-      padding-bottom: 2vh;
-      border-bottom: 0.04vw solid rgba(212,184,122,0.08);
     }
     .add-form input {
       flex: 1;
@@ -404,7 +412,7 @@
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 3vh;
+      top: 3vh;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(10,10,10,0.95);
@@ -479,6 +487,18 @@
       25% { transform: translateX(-4px); }
       75% { transform: translateX(4px); }
     }
+    #lockscreen .lock-back {
+      position: absolute;
+      top: 1.8vw; left: 3.5vw;
+      font-size: 0.8vw; font-weight: 400;
+      color: rgba(255,255,255,0.18);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    #lockscreen .lock-back:hover {
+      color: rgba(212,184,122,0.50);
+    }
   </style>
 </head>
 <body>
@@ -493,6 +513,7 @@
       <div class="lock-subtitle">只有演讲者本人可以编辑备注</div>
       <input type="password" id="lock-input" class="lock-input" placeholder="输入演讲密钥" autocomplete="off">
     </div>
+    <a href="index.html" class="lock-back">← 返回目录</a>
   </div>
 
   <div class="container">
@@ -526,8 +547,6 @@
         <div class="page-list" id="page-list"></div>
       </div>
     </div>
-
-    <div class="rule"></div>
 
     <!-- 编辑区 -->
     <div class="add-form">
