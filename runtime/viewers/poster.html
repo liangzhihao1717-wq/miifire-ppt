@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>觅火 MIIFIRE</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      background: #0a0a0a;
+      overflow-x: hidden;
+      overscroll-behavior: none;
+    }
+    body {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      color: #fff;
+    }
+    /* 顶部进度条 */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #c9a050, #d4b87a);
+      z-index: 100;
+      transition: width 0.1s linear;
+    }
+    /* 海报容器：手机宽度居中，按 9:16 逐页纵向排列 */
+    #poster {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      position: relative;
+      overflow: hidden;
+      /* 容器查询基准：页内字号/间距随每页画布自身缩放（cqw/cqh） */
+      container-type: size;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(180,150,100,0.05) 0%, transparent 45%),
+        #0a0a0a;
+      flex-shrink: 0;
+    }
+    /* 页码标记（右下角，弱化） */
+    .page-index {
+      position: absolute;
+      right: 4vw;
+      right: 4cqw;
+      bottom: 3vh;
+      bottom: 3cqh;
+      font-size: 3vw;
+      font-size: 3cqw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.2em;
+      z-index: 5;
+    }
+    /* 底部品牌栏 */
+    #footer {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 6vh 10vw 8vh;
+      text-align: center;
+      border-top: 0.12vw solid rgba(212,184,122,0.12);
+    }
+    #footer img { height: 5vh; filter: brightness(0.95) saturate(0.4); opacity: 0.6; }
+    #footer .name {
+      margin-top: 2vh;
+      font-size: 3vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.3em;
+    }
+    #footer .hint {
+      margin-top: 1vh;
+      font-size: 2.6vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: 0.2em;
+    }
+    /* 字体加载后淡入，避免闪跳 */
+    body.fonts-ready { opacity: 1; }
+  </style>
+  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="progress"></div>
+  <div id="poster"></div>
+  <div id="footer">
+    <img src="/runtime/assets/logo.png" alt="MIIFIRE">
+    <div class="name">觅火 MIIFIRE</div>
+    <div class="hint" id="footer-hint"></div>
+  </div>
+
+  <script>
+    // 读取项目 ID：/runtime/viewers/poster.html?project=xxx
+    const params = new URLSearchParams(window.location.search);
+    const project = params.get('project') || '';
+
+    // 字体加载完成标记（简单等待）
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => document.body.classList.add('fonts-ready'));
+    }
+
+    const posterEl = document.getElementById('poster');
+    const progressEl = document.getElementById('progress');
+
+    function setTitle(t) {
+      if (t) document.title = t;
+    }
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (scrollTop / total) * 100 : 100;
+      progressEl.style.width = pct + '%';
+    }
+
+    // 加载 manifest
+    fetch(`/api/projects`).then(r => r.json()).then(({ projects }) => {
+      const meta = projects.find(p => p.id === project) || {};
+      setTitle(meta.title || '觅火 MIIFIRE');
+      if (meta.total) {
+        document.getElementById('footer-hint').textContent = `共 ${meta.total} 页 · 滑到底 · 收获你的内容资产`;
+      }
+
+      const themeLink = document.createElement('link');
+      themeLink.rel = 'stylesheet';
+      themeLink.href = `/runtime/themes/${meta.theme || 'portrait'}.css`;
+      document.head.appendChild(themeLink);
+
+      // 加载每一页（纯内容 DOM），依次纵向排列
+      const total = meta.total || 0;
+      if (!total) {
+        posterEl.innerHTML = '<div style="padding:20vh 10vw;color:rgba(255,255,255,0.3);font-size:4vw">未找到项目内容</div>';
+        return;
+      }
+      let loaded = 0;
+      const loadPage = (n) => {
+        fetch(`/projects/${project}/slides/${n}.html`)
+          .then(r => r.text())
+          .then(html => {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const slide = doc.querySelector('.slide');
+            const page = document.createElement('div');
+            page.className = 'page';
+            if (slide) {
+              // 复用页面内容；.page 兼作 .slide 布局容器（padding/flex 来自主题）
+              page.classList.add('slide');
+              page.innerHTML = slide.innerHTML;
+            }
+            const idx = document.createElement('div');
+            idx.className = 'page-index';
+            idx.textContent = String(n).padStart(2, '0');
+            page.appendChild(idx);
+            posterEl.appendChild(page);
+            loaded++;
+            if (loaded === total) {
+              updateProgress();
+              window.addEventListener('scroll', updateProgress, { passive: true });
+              window.addEventListener('resize', updateProgress);
+            }
+          })
+          .catch(() => {
+            loaded++;
+          });
+      };
+      for (let i = 1; i <= total; i++) loadPage(i);
+    });
+
+    // F 全屏（可选，桌面调试用）
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F') {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+        else document.exitFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -109,7 +109,7 @@
   <div class="container">
     <div class="header">
       <div class="logo-row">
-        <img src="product-roadshow-20260728/logo.png" alt="MIIFIRE">
+        <img src="/runtime/assets/logo.png" alt="MIIFIRE">
         <h1>觅火 MIIFIRE</h1>
       </div>
       <div class="subtitle">PPT 项目目录</div>
@@ -117,19 +117,50 @@
 
     <div class="divider"></div>
 
-    <div class="project-list">
-      <a class="project-card" href="product-roadshow-20260728/">
-        <div>
-          <div class="name">产品路演</div>
-          <div class="date">2026-07-28</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
+    <div class="project-list" id="project-list">
+      <!-- 由 /api/projects 动态渲染 -->
     </div>
 
     <div class="footer">
       miifire-ppt &copy; 2026
     </div>
   </div>
+
+  <script>
+    // 从统一服务读取项目列表并动态渲染目录
+    fetch('/api/projects')
+      .then(r => r.json())
+      .then(({ projects }) => {
+        const list = document.getElementById('project-list');
+        if (!projects || projects.length === 0) {
+          list.innerHTML = '<div style="color:rgba(255,255,255,0.3);font-size:1vw">暂无项目</div>';
+          return;
+        }
+        projects.forEach(p => {
+          const a = document.createElement('a');
+          a.className = 'project-card';
+          a.href = `/p/${encodeURIComponent(p.id)}/`;
+          const d = document.createElement('div');
+          const name = document.createElement('div');
+          name.className = 'name';
+          name.textContent = p.title || p.id;
+          const date = document.createElement('div');
+          date.className = 'date';
+          date.textContent = p.date || '';
+          d.appendChild(name);
+          d.appendChild(date);
+          const arrow = document.createElement('div');
+          arrow.className = 'arrow';
+          arrow.textContent = '→';
+          a.appendChild(d);
+          a.appendChild(arrow);
+          list.appendChild(a);
+        });
+      })
+      .catch(() => {
+        document.getElementById('project-list').innerHTML =
+          '<div style="color:rgba(255,255,255,0.3);font-size:1vw">服务未启动，请运行 node runtime/server.js</div>';
+      });
+  </script>
 </body>
 </html>
