@@ -14,10 +14,49 @@
       无横向滚动、内容不超高被裁、9:16 全屏铺满、手机不居左。
    ============================================================ */
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif; }
+/* ===== 自托管思源宋体子集（iOS/微信/安卓渲染一致，不依赖设备本地字体） ===== */
+@font-face {
+  font-family: 'MIIFIRE Serif';
+  src: url('/runtime/fonts/miifire-serif-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MIIFIRE Serif';
+  src: url('/runtime/fonts/miifire-serif-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MIIFIRE Serif';
+  src: url('/runtime/fonts/miifire-serif-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+/* 拉丁文/数字：自托管黑体（中文宋体、英文黑体的字体配对，全端一致） */
+@font-face {
+  font-family: 'MIIFIRE Sans';
+  src: url('/runtime/fonts/miifire-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MIIFIRE Sans';
+  src: url('/runtime/fonts/miifire-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MIIFIRE Sans';
+  src: url('/runtime/fonts/miifire-sans-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif; }
 
 body {
-  font-family: 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
   background: #000;
   color: #fff;
   min-height: 100dvh;
@@ -261,7 +300,6 @@ body > .slide {
 }
 .item .n {
   flex-shrink: 0;
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3.2vw;
   font-size: 3.2cqw;
@@ -581,7 +619,6 @@ body > .slide {
   padding-bottom: 0;
 }
 .pick .m-no {
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 8cqw;
   font-weight: 500;
@@ -620,7 +657,6 @@ body > .slide {
   position: absolute;
   top: 6cqh;
   right: 7cqw;
-  font-family: -apple-system, "Helvetica Neue", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3cqw;
   font-weight: 300;
@@ -924,7 +960,6 @@ body > .slide {
 }
 .link .n {
   flex-shrink: 0;
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3.2vw;
   font-size: 3.2cqw;
@@ -947,7 +982,7 @@ body > .slide {
   color: #d4b87a;
 }
 
-/* ===== 通用底部署名（数字/品牌用无衬线） ===== */
+/* ===== 通用底部署名（数字跟随全局宋体） ===== */
 .meta {
   position: absolute;
   bottom: 5vh;
@@ -957,7 +992,6 @@ body > .slide {
   right: 10vw;
   right: 10cqw;
   text-align: center;
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3vw;
   font-size: 3cqw;
@@ -972,7 +1006,7 @@ body > .slide {
    ============================================================ */
 /* 「系统化课程」眉题：宽字距宋体标签，置于主标题上方（flex order 重排，不动 DOM） */
 .cover .kicker {
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
   font-size: 4.2cqw;
   font-weight: 400;
   letter-spacing: 0.4em;
@@ -983,7 +1017,7 @@ body > .slide {
 }
 /* 主标题：超大宋体 + 金色渐变 + 宽字距 */
 .cover .title.big {
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
   font-size: 10cqw;
   line-height: 1.32;
   letter-spacing: 0.1em;
@@ -1015,7 +1049,7 @@ body > .slide {
 }
 /* 副标题：宋体说明文字 */
 .cover .subtitle {
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
   font-size: 4cqw;
   font-weight: 400;
   letter-spacing: 0.18em;
@@ -1026,7 +1060,7 @@ body > .slide {
 }
 /* 品牌区：顶部宋体眉题 */
 .cover .brand span {
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-family: 'MIIFIRE Sans', 'MIIFIRE Serif', 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
   font-size: 3.6cqw;
   font-weight: 400;
   letter-spacing: 0.3em;
@@ -1104,7 +1138,6 @@ body > .slide {
   text-align: center;
 }
 .route-grid .cell .n {
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3.2cqw;
   font-weight: 700;
@@ -1174,7 +1207,6 @@ body > .slide {
 }
 .play-no {
   flex-shrink: 0;
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 3.4cqw;
   font-weight: 700;
@@ -1266,7 +1298,6 @@ body > .slide {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 2.4cqw;
   font-weight: 700;
