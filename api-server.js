@@ -57,6 +57,23 @@ const server = http.createServer((req, res) => {
 
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
+  // GET /api/projects → 扫描 $DATA_DIR/projects/*/manifest.json（新版结构海报清单）
+  if (url.pathname === '/api/projects' && req.method === 'GET') {
+    const projectsDir = path.join(DATA_DIR, 'projects');
+    const projects = [];
+    if (fs.existsSync(projectsDir)) {
+      for (const d of fs.readdirSync(projectsDir)) {
+        const mf = path.join(projectsDir, d, 'manifest.json');
+        try {
+          const m = JSON.parse(fs.readFileSync(mf, 'utf-8'));
+          projects.push({ id: d, ...m });
+        } catch { /* 忽略非项目目录 */ }
+      }
+    }
+    json(res, 200, { projects });
+    return;
+  }
+
   // GET /api/notes?project=xxx&page=5
   if (url.pathname === '/api/notes' && req.method === 'GET') {
     const project = resolveProject(url.searchParams.get('project'));
