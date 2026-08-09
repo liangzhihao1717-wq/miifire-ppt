@@ -434,9 +434,186 @@ body > .slide {
 .compact:has(.tutor-photo) .items {
   gap: 1.8cqh;
 }
+
+/* ============================================================
+   第二章·内容挖掘页（第 9 页）：单栏大字版式
+   条目为「小标签 + 主体大字」两行结构，呼吸间距，方法技巧焦点强化
+   ============================================================ */
+.digs .section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* 第9页：横线到首条、末条到金线的呼吸空间对称一致（均为 6cqh） */
+.digs .rule {
+  margin-bottom: 6cqh;
+}
+.digs .sh {
+  margin-bottom: 2.2cqh;
+}
+.digs .tags {
+  gap: 3.4cqh;
+}
+.digs .tags .tag {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5cqh;
+}
+.digs .tags .tag .t-label {
+  font-size: 2.8cqw;
+  color: rgba(212,184,122,0.75);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+.digs .tags .tag .kw {
+  font-size: 5cqw;
+  font-weight: 700;
+  line-height: 1.35;
+}
+/* 方法技巧：顶部金线分隔 + 焦点大字 */
+.digs .method {
+  margin-top: 6cqh;
+  padding-top: 4.5cqh;
+  border-top: 0.1cqw solid rgba(212,184,122,0.28);
+}
+.digs .method .tags .tag .kw {
+  font-size: 6cqw;
+}
+/* 产出栏钉底，消除底部空洞 */
+.compact.digs .out {
+  margin-top: auto;
+}
+
+/* ============================================================
+   第一章·账号定位页（第 8 页）：定位五维宣言式大字清单
+   金色大编号 + 宣言级大字，细金线分隔（高端目录感），
+   第 4 条「目标客户画像」金色焦点放大
+   ============================================================ */
+.pos .rule {
+  margin-bottom: 0;
+}
+.pos .items {
+  margin-top: 5cqh;
+  margin-bottom: 2cqh;
+  gap: 0;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+.pos .out {
+  margin-top: 0;
+}
+.pos .item {
+  padding: 1.3cqh 0;
+  border-bottom: 0.08cqw solid rgba(212,184,122,0.16);
+}
+.pos .item:last-child {
+  border-bottom: none;
+  padding-bottom: 1.3cqh;
+}
+.pos .item .n {
+  font-size: 4.2cqw;
+  font-weight: 600;
+  color: rgba(212,184,122,0.85);
+}
+.pos .item .t {
+  font-size: 4.6cqw;
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: 0;
+}
+/* 核心词放大：金色高亮，前后留呼吸，与大字的字号差收敛（大字略降、小字略升） */
+.pos .item .t .core {
+  font-size: 5.5cqw;
+  font-weight: 700;
+  color: #d4b87a;
+  -webkit-text-fill-color: #d4b87a;
+  letter-spacing: 0;
+  margin: 0 1cqw;
+  line-height: 1.35;
+}
+/* 焦点：第 4 条「客户画像」再大一档 */
+.pos .item:nth-child(4) .t .core {
+  font-size: 6cqw;
+}
 .compact .out { margin-top: 2cqh; padding: 0; }
 .compact .out .label { font-size: 3.2cqw; margin-bottom: 0.8cqh; }
 .compact .out .val { font-size: 3.8cqw; line-height: 1.5; }
+
+/* ============================================================
+   第三章·短视频选题页（第 10 页）：官网级「方法论目录」版式
+   大号金色序号 + 眉题/正文双层条目 + 细金线分隔 + 目录脊柱
+   ============================================================ */
+.pick .rule {
+  margin-bottom: 4.5cqh;
+}
+.pick .methods {
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-left: 5cqw;
+}
+/* 目录脊柱：序号列左侧竖向金线 */
+.pick .methods::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4cqh;
+  bottom: 0.4cqh;
+  width: 0.08cqw;
+  background: linear-gradient(180deg, rgba(212,184,122,0.5), rgba(212,184,122,0.08));
+}
+/* 英文眉题（纯装饰） */
+.pick .m-head {
+  font-size: 2.6cqw;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  color: rgba(212,184,122,0.55);
+  margin-bottom: 2cqh;
+}
+.pick .method {
+  display: flex;
+  align-items: flex-start;
+  gap: 5cqw;
+  padding: 2.2cqh 0;
+  border-bottom: 0.08cqw solid rgba(212,184,122,0.16);
+}
+.pick .method:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.pick .m-no {
+  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 8cqw;
+  font-weight: 500;
+  color: rgba(212,184,122,0.9);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  min-width: 12cqw;
+  flex-shrink: 0;
+  margin-top: 14px;
+}
+.pick .m-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7cqh;
+}
+.pick .m-label {
+  font-size: 2.8cqw;
+  font-weight: 500;
+  color: rgba(212,184,122,0.72);
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+}
+.pick .m-name {
+  font-size: 4.8cqw;
+  font-weight: 400;
+  color: var(--ink-1);
+  line-height: 1.4;
+}
+/* 核心词金色高亮，前后留呼吸（延续第 8 页手法） */
+.pick .m-name .kw {
+  margin: 0 0.6cqw;
+}
 
 /* ===== 分页角标（如 1/2、2/2，右上角） ===== */
 .page-tag {
@@ -894,8 +1071,8 @@ body > .slide {
    路线图页（第 7 页 · 内容获客全链路）破格版式
    12 模块 3×4 网格链路，突破普通列表模板
    ============================================================ */
-.route { position: relative; }
-.route-head { margin-bottom: 4cqh; }
+.route-head { margin-bottom: 9cqh; }
+.route .sep { display: none; }
 .route-head .kicker { margin-bottom: 1.5cqh; }
 .route-head .title { margin-bottom: 0; }
 .route-sub {
@@ -1059,7 +1236,7 @@ body > .slide {
 .step {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 3cqw;
   padding-bottom: 3cqh;
 }
@@ -1075,6 +1252,10 @@ body > .slide {
 }
 .step:last-child .step-line {
   bottom: 50%;
+}
+/* 首节点轨道起点对齐圆点顶部，避免竖轨在圆点上方冒尖 */
+.step:first-child .step-line {
+  top: calc((1.6 * 4.4cqw - 4.4cqw) / 2);
 }
 /* 节点圆点 */
 .step-no {
@@ -1095,7 +1276,6 @@ body > .slide {
 }
 .step-body {
   flex: 1;
-  padding-top: 0.3cqh;
 }
 .step-t {
   font-size: 4.4cqw;
