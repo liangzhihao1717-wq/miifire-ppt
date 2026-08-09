@@ -97,7 +97,7 @@ body > .slide {
   letter-spacing: 0.06em;
 }
 
-/* ===== 章节编号（适度标签） ===== */
+/* ===== 章节编号（并入标题同一行，作一级标题前缀） ===== */
 .modnum {
   font-size: 3.6vw;
   font-size: 3.6cqw;
@@ -121,6 +121,17 @@ body > .slide {
 }
 .title.sm { font-size: 6vw; font-size: 6cqw; }
 .title.xs { font-size: 6vw; font-size: 6cqw; }
+
+/* 标题内嵌章节号（「第X章」+标题同一行，同字号一级标题） */
+.title .modnum {
+  display: inline;
+  font-size: 1em;
+  font-weight: 700;
+  color: rgba(212,184,122,0.92);
+  letter-spacing: 0.08em;
+  margin-right: 0.35em;
+  text-indent: 0;
+}
 
 /* 金色渐变关键词（标题内） */
 .title .kw {
@@ -201,6 +212,7 @@ body > .slide {
   color: rgba(255,255,255,0.6);
   letter-spacing: 0.06em;
 }
+.noresult + .noresult { margin-top: 1.2cqh; }
 
 /* ===== 分割线 ===== */
 .rule {
@@ -320,9 +332,25 @@ body > .slide {
 /* 面向谁页（hero + 尝试列表）：整体垂直撑满，避免底部大片空白 */
 .spread .hero,
 .spread .tried,
-.spread .noresult { margin-top: auto; }
+.spread .noresult,
+.spread .but { margin-top: auto; }
 .spread .tried { margin-bottom: auto; }
 .spread .noresult { margin-bottom: 0; }
+/* 「但是」转折行：金色强调（一级标题字号） */
+.but {
+  font-size: 7cqw;
+  font-weight: 900;
+  color: rgba(212,184,122,0.92);
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+}
+.noresult .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 /* 高密度页紧凑版式（内容多的页，如讲师/文案/拍摄/剪辑；类随内容页 .slide 透传到 .slide-inner） */
 .compact .modnum { margin-bottom: 1cqh; }
@@ -341,7 +369,7 @@ body > .slide {
 .compact .note { margin-bottom: 2cqh; font-size: 3.4cqw; margin-top: auto; }
 .compact .name { font-size: 5.6cqw; }
 .compact .bio { margin-bottom: 3cqh; font-size: 3.6cqw; }
-.compact .out { margin-top: 2cqh; padding: 2.2cqh 3cqw 2cqh; border-radius: 1.2cqw; }
+.compact .out { margin-top: 2cqh; padding: 0; }
 .compact .out .label { font-size: 3.2cqw; margin-bottom: 0.8cqh; }
 .compact .out .val { font-size: 3.8cqw; line-height: 1.5; }
 
@@ -376,15 +404,19 @@ body > .slide {
   background: rgba(212,184,122,0.16);
 }
 
-/* ===== 底部产出栏（独立区域：精致金色卡片，官网级 CTA 锚点） ===== */
+/* ===== 底部产出栏（独立区域：上方一条短金线，无背景容器） ===== */
 .out {
   margin-top: auto;
-  padding: 4cqh 4.5cqw 3.8cqh;
-  border: 0.1cqw solid rgba(212,184,122,0.22);
-  border-radius: 1.4cqw;
-  background:
-    radial-gradient(140% 180% at 88% -30%, rgba(212,184,122,0.14) 0%, transparent 55%),
-    linear-gradient(150deg, rgba(212,184,122,0.08) 0%, rgba(180,150,100,0.02) 100%);
+  padding: 3cqh 0 2.5cqh;
+  position: relative;
+}
+.out::before {
+  content: '';
+  display: block;
+  width: 10cqw;
+  height: 0.12cqw;
+  background: linear-gradient(90deg, rgba(212,184,122,0.65), rgba(212,184,122,0.15));
+  margin-bottom: 1.8cqh;
 }
 .out .label {
   display: flex;
@@ -397,16 +429,6 @@ body > .slide {
   letter-spacing: 0.22em;
   margin-bottom: 1.4vh;
   margin-bottom: 1.4cqh;
-}
-/* 徽章小圆点：品牌仪式感 */
-.out .label::before {
-  content: '';
-  flex-shrink: 0;
-  width: 0.7cqw;
-  height: 0.7cqw;
-  border-radius: 50%;
-  background: #d4b87a;
-  box-shadow: 0 0 1.2cqw rgba(212,184,122,0.6);
 }
 .out .val {
   font-size: 4.4vw;
@@ -476,6 +498,20 @@ body > .slide {
   color: rgba(255,255,255,0.62);
   line-height: 1.6;
   padding-left: 1cqw;
+}
+/* 语义分隔线（---分隔线---）：细金线，短宽，用于段落转折 */
+.sep {
+  height: 0.1cqw;
+  width: 14cqw;
+  background: linear-gradient(90deg, rgba(212,184,122,0.6), rgba(212,184,122,0.1));
+  margin: 1cqh 0;
+}
+/* 断句行内的小节标题（如"觅火 MIIFIRE 智能体 · 主力生产"） */
+.lines .lt {
+  font-weight: 700;
+  color: rgba(212,184,122,0.9);
+  letter-spacing: 0.1em;
+  font-size: 4.2cqw;
 }
 
 /* ===== 表单式信息行（课程形式页） ===== */
@@ -1009,17 +1045,4 @@ body > .slide {
   color: rgba(212,184,122,0.75);
   letter-spacing: 0.08em;
   margin-top: 0.6cqh;
-}
-/* 结尾产物连线下引 */
-.pipeline .out {
-  position: relative;
-}
-.pipeline .out::before {
-  content: '';
-  position: absolute;
-  left: 2.2cqw;
-  top: -3.5cqh;
-  width: 0.1cqw;
-  height: 3.5cqh;
-  background: linear-gradient(180deg, rgba(212,184,122,0.15), rgba(212,184,122,0.4));
 }
