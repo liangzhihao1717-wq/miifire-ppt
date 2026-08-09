@@ -13,7 +13,7 @@
       overscroll-behavior: none;
     }
     body {
-      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-family: 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
       color: #fff;
     }
     /* 顶部进度条 */
@@ -26,7 +26,7 @@
       z-index: 100;
       transition: width 0.1s linear;
     }
-    /* 海报容器：手机宽度居中，按 9:16 逐页纵向排列 */
+    /* 海报容器：手机宽度居中，按 9:16 逐页纵向排列，页间留呼吸空间 */
     #poster {
       width: 100%;
       max-width: 480px;
@@ -34,6 +34,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 5vh;
     }
     .page {
       width: 100%;
@@ -54,6 +55,8 @@
       right: 4cqw;
       bottom: 3vh;
       bottom: 3cqh;
+      font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
+      font-variant-numeric: tabular-nums;
       font-size: 3vw;
       font-size: 3cqw;
       font-weight: 300;
@@ -88,7 +91,6 @@
     /* 字体加载后淡入，避免闪跳 */
     body.fonts-ready { opacity: 1; }
   </style>
-  <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="progress"></div>
@@ -143,24 +145,20 @@
         return;
       }
       let loaded = 0;
-      const loadPage = (n) => {
+      // 预建按序占位，内容异步填入对应位置，避免完成顺序打乱页序
+      const loadPage = (n, page) => {
         fetch(`/projects/${project}/slides/${n}.html`)
           .then(r => r.text())
           .then(html => {
             const doc = new DOMParser().parseFromString(html, 'text/html');
             const slide = doc.querySelector('.slide');
-            const page = document.createElement('div');
-            page.className = 'page';
             if (slide) {
-              // 复用页面内容；.page 兼作 .slide 布局容器（padding/flex 来自主题）
-              page.classList.add('slide');
-              page.innerHTML = slide.innerHTML;
+              // 内层布局容器：让 cqw/cqh 以 .page 全宽为基准，避免被自身 padding 压缩；
+              // 透传 .slide 上的附加类（如 compact），保证页面级样式生效
+              const extra = (slide.className || '').split(/\s+/).filter(c => c && c !== 'slide').join(' ');
+              page.insertAdjacentHTML('afterbegin',
+                '<div class="slide-inner' + (extra ? ' ' + extra : '') + '">' + slide.innerHTML + '</div>');
             }
-            const idx = document.createElement('div');
-            idx.className = 'page-index';
-            idx.textContent = String(n).padStart(2, '0');
-            page.appendChild(idx);
-            posterEl.appendChild(page);
             loaded++;
             if (loaded === total) {
               updateProgress();
@@ -172,7 +170,16 @@
             loaded++;
           });
       };
-      for (let i = 1; i <= total; i++) loadPage(i);
+      for (let i = 1; i <= total; i++) {
+        const page = document.createElement('div');
+        page.className = 'page';
+        const idx = document.createElement('div');
+        idx.className = 'page-index';
+        idx.textContent = String(i).padStart(2, '0');
+        page.appendChild(idx);
+        posterEl.appendChild(page);
+        loadPage(i, page);
+      }
     });
 
     // F 全屏（可选，桌面调试用）

@@ -46,7 +46,10 @@ const MIME = {
 };
 
 function send(res, code, data, type) {
-  res.writeHead(code, { 'Content-Type': type || 'text/plain; charset=utf-8' });
+  res.writeHead(code, {
+    'Content-Type': type || 'text/plain; charset=utf-8',
+    'Cache-Control': 'no-store',
+  });
   res.end(data);
 }
 
