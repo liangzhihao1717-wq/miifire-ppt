@@ -23,6 +23,24 @@ body {
   min-height: 100dvh;
 }
 
+/* ===== 金色收敛（设计原则固化）：正文关键词一律纯色金，金属渐变只保留封面主标题一处 ===== */
+.kw {
+  background: none !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  -webkit-text-fill-color: #d4b87a !important;
+  color: #d4b87a;
+}
+
+/* ===== 设计 Token：文字层级（黑金 · 4 档暖灰，单一来源） ===== */
+:root {
+  --ink-1: #ece9e0;                 /* 主文字（标题/品牌） */
+  --ink-2: rgba(255,255,255,0.74);  /* 正文 */
+  --ink-3: rgba(255,255,255,0.5);   /* 说明/备注/补充 */
+  --ink-4: rgba(255,255,255,0.3);   /* 弱化/元信息 */
+  --gold: #d4b87a;                  /* 品牌金（正文强调） */
+}
+
 /* 单页独立打开时保持全宽显示；poster.html 容器模式下 body 直子元素为容器，不受影响 */
 body > .slide {
   margin: 0 auto;
@@ -37,6 +55,7 @@ body > .slide {
   padding: 15vh 7vw 9vh;
   padding: 15cqh 7cqw 9cqh;
   background:
+    radial-gradient(ellipse 120% 55% at 50% -8%, rgba(212,184,122,0.05) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 10%, rgba(180,150,100,0.05) 0%, transparent 45%),
     #0a0a0a;
   display: flex;
@@ -88,12 +107,12 @@ body > .slide {
   color: inherit;
   text-decoration: none;
 }
-.brand img { height: 5vh; height: 5cqh; filter: brightness(0.95) saturate(0.4); }
+.brand img { height: 5vh; height: 5cqh; filter: brightness(0.95) saturate(0.4); transform: translateY(-2px); }
 .brand span {
   font-size: 3.2vw;
   font-size: 3.2cqw;
   font-weight: 600;
-  color: rgba(255,255,255,0.85);
+  color: rgba(212,184,122,0.8);
   letter-spacing: 0.06em;
 }
 
@@ -114,7 +133,7 @@ body > .slide {
   font-size: 7cqw;
   font-weight: 900;
   letter-spacing: 0.08em;
-  color: #e0ded5;
+  color: var(--ink-1);
   margin-bottom: 2vh;
   margin-bottom: 2cqh;
   line-height: 1.35;
@@ -151,10 +170,10 @@ body > .slide {
   font-size: 4.2vw;
   font-size: 4.2cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.62);
-  letter-spacing: 0.1em;
-  margin-bottom: 5vh;
-  margin-bottom: 5cqh;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+  margin-bottom: 4vh;
+  margin-bottom: 4cqh;
 }
 
 /* ===== 概要页：眉题 + 主角句 + 竖线分组 ===== */
@@ -168,9 +187,9 @@ body > .slide {
 .hero {
   font-size: 7cqw;
   font-weight: 700;
-  color: #ece9e0;
+  color: var(--ink-1);
   line-height: 1.5;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   margin-bottom: 3cqh;
 }
 .hero .kw {
@@ -203,13 +222,13 @@ body > .slide {
 .tried .tried-items div {
   font-size: 4.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.72);
-  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  letter-spacing: 0;
 }
 .noresult {
   font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: var(--ink-2);
   letter-spacing: 0.06em;
 }
 .noresult + .noresult { margin-top: 1.2cqh; }
@@ -232,7 +251,7 @@ body > .slide {
   display: flex;
   flex-direction: column;
   gap: 3.2vh;
-  gap: 3.2cqh;
+  gap: 2.8cqh;
 }
 .item {
   display: flex;
@@ -246,8 +265,8 @@ body > .slide {
   font-variant-numeric: tabular-nums;
   font-size: 3.2vw;
   font-size: 3.2cqw;
-  font-weight: 300;
-  color: rgba(212,184,122,0.62);
+  font-weight: 500;
+  color: rgba(212,184,122,0.85);
   letter-spacing: 0.08em;
   min-width: 7vw;
   min-width: 7cqw;
@@ -256,8 +275,8 @@ body > .slide {
   font-size: 5.2vw;
   font-size: 5.2cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 .item .t .kw,
@@ -273,8 +292,8 @@ body > .slide {
   font-size: 4vw;
   font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.66);
-  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  letter-spacing: 0;
   line-height: 1.6;
   margin-top: 0.3vh;
   margin-top: 0.3cqh;
@@ -303,8 +322,8 @@ body > .slide {
   font-size: 4.8vw;
   font-size: 4.8cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.74);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 
@@ -321,9 +340,9 @@ body > .slide {
 .spread .fitem { gap: 4cqw; }
 .spread .fitem .label { font-size: 4cqw; min-width: 18cqw; }
 .spread .fitem .val { font-size: 4.8cqw; line-height: 1.6; }
-.spread .lines { gap: 3.4cqh; }
+.spread .lines { gap: 3cqh; }
 .spread .lines > div { font-size: 4.8cqw; }
-.spread .lines .dim { font-size: 4cqw; color: rgba(255,255,255,0.62); }
+.spread .lines .dim { font-size: 4cqw; color: rgba(255,255,255,0.48); }
 .spread .section { margin-top: auto; margin-bottom: 5cqh; }
 .spread .section:last-of-type { margin-bottom: auto; }
 .spread .section .sh { font-size: 4.6cqw; margin-bottom: 1.5cqh; }
@@ -363,12 +382,58 @@ body > .slide {
 .compact .section .sh { font-size: 3.8cqw; }
 .compact .tags { gap: 0.5cqh; }
 .compact .tags .tag { font-size: 3.8cqw; line-height: 1.5; }
-.compact .items { gap: 1.8cqh; margin-top: auto; margin-bottom: auto; }
+.compact .items { gap: 1.1cqh; margin-top: auto; margin-bottom: auto; }
 .compact .item .t { font-size: 4.2cqw; line-height: 1.5; }
 .compact .item .sub { font-size: 3.4cqw; margin-top: 0.2cqh; line-height: 1.5; }
 .compact .note { margin-bottom: 2cqh; font-size: 3.4cqw; margin-top: auto; }
 .compact .name { font-size: 5.6cqw; }
-.compact .bio { margin-bottom: 3cqh; font-size: 3.6cqw; }
+.compact .name-row { margin-bottom: 1.4cqh; }
+.compact .bio { margin-bottom: 1.8cqh; font-size: 3.6cqw; }
+/* 讲师页：头衔区（梁挚昊 + 头衔）整体居右，左侧留白供放置其他内容 */
+.compact .name-row {
+  justify-content: flex-end;
+}
+.compact .bio {
+  text-align: right;
+}
+/* 讲师页：左侧等比人像照（575×572），贴合左侧空白区，下缘对齐「创始人/品牌 IP 打造」行底 */
+.compact .tutor-photo {
+  position: absolute;
+  left: 7cqw;
+  top: 10cqh;
+  width: 22.1cqh;
+  height: 22.1cqh;
+  object-fit: contain;
+  display: block;
+}
+/* 讲师页：「梁挚昊 · 主讲/带教」居右，AI Builder 位于其下一行 */
+.compact:has(.tutor-photo) .title-row {
+  display: flex;
+  justify-content: flex-end;
+}
+.compact:has(.tutor-photo) .title-row .name-row {
+  margin-bottom: 0;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3cqh;
+}
+/* 讲师页：「主讲/带教 AI Builder」同行标签（梁挚昊之下第二行，均居右） */
+.compact .sub-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2.4cqw;
+}
+.compact .badge {
+  font-size: 3.6cqw;
+  font-weight: 400;
+  color: rgba(212,184,122,0.85);
+  letter-spacing: 0.06em;
+}
+/* 讲师页：履历 4 段之间呼吸空间加大（仅本页，不影响其他紧凑页） */
+.compact:has(.tutor-photo) .items {
+  gap: 1.8cqh;
+}
 .compact .out { margin-top: 2cqh; padding: 0; }
 .compact .out .label { font-size: 3.2cqw; margin-bottom: 0.8cqh; }
 .compact .out .val { font-size: 3.8cqw; line-height: 1.5; }
@@ -434,8 +499,8 @@ body > .slide {
   font-size: 4.4vw;
   font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.74);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 .out .val .kw {
@@ -461,8 +526,8 @@ body > .slide {
   font-size: 4.4vw;
   font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.68);
-  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.8;
 }
 .block .a .kw {
@@ -480,8 +545,8 @@ body > .slide {
   font-size: 4.4vw;
   font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.72);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.7;
 }
 .lines .kw {
@@ -495,7 +560,7 @@ body > .slide {
 .lines .dim {
   font-size: 3.8vw;
   font-size: 3.8cqw;
-  color: rgba(255,255,255,0.62);
+  color: var(--ink-3);
   line-height: 1.6;
   padding-left: 1cqw;
 }
@@ -541,8 +606,8 @@ body > .slide {
   font-size: 4.6vw;
   font-size: 4.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 
@@ -551,11 +616,11 @@ body > .slide {
   font-size: 3.8vw;
   font-size: 3.8cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.62);
+  color: var(--ink-3);
   letter-spacing: 0.06em;
   line-height: 1.8;
-  margin-bottom: 4vh;
-  margin-bottom: 4cqh;
+  margin-bottom: 3.2vh;
+  margin-bottom: 3.2cqh;
 }
 
 /* ===== 讲师介绍 ===== */
@@ -572,7 +637,7 @@ body > .slide {
   font-size: 7cqw;
   font-weight: 900;
   letter-spacing: 0.1em;
-  color: #e0ded5;
+  color: var(--ink-1);
 }
 .tagline {
   font-size: 4vw;
@@ -585,7 +650,7 @@ body > .slide {
   font-size: 4vw;
   font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.64);
+  color: var(--ink-3);
   letter-spacing: 0.08em;
   margin-bottom: 5vh;
   margin-bottom: 5cqh;
@@ -629,7 +694,7 @@ body > .slide {
   margin-top: auto;
   margin-bottom: 0;
   font-size: 5cqw;
-  color: rgba(255,255,255,0.68);
+  color: var(--ink-3);
 }
 
 /* ===== 结尾 ===== */
@@ -659,7 +724,7 @@ body > .slide {
   font-size: 4vw;
   font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: var(--ink-3);
   letter-spacing: 0.16em;
   margin-top: 2vh;
   margin-top: 2cqh;
@@ -686,8 +751,8 @@ body > .slide {
   font-variant-numeric: tabular-nums;
   font-size: 3.2vw;
   font-size: 3.2cqw;
-  font-weight: 300;
-  color: rgba(212,184,122,0.62);
+  font-weight: 500;
+  color: rgba(212,184,122,0.85);
   letter-spacing: 0.08em;
   min-width: 8vw;
   min-width: 8cqw;
@@ -696,8 +761,8 @@ body > .slide {
   font-size: 4.4vw;
   font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.74);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 .link .t .kw {
@@ -720,13 +785,25 @@ body > .slide {
   font-size: 3vw;
   font-size: 3cqw;
   font-weight: 300;
-  color: rgba(255,255,255,0.3);
+  color: var(--ink-4);
   letter-spacing: 0.3em;
 }
 
 /* ============================================================
    封面：宋体 · 大字 · 克制 · 黑金质感
+   版式节奏：眉题(kicker) 置顶 → 主标题 → 金线 → 主信息 → 说明 → 链路句
    ============================================================ */
+/* 「系统化课程」眉题：宽字距宋体标签，置于主标题上方（flex order 重排，不动 DOM） */
+.cover .kicker {
+  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
+  font-size: 4.2cqw;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  color: rgba(212,184,122,0.78);
+  margin-bottom: 2cqh;
+  order: -1;
+}
 /* 主标题：超大宋体 + 金色渐变 + 宽字距 */
 .cover .title.big {
   font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
@@ -734,7 +811,7 @@ body > .slide {
   line-height: 1.32;
   letter-spacing: 0.1em;
   text-indent: 0.1em;               /* 抵消末尾字距，保持绝对居中 */
-  margin-bottom: 4cqh;
+  margin-bottom: 2.5cqh;
   background: linear-gradient(180deg,
     #f3e7c4 0%,
     #d4b87a 36%,
@@ -744,28 +821,20 @@ body > .slide {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  order: 0;
 }
 .cover .title.big .thin {
   font-weight: 400;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-/* 「系统化课程」：宽字距宋体标签 */
-.cover .kicker {
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
-  font-size: 4.2cqw;
-  font-weight: 400;
-  letter-spacing: 0.4em;
-  text-indent: 0.4em;
-  color: rgba(255,255,255,0.62);
-  margin-bottom: 4cqh;
-}
 /* 居中细金线：品牌仪式感 */
 .cover .rule.mid {
   width: 13cqw;
   height: 0.1cqw;
-  margin: 0 auto 4cqh;
+  margin: 0 auto 2.5cqh;
   background: rgba(212,184,122,0.42);
+  order: 1;
 }
 /* 副标题：宋体说明文字 */
 .cover .subtitle {
@@ -774,7 +843,7 @@ body > .slide {
   font-weight: 400;
   letter-spacing: 0.18em;
   text-indent: 0.18em;
-  color: rgba(255,255,255,0.6);
+  color: var(--ink-3);
   line-height: 1.9;
   margin-bottom: 0;
 }
@@ -790,9 +859,10 @@ body > .slide {
 .cover .cover-main {
   font-size: 4.8cqw;
   font-weight: 700;
-  color: #e0ded5;
+  color: var(--ink-1);
   letter-spacing: 0.08em;
-  margin-bottom: 2.5cqh;
+  margin-bottom: 2cqh;
+  order: 2;
 }
 .cover .cover-main .kw {
   font-weight: 700;
@@ -805,10 +875,11 @@ body > .slide {
 .cover .cover-lines {
   font-size: 3.6cqw;
   font-weight: 300;
-  color: rgba(255,255,255,0.6);
+  color: var(--ink-3);
   letter-spacing: 0.12em;
   line-height: 1.9;
-  margin-bottom: 3cqh;
+  margin-bottom: 2.5cqh;
+  order: 3;
 }
 /* 封面链路句 */
 .cover .cover-chain {
@@ -816,6 +887,7 @@ body > .slide {
   font-weight: 400;
   color: rgba(212,184,122,0.9);
   letter-spacing: 0.06em;
+  order: 4;
 }
 
 /* ============================================================
@@ -829,7 +901,7 @@ body > .slide {
 .route-sub {
   font-size: 3.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: var(--ink-3);
   letter-spacing: 0.1em;
   margin-top: 1.2cqh;
 }
@@ -843,9 +915,9 @@ body > .slide {
   align-content: stretch;
 }
 .route-grid .cell {
-  background: linear-gradient(160deg, rgba(212,184,122,0.07) 0%, rgba(212,184,122,0.02) 100%);
+  background: rgba(212,184,122,0.04);
   border: 0.1cqw solid rgba(212,184,122,0.16);
-  border-radius: 1.2cqw;
+  border-radius: 0;
   padding: 1.6cqh 1cqw 1.4cqh;
   display: flex;
   flex-direction: column;
@@ -865,19 +937,19 @@ body > .slide {
 .route-grid .cell .t {
   font-size: 3.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.4;
 }
 /* 破格：第 08/12 格金色强调（升级玩法 / SOP 流水线） */
 .route-grid .cell:nth-child(8) {
   border-color: rgba(212,184,122,0.5);
-  background: linear-gradient(160deg, rgba(212,184,122,0.16) 0%, rgba(212,184,122,0.04) 100%);
+  background: rgba(212,184,122,0.10);
 }
 .route-grid .cell:nth-child(8) .t { color: #e2c988; }
 .route-grid .cell:nth-child(12) {
   border-color: rgba(212,184,122,0.35);
-  background: linear-gradient(160deg, rgba(212,184,122,0.12) 0%, rgba(212,184,122,0.03) 100%);
+  background: rgba(212,184,122,0.07);
 }
 .route-grid .cell:nth-child(12) .t { color: #e2c988; }
 .route-foot { margin-top: 0; padding-top: 2cqh; }
@@ -890,7 +962,7 @@ body > .slide {
 .route-tag {
   font-size: 3.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.7);
+  color: var(--ink-2);
   letter-spacing: 0.1em;
   text-align: center;
 }
@@ -907,15 +979,15 @@ body > .slide {
    玩法一 / 玩法二 双区块卡片 + 流程箭头
    ============================================================ */
 .play-card {
-  background: linear-gradient(160deg, rgba(212,184,122,0.06) 0%, rgba(212,184,122,0.015) 100%);
+  background: rgba(212,184,122,0.035);
   border: 0.1cqw solid rgba(212,184,122,0.18);
-  border-radius: 1.4cqw;
+  border-radius: 0;
   padding: 2.2cqh 3cqw 2.2cqh;
   margin-bottom: 2.2cqh;
 }
 .play-card.play-hot {
   border-color: rgba(212,184,122,0.42);
-  background: linear-gradient(160deg, rgba(212,184,122,0.13) 0%, rgba(212,184,122,0.03) 100%);
+  background: rgba(212,184,122,0.08);
 }
 .play-head {
   display: flex;
@@ -936,7 +1008,7 @@ body > .slide {
   font-size: 4.8cqw;
   font-weight: 700;
   color: #ece9e0;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   line-height: 1.5;
 }
 .play-name .kw {
@@ -954,8 +1026,8 @@ body > .slide {
 .play-flow span {
   font-size: 3.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.5;
 }
 .play-flow .arr {
@@ -1028,8 +1100,8 @@ body > .slide {
 .step-t {
   font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  letter-spacing: 0;
   line-height: 1.6;
 }
 .step-t .kw {
