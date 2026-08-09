@@ -34,8 +34,8 @@ body > .slide {
   aspect-ratio: 9 / 16;
   position: relative;
   overflow: hidden;
-  padding: 11vh 7vw 7vh;
-  padding: 11cqh 7cqw 7cqh;
+  padding: 15vh 7vw 9vh;
+  padding: 15cqh 7cqw 9cqh;
   background:
     radial-gradient(ellipse at 80% 10%, rgba(180,150,100,0.05) 0%, transparent 45%),
     #0a0a0a;
@@ -51,8 +51,8 @@ body > .slide {
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 11vh 7vw 7vh;
-  padding: 11cqh 7cqw 7cqh;
+  padding: 15vh 7vw 9vh;
+  padding: 15cqh 7cqw 9cqh;
   overflow: hidden;
 }
 
@@ -76,23 +76,33 @@ body > .slide {
   gap: 2.5vw;
   gap: 2.5cqw;
   text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
   opacity: 0.8;
+  z-index: 10;
+}
+.brand:link,
+.brand:visited,
+.brand:hover,
+.brand:active {
+  color: inherit;
+  text-decoration: none;
 }
 .brand img { height: 5vh; height: 5cqh; filter: brightness(0.95) saturate(0.4); }
 .brand span {
   font-size: 3.2vw;
   font-size: 3.2cqw;
   font-weight: 600;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.85);
   letter-spacing: 0.06em;
 }
 
 /* ===== 章节编号（适度标签） ===== */
 .modnum {
-  font-size: 3vw;
-  font-size: 3cqw;
+  font-size: 3.6vw;
+  font-size: 3.6cqw;
   font-weight: 700;
-  color: rgba(212,184,122,0.8);
+  color: rgba(212,184,122,0.85);
   letter-spacing: 0.3em;
   text-indent: 0.3em;
   margin-bottom: 2cqh;
@@ -127,13 +137,69 @@ body > .slide {
 
 /* ===== 副标题 / 引导语（弱一档，与正文拉开层级） ===== */
 .subtitle {
-  font-size: 3.4vw;
-  font-size: 3.4cqw;
+  font-size: 4.2vw;
+  font-size: 4.2cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.38);
+  color: rgba(255,255,255,0.62);
   letter-spacing: 0.1em;
   margin-bottom: 5vh;
   margin-bottom: 5cqh;
+}
+
+/* ===== 概要页：眉题 + 主角句 + 竖线分组 ===== */
+.eyebrow {
+  font-size: 4.2cqw;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: rgba(212,184,122,0.85);
+  margin-bottom: 2.5cqh;
+}
+.hero {
+  font-size: 7cqw;
+  font-weight: 700;
+  color: #ece9e0;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  margin-bottom: 3cqh;
+}
+.hero .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* 语义转折极浅分隔线 */
+.turn-divider {
+  height: 0.1cqw;
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 3.5cqh;
+}
+.tried {
+  display: flex;
+  gap: 2.5cqw;
+}
+.tried .tried-bar {
+  width: 0.2cqw;
+  background: linear-gradient(180deg, rgba(212,184,122,0.7), rgba(212,184,122,0.15));
+}
+.tried .tried-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqh;
+}
+.tried .tried-items div {
+  font-size: 4.6cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: 0.05em;
+}
+.noresult {
+  font-size: 4cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.06em;
 }
 
 /* ===== 分割线 ===== */
@@ -141,20 +207,20 @@ body > .slide {
   width: 100%;
   height: 0.15vw;
   height: 0.15cqw;
-  background: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.10);
   margin-bottom: 5vh;
   margin-bottom: 5cqh;
 }
 .rule.gold {
-  background: rgba(212,184,122,0.35);
+  background: rgba(212,184,122,0.24);
 }
 
 /* ===== 编号列表 ===== */
 .items {
   display: flex;
   flex-direction: column;
-  gap: 2.6vh;
-  gap: 2.6cqh;
+  gap: 3.2vh;
+  gap: 3.2cqh;
 }
 .item {
   display: flex;
@@ -166,21 +232,21 @@ body > .slide {
   flex-shrink: 0;
   font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
-  font-size: 2.8vw;
-  font-size: 2.8cqw;
+  font-size: 3.2vw;
+  font-size: 3.2cqw;
   font-weight: 300;
-  color: rgba(212,184,122,0.4);
+  color: rgba(212,184,122,0.62);
   letter-spacing: 0.08em;
   min-width: 7vw;
   min-width: 7cqw;
 }
 .item .t {
-  font-size: 4.2vw;
-  font-size: 4.2cqw;
+  font-size: 5.2vw;
+  font-size: 5.2cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.78);
   letter-spacing: 0.04em;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 .item .t .kw,
 .tags .tag .kw {
@@ -192,23 +258,23 @@ body > .slide {
 }
 .item .sub {
   display: block;
-  font-size: 3.2vw;
-  font-size: 3.2cqw;
+  font-size: 4vw;
+  font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.42);
+  color: rgba(255,255,255,0.66);
   letter-spacing: 0.04em;
-  line-height: 1.7;
+  line-height: 1.6;
   margin-top: 0.3vh;
   margin-top: 0.3cqh;
 }
 
 /* ===== 分组小节（带小节标题 + 标签流） ===== */
-.section { margin-bottom: 4.5vh; margin-bottom: 4.5cqh; }
+.section { margin-bottom: 5.2vh; margin-bottom: 5.2cqh; }
 .section .sh {
-  font-size: 3.8vw;
-  font-size: 3.8cqw;
+  font-size: 4.4vw;
+  font-size: 4.4cqw;
   font-weight: 700;
-  color: rgba(212,184,122,0.85);
+  color: rgba(212,184,122,0.9);
   letter-spacing: 0.12em;
   margin-bottom: 1.8vh;
   margin-bottom: 1.8cqh;
@@ -216,18 +282,18 @@ body > .slide {
 .tags {
   display: flex;
   flex-direction: column;
-  gap: 1.2vh;
-  gap: 1.2cqh;
+  gap: 1.6vh;
+  gap: 1.6cqh;
   padding-left: 1vw;
   padding-left: 1cqw;
 }
 .tags .tag {
-  font-size: 3.9vw;
-  font-size: 3.9cqw;
+  font-size: 4.8vw;
+  font-size: 4.8cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.68);
+  color: rgba(255,255,255,0.74);
   letter-spacing: 0.04em;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* 内容较少页：条目垂直居中分布并放大字号，避免中部大片空白（类随内容页透传） */
@@ -238,31 +304,46 @@ body > .slide {
   margin-bottom: auto;
 }
 .spread .items { gap: 4.5cqh; }
-.spread .item .t { font-size: 4.4cqw; }
-.spread .item .sub { font-size: 3.4cqw; margin-top: 0.5cqh; }
+.spread .item .t { font-size: 5.4cqw; }
+.spread .item .sub { font-size: 4.2cqw; margin-top: 0.5cqh; }
 .spread .fitem { gap: 4cqw; }
-.spread .fitem .label { font-size: 3.4cqw; min-width: 18cqw; }
-.spread .fitem .val { font-size: 4cqw; line-height: 1.6; }
-.spread .lines { gap: 2.6cqh; }
-.spread .lines > div { font-size: 4.2cqw; }
-.spread .lines .dim { font-size: 3.2cqw; color: rgba(255,255,255,0.45); }
-.spread .section { margin-bottom: 5cqh; }
-.spread .section .sh { font-size: 4cqw; margin-bottom: 1.5cqh; }
+.spread .fitem .label { font-size: 4cqw; min-width: 18cqw; }
+.spread .fitem .val { font-size: 4.8cqw; line-height: 1.6; }
+.spread .lines { gap: 3.4cqh; }
+.spread .lines > div { font-size: 4.8cqw; }
+.spread .lines .dim { font-size: 4cqw; color: rgba(255,255,255,0.62); }
+.spread .section { margin-top: auto; margin-bottom: 5cqh; }
+.spread .section:last-of-type { margin-bottom: auto; }
+.spread .section .sh { font-size: 4.6cqw; margin-bottom: 1.5cqh; }
 .spread .tags { gap: 1.4cqh; }
-.spread .tags .tag { font-size: 4cqw; line-height: 1.7; }
+.spread .tags .tag { font-size: 4.8cqw; line-height: 1.6; }
+/* 面向谁页（hero + 尝试列表）：整体垂直撑满，避免底部大片空白 */
+.spread .hero,
+.spread .tried,
+.spread .noresult { margin-top: auto; }
+.spread .tried { margin-bottom: auto; }
+.spread .noresult { margin-bottom: 0; }
 
-/* 高密度页紧凑版式（如模块三：多组标签流；类随内容页 .slide 透传到 .slide-inner） */
+/* 高密度页紧凑版式（内容多的页，如讲师/文案/拍摄/剪辑；类随内容页 .slide 透传到 .slide-inner） */
 .compact .modnum { margin-bottom: 1cqh; }
-.compact .title { margin-bottom: 1.2cqh; }
-.compact .subtitle { margin-bottom: 1.8cqh; }
+.compact .title { margin-bottom: 1.2cqh; font-size: 6cqw; }
+.compact .subtitle { margin-bottom: 1.8cqh; font-size: 3.8cqw; }
 .compact .rule { margin-bottom: 1.5cqh; }
-.compact .section { margin-bottom: 1.8cqh; }
+.compact .section { margin-bottom: 1.8cqh; margin-top: auto; }
+.compact .section:last-of-type { margin-bottom: auto; }
 .compact .section .sh { margin-bottom: 0.8cqh; }
-.compact .section .sh { font-size: 3.2cqw; }
+.compact .section .sh { font-size: 3.8cqw; }
 .compact .tags { gap: 0.5cqh; }
-.compact .tags .tag { font-size: 3cqw; line-height: 1.5; }
-.compact .out { margin-top: 20px; padding-top: 1.8cqh; }
-.compact .out .ov { line-height: 1.45; }
+.compact .tags .tag { font-size: 3.8cqw; line-height: 1.5; }
+.compact .items { gap: 1.8cqh; margin-top: auto; margin-bottom: auto; }
+.compact .item .t { font-size: 4.2cqw; line-height: 1.5; }
+.compact .item .sub { font-size: 3.4cqw; margin-top: 0.2cqh; line-height: 1.5; }
+.compact .note { margin-bottom: 2cqh; font-size: 3.4cqw; margin-top: auto; }
+.compact .name { font-size: 5.6cqw; }
+.compact .bio { margin-bottom: 3cqh; font-size: 3.6cqw; }
+.compact .out { margin-top: 2cqh; padding: 2.2cqh 3cqw 2cqh; border-radius: 1.2cqw; }
+.compact .out .label { font-size: 3.2cqw; margin-bottom: 0.8cqh; }
+.compact .out .val { font-size: 3.8cqw; line-height: 1.5; }
 
 /* ===== 分页角标（如 1/2、2/2，右上角） ===== */
 .page-tag {
@@ -271,10 +352,10 @@ body > .slide {
   right: 7cqw;
   font-family: -apple-system, "Helvetica Neue", sans-serif;
   font-variant-numeric: tabular-nums;
-  font-size: 2.6cqw;
+  font-size: 3cqw;
   font-weight: 300;
   letter-spacing: 0.14em;
-  color: rgba(212,184,122,0.55);
+  color: rgba(212,184,122,0.6);
 }
 
 /* ===== 两栏布局（标签流分组，左右分栏） ===== */
@@ -295,49 +376,72 @@ body > .slide {
   background: rgba(212,184,122,0.16);
 }
 
-/* ===== 底部产出栏（独立区域：浅金色块，不用横线切割页面） ===== */
+/* ===== 底部产出栏（独立区域：精致金色卡片，官网级 CTA 锚点） ===== */
 .out {
   margin-top: auto;
-  padding: 3.5vh 4vw 3vh;
-  padding: 3.5cqh 4cqw 3cqh;
-  background: linear-gradient(135deg, rgba(212,184,122,0.1) 0%, rgba(180,150,100,0.04) 100%);
+  padding: 4cqh 4.5cqw 3.8cqh;
+  border: 0.1cqw solid rgba(212,184,122,0.22);
+  border-radius: 1.4cqw;
+  background:
+    radial-gradient(140% 180% at 88% -30%, rgba(212,184,122,0.14) 0%, transparent 55%),
+    linear-gradient(150deg, rgba(212,184,122,0.08) 0%, rgba(180,150,100,0.02) 100%);
 }
 .out .label {
-  font-size: 3vw;
-  font-size: 3cqw;
-  font-weight: 700;
-  color: rgba(212,184,122,0.7);
-  letter-spacing: 0.12em;
-  margin-bottom: 1vh;
-  margin-bottom: 1cqh;
-}
-.out .val {
+  display: flex;
+  align-items: center;
+  gap: 1.4cqw;
   font-size: 3.4vw;
   font-size: 3.4cqw;
+  font-weight: 700;
+  color: rgba(212,184,122,0.95);
+  letter-spacing: 0.22em;
+  margin-bottom: 1.4vh;
+  margin-bottom: 1.4cqh;
+}
+/* 徽章小圆点：品牌仪式感 */
+.out .label::before {
+  content: '';
+  flex-shrink: 0;
+  width: 0.7cqw;
+  height: 0.7cqw;
+  border-radius: 50%;
+  background: #d4b87a;
+  box-shadow: 0 0 1.2cqw rgba(212,184,122,0.6);
+}
+.out .val {
+  font-size: 4.4vw;
+  font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.74);
   letter-spacing: 0.04em;
   line-height: 1.6;
+}
+.out .val .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ===== 问答块（概要页） ===== */
 .block { margin-bottom: 5vh; margin-bottom: 5cqh; }
 .block .q {
-  font-size: 4vw;
-  font-size: 4cqw;
+  font-size: 4.6vw;
+  font-size: 4.6cqw;
   font-weight: 700;
-  color: rgba(212,184,122,0.85);
+  color: rgba(212,184,122,0.9);
   letter-spacing: 0.12em;
   margin-bottom: 2vh;
   margin-bottom: 2cqh;
 }
 .block .a {
-  font-size: 3.4vw;
-  font-size: 3.4cqw;
+  font-size: 4.4vw;
+  font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.68);
   letter-spacing: 0.05em;
-  line-height: 1.9;
+  line-height: 1.8;
 }
 .block .a .kw {
   font-weight: 700;
@@ -348,12 +452,13 @@ body > .slide {
 .lines {
   display: flex;
   flex-direction: column;
-  gap: 1.6cqh;
+  gap: 2.2cqh;
 }
 .lines > div {
-  font-size: 3.6cqw;
+  font-size: 4.4vw;
+  font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.68);
+  color: rgba(255,255,255,0.72);
   letter-spacing: 0.04em;
   line-height: 1.7;
 }
@@ -366,8 +471,9 @@ body > .slide {
 }
 /* 括号说明行：弱化一档 */
 .lines .dim {
-  font-size: 3cqw;
-  color: rgba(255,255,255,0.4);
+  font-size: 3.8vw;
+  font-size: 3.8cqw;
+  color: rgba(255,255,255,0.62);
   line-height: 1.6;
   padding-left: 1cqw;
 }
@@ -376,8 +482,8 @@ body > .slide {
 .form-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.8vh;
-  gap: 1.8cqh;
+  gap: 2.4vh;
+  gap: 2.4cqh;
 }
 .fitem {
   display: flex;
@@ -387,29 +493,29 @@ body > .slide {
 }
 .fitem .label {
   flex-shrink: 0;
-  font-size: 3vw;
-  font-size: 3cqw;
+  font-size: 3.6vw;
+  font-size: 3.6cqw;
   font-weight: 700;
-  color: rgba(212,184,122,0.7);
+  color: rgba(212,184,122,0.8);
   letter-spacing: 0.1em;
   min-width: 16vw;
   min-width: 16cqw;
 }
 .fitem .val {
-  font-size: 3.4vw;
-  font-size: 3.4cqw;
+  font-size: 4.6vw;
+  font-size: 4.6cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.62);
+  color: rgba(255,255,255,0.7);
   letter-spacing: 0.04em;
   line-height: 1.6;
 }
 
 /* ===== 备注行（深挖/贯通页顶部） ===== */
 .note {
-  font-size: 3vw;
-  font-size: 3cqw;
+  font-size: 3.8vw;
+  font-size: 3.8cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.62);
   letter-spacing: 0.06em;
   line-height: 1.8;
   margin-bottom: 4vh;
@@ -433,17 +539,17 @@ body > .slide {
   color: #e0ded5;
 }
 .tagline {
-  font-size: 3.6vw;
-  font-size: 3.6cqw;
+  font-size: 4vw;
+  font-size: 4cqw;
   font-weight: 400;
-  color: rgba(212,184,122,0.8);
+  color: rgba(212,184,122,0.85);
   letter-spacing: 0.15em;
 }
 .bio {
-  font-size: 3.2vw;
-  font-size: 3.2cqw;
+  font-size: 4vw;
+  font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.64);
   letter-spacing: 0.08em;
   margin-bottom: 5vh;
   margin-bottom: 5cqh;
@@ -468,14 +574,40 @@ body > .slide {
   margin: 6cqh 0;
 }
 
+/* ===== 居中金句页（如"课堂实战纠错"）· 全页分布，避免上下大片留白 ===== */
+.hero-note { text-align: center; align-items: center; }
+.hero-note .kicker {
+  margin-top: 14cqh;
+  font-size: 5cqw;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  color: rgba(212,184,122,0.9);
+}
+.hero-note .title {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 8.4cqw;
+  line-height: 1.5;
+}
+.hero-note .subtitle {
+  margin-top: auto;
+  margin-bottom: 0;
+  font-size: 5cqw;
+  color: rgba(255,255,255,0.68);
+}
+
 /* ===== 结尾 ===== */
 .closing {
-  margin-top: auto;
   text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .closing .main {
-  font-size: 5vw;
-  font-size: 5cqw;
+  font-size: 6.4vw;
+  font-size: 6.4cqw;
   font-weight: 900;
   letter-spacing: 0.12em;
   color: #e0ded5;
@@ -488,10 +620,10 @@ body > .slide {
   background-clip: text;
 }
 .closing .sub {
-  font-size: 3.2vw;
-  font-size: 3.2cqw;
+  font-size: 4vw;
+  font-size: 4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.6);
   letter-spacing: 0.16em;
   margin-top: 2vh;
   margin-top: 2cqh;
@@ -501,8 +633,8 @@ body > .slide {
 .chain {
   display: flex;
   flex-direction: column;
-  gap: 1.6vh;
-  gap: 1.6cqh;
+  gap: 2.2vh;
+  gap: 2.2cqh;
   margin-bottom: 4vh;
   margin-bottom: 4cqh;
 }
@@ -516,19 +648,19 @@ body > .slide {
   flex-shrink: 0;
   font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
-  font-size: 2.6vw;
-  font-size: 2.6cqw;
+  font-size: 3.2vw;
+  font-size: 3.2cqw;
   font-weight: 300;
-  color: rgba(212,184,122,0.4);
+  color: rgba(212,184,122,0.62);
   letter-spacing: 0.08em;
   min-width: 8vw;
   min-width: 8cqw;
 }
 .link .t {
-  font-size: 3.4vw;
-  font-size: 3.4cqw;
+  font-size: 4.4vw;
+  font-size: 4.4cqw;
   font-weight: 400;
-  color: rgba(255,255,255,0.62);
+  color: rgba(255,255,255,0.74);
   letter-spacing: 0.04em;
   line-height: 1.6;
 }
@@ -549,10 +681,10 @@ body > .slide {
   text-align: center;
   font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
   font-variant-numeric: tabular-nums;
-  font-size: 2.8vw;
-  font-size: 2.8cqw;
+  font-size: 3vw;
+  font-size: 3cqw;
   font-weight: 300;
-  color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.3);
   letter-spacing: 0.3em;
 }
 
@@ -585,11 +717,11 @@ body > .slide {
 /* 「系统化课程」：宽字距宋体标签 */
 .cover .kicker {
   font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
-  font-size: 3.6cqw;
+  font-size: 4.2cqw;
   font-weight: 400;
   letter-spacing: 0.4em;
   text-indent: 0.4em;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.62);
   margin-bottom: 4cqh;
 }
 /* 居中细金线：品牌仪式感 */
@@ -597,24 +729,297 @@ body > .slide {
   width: 13cqw;
   height: 0.1cqw;
   margin: 0 auto 4cqh;
-  background: rgba(212,184,122,0.55);
+  background: rgba(212,184,122,0.42);
 }
 /* 副标题：宋体说明文字 */
 .cover .subtitle {
   font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
-  font-size: 3.6cqw;
+  font-size: 4cqw;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-indent: 0.18em;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.6);
   line-height: 1.9;
   margin-bottom: 0;
 }
 /* 品牌区：顶部宋体眉题 */
 .cover .brand span {
   font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'SimSun', serif;
-  font-size: 3.2cqw;
+  font-size: 3.6cqw;
   font-weight: 400;
   letter-spacing: 0.3em;
+  color: rgba(212,184,122,0.8);
+}
+/* 封面主信息行（3 天实战带教） */
+.cover .cover-main {
+  font-size: 4.8cqw;
+  font-weight: 700;
+  color: #e0ded5;
+  letter-spacing: 0.08em;
+  margin-bottom: 2.5cqh;
+}
+.cover .cover-main .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* 封面两行说明 */
+.cover .cover-lines {
+  font-size: 3.6cqw;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.12em;
+  line-height: 1.9;
+  margin-bottom: 3cqh;
+}
+/* 封面链路句 */
+.cover .cover-chain {
+  font-size: 4cqw;
+  font-weight: 400;
+  color: rgba(212,184,122,0.9);
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   路线图页（第 7 页 · 内容获客全链路）破格版式
+   12 模块 3×4 网格链路，突破普通列表模板
+   ============================================================ */
+.route { position: relative; }
+.route-head { margin-bottom: 4cqh; }
+.route-head .kicker { margin-bottom: 1.5cqh; }
+.route-head .title { margin-bottom: 0; }
+.route-sub {
+  font-size: 3.6cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  margin-top: 1.2cqh;
+}
+.route-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1.6cqh 2cqw;
+  margin-bottom: 4cqh;
+  align-content: stretch;
+}
+.route-grid .cell {
+  background: linear-gradient(160deg, rgba(212,184,122,0.07) 0%, rgba(212,184,122,0.02) 100%);
+  border: 0.1cqw solid rgba(212,184,122,0.16);
+  border-radius: 1.2cqw;
+  padding: 1.6cqh 1cqw 1.4cqh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8cqh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.route-grid .cell .n {
+  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 3.2cqw;
+  font-weight: 700;
+  color: rgba(212,184,122,0.9);
+  letter-spacing: 0.1em;
+}
+.route-grid .cell .t {
+  font-size: 3.4cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+/* 破格：第 08/12 格金色强调（升级玩法 / SOP 流水线） */
+.route-grid .cell:nth-child(8) {
+  border-color: rgba(212,184,122,0.5);
+  background: linear-gradient(160deg, rgba(212,184,122,0.16) 0%, rgba(212,184,122,0.04) 100%);
+}
+.route-grid .cell:nth-child(8) .t { color: #e2c988; }
+.route-grid .cell:nth-child(12) {
+  border-color: rgba(212,184,122,0.35);
+  background: linear-gradient(160deg, rgba(212,184,122,0.12) 0%, rgba(212,184,122,0.03) 100%);
+}
+.route-grid .cell:nth-child(12) .t { color: #e2c988; }
+.route-foot { margin-top: 0; padding-top: 2cqh; }
+.route-line {
+  width: 100%;
+  height: 0.1cqw;
+  background: linear-gradient(90deg, rgba(212,184,122,0.06) 0%, rgba(212,184,122,0.55) 50%, rgba(212,184,122,0.06) 100%);
+  margin-bottom: 2cqh;
+}
+.route-tag {
+  font-size: 3.6cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.route-tag .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   升级玩法页（第 16 页 · 第八章）破格版式
+   玩法一 / 玩法二 双区块卡片 + 流程箭头
+   ============================================================ */
+.play-card {
+  background: linear-gradient(160deg, rgba(212,184,122,0.06) 0%, rgba(212,184,122,0.015) 100%);
+  border: 0.1cqw solid rgba(212,184,122,0.18);
+  border-radius: 1.4cqw;
+  padding: 2.2cqh 3cqw 2.2cqh;
+  margin-bottom: 2.2cqh;
+}
+.play-card.play-hot {
+  border-color: rgba(212,184,122,0.42);
+  background: linear-gradient(160deg, rgba(212,184,122,0.13) 0%, rgba(212,184,122,0.03) 100%);
+}
+.play-head {
+  display: flex;
+  align-items: baseline;
+  gap: 2.4cqw;
+  margin-bottom: 1.4cqh;
+}
+.play-no {
+  flex-shrink: 0;
+  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 3.4cqw;
+  font-weight: 700;
+  color: rgba(212,184,122,0.9);
+  letter-spacing: 0.1em;
+}
+.play-name {
+  font-size: 4.8cqw;
+  font-weight: 700;
+  color: #ece9e0;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+.play-name .kw {
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.play-flow {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  flex-wrap: wrap;
+}
+.play-flow span {
+  font-size: 3.6cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.play-flow .arr {
+  flex-shrink: 0;
+  width: 1.8cqw;
+  height: 0.1cqw;
+  background: linear-gradient(90deg, rgba(212,184,122,0.8), rgba(212,184,122,0.2));
+  position: relative;
+}
+.play-flow .arr::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -0.35cqw;
+  border: 0.55cqw solid transparent;
+  border-left: 0.7cqw solid rgba(212,184,122,0.8);
+}
+
+/* ============================================================
+   SOP 流水线页（第 20 页 · 第十二章）破格版式
+   垂直线性流程：竖轨道 + 节点圆点，流水线构图
+   ============================================================ */
+.pipe {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3.5cqh;
+}
+.step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 3cqw;
+  padding-bottom: 3cqh;
+}
+.step:last-child { padding-bottom: 0; }
+/* 左侧竖轨道 */
+.step-line {
+  position: absolute;
+  left: 2.2cqw;
+  top: 0;
+  bottom: 0;
+  width: 0.1cqw;
+  background: linear-gradient(180deg, rgba(212,184,122,0.6), rgba(212,184,122,0.15));
+}
+.step:last-child .step-line {
+  bottom: 50%;
+}
+/* 节点圆点 */
+.step-no {
+  flex-shrink: 0;
+  width: 4.4cqw;
+  height: 4.4cqw;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, "Helvetica Neue", "PingFang SC", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 2.4cqw;
+  font-weight: 700;
+  color: #0a0a0a;
+  background: linear-gradient(135deg, #e2c988 0%, #c9a050 100%);
+  box-shadow: 0 0 2.5cqw rgba(212,184,122,0.3);
+}
+.step-body {
+  flex: 1;
+  padding-top: 0.3cqh;
+}
+.step-t {
+  font-size: 4.4cqw;
+  font-weight: 400;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+.step-t .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.step-s {
+  font-size: 3.4cqw;
+  font-weight: 400;
   color: rgba(212,184,122,0.75);
+  letter-spacing: 0.08em;
+  margin-top: 0.6cqh;
+}
+/* 结尾产物连线下引 */
+.pipeline .out {
+  position: relative;
+}
+.pipeline .out::before {
+  content: '';
+  position: absolute;
+  left: 2.2cqw;
+  top: -3.5cqh;
+  width: 0.1cqw;
+  height: 3.5cqh;
+  background: linear-gradient(180deg, rgba(212,184,122,0.15), rgba(212,184,122,0.4));
 }
