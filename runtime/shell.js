@@ -213,6 +213,20 @@
         state.pages = meta.pages || [];
         if (meta.title) document.title = meta.title;
 
+        // 微信小程序 web-view：上报分享信息（标题/封面/当前页）
+        // 小程序端 bindmessage 接收后用于分享卡片与深链
+        try {
+          if (window.wx && wx.miniProgram && wx.miniProgram.postMessage) {
+            wx.miniProgram.postMessage({
+              data: {
+                title: meta.title || '觅火 PPT',
+                image: 'https://miifire.com/projects/' + encodeURIComponent(project) + '/thumbs/1.png',
+                page: window.location.href,
+              },
+            });
+          }
+        } catch (e) { /* 非小程序环境忽略 */ }
+
         // 注入主题
         const link = document.createElement('link');
         link.rel = 'stylesheet';

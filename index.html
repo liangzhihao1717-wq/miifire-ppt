@@ -144,6 +144,19 @@
   </div>
 
   <script>
+    // 微信小程序 web-view：上报目录页分享信息
+    try {
+      if (window.wx && wx.miniProgram && wx.miniProgram.postMessage) {
+        wx.miniProgram.postMessage({
+          data: {
+            title: '觅火 PPT 项目目录',
+            image: 'https://miifire.com/runtime/assets/logo.png',
+            page: window.location.href,
+          },
+        });
+      }
+    } catch (e) { /* 非小程序环境忽略 */ }
+
     // 从统一服务读取项目列表并动态渲染目录
     fetch('/api/projects')
       .then(r => r.json())
