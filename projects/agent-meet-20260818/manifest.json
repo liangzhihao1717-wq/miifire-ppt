@@ -1,0 +1,17 @@
+{
+  "id": "agent-meet-20260818",
+  "title": "内衣行业 · 代理商专场 · 短视频获客",
+  "date": "2026-08-18",
+  "type": "poster",
+  "ratio": "9:16",
+  "total": 5,
+  "theme": "portrait",
+  "features": ["scroller", "progress", "fullscreen"],
+  "pages": [
+    { "id": "cover", "n": 1, "title": "短视频获客" },
+    { "id": "pain", "n": 2, "title": "短视频这件事，你卡在哪" },
+    { "id": "day1", "n": 3, "title": "第一天 · 一套系统的方法" },
+    { "id": "day2", "n": 4, "title": "第二天 · 落地实操" },
+    { "id": "closing", "n": 5, "title": "让每一条视频都成为获客资产" }
+  ]
+}
