@@ -149,8 +149,9 @@
     const p = Math.max(0, Math.min(max, api.current + dir));
     if (p === api.current) return;
     flipAt = Date.now();
-    busy = true;
-    api.go(p);
+    if (api.go(p) !== false) {
+      busy = true;
+    }
   }
 
   const feature = {

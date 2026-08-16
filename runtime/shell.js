@@ -87,11 +87,19 @@
         else if (n === 'toc' && (state.total + 1) in state.extraPages) n = state.total + 1;
         else return;
       }
-      n = Math.max(0, Math.min(state.total + 1, Math.round(n)));
-      if (n === state.current) return;
+      n = Math.round(n);
+      const max = state.total + 1;
+      // 边界校验：非法页直接忽略（防止 404），返回 false 表示未跳转
+      if (n < 0 || n > max) return false;
+      if (n === 0 && !(0 in state.extraPages)) return false;
+      if (n === max && !(max in state.extraPages)) return false;
+      if (n >= 1 && n <= state.total) { /* 内容页，合法 */ }
+      else if (n !== 0 && n !== max) return false;
+      if (n === state.current) return false;
       const prev = state.current;
       state.current = n;
       emitPageChange(n, prev, opts || {});
+      return true;
     },
 
     // 页码 ⇄ 页面 ID（manifest.pages[].id）

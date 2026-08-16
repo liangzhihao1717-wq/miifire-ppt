@@ -116,9 +116,11 @@ const BAD_SCRIPT = /<script[\s>]/i;
 pageFiles.sort((a, b) => parseInt(a) - parseInt(b)).forEach((f) => {
   const src = fs.readFileSync(path.join(pageDirUsed, f), 'utf-8');
   const n = parseInt(f, 10);
+  const hasInlineStyle = BAD_STYLE_TAG.test(src);
 
-  if (BAD_STYLE_TAG.test(src)) {
-    warnings.push(`${f}: 含内联 <style>（新页面应纯内容，样式来自主题）`);
+  if (hasInlineStyle) {
+    // 老架构页面（自带样式）：提示但跳过 class 注册表检查（其样式自包含）
+    warnings.push(`${f}: 含内联 <style>（老架构特征；新页面应纯内容，样式来自主题）`);
   }
   if (BAD_SCRIPT.test(src)) {
     errors.push(`${f}: 含 <script>（内容页禁止脚本）`);
@@ -130,18 +132,20 @@ pageFiles.sort((a, b) => parseInt(a) - parseInt(b)).forEach((f) => {
     errors.push(`${f}: 缺少 .slide 根容器`);
   }
 
-  // class 存在性：内容页用到的 class 需在主题注册表中
-  const used = new Set();
-  const clsRe = /class="([^"]+)"/g;
-  let cm;
-  while ((cm = clsRe.exec(src))) {
-    cm[1].split(/\s+/).forEach((c) => { if (c) used.add(c); });
-  }
-  used.forEach((c) => {
-    if (!themeClasses.has(c) && !/^mii-/.test(c)) {
-      warnings.push(`${f}: class "${c}" 不在主题注册表中（需在主题 css 实现或模板中登记）`);
+  // class 存在性：仅对纯内容页（新架构）执行
+  if (!hasInlineStyle) {
+    const used = new Set();
+    const clsRe = /class="([^"]+)"/g;
+    let cm;
+    while ((cm = clsRe.exec(src))) {
+      cm[1].split(/\s+/).forEach((c) => { if (c) used.add(c); });
     }
-  });
+    used.forEach((c) => {
+      if (!themeClasses.has(c) && !/^mii-/.test(c)) {
+        warnings.push(`${f}: class "${c}" 不在主题注册表中（需在主题 css 实现或模板中登记）`);
+      }
+    });
+  }
 });
 
 // ---------- 输出 ----------

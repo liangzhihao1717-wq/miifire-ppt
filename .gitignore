@@ -1,1 +1,4 @@
 node_modules/
+
+# 运行时数据（server.js 自动生成，不入库）
+projects/*/notes.json
