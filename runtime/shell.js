@@ -19,7 +19,11 @@
 
   const params = new URLSearchParams(window.location.search);
   const project = params.get('project') || '';
-  const QPAGE = parseInt(params.get('page'), 10) || null;
+  // 深链：?page=N（内容页）/ ?page=cover / ?page=toc
+  const QPAGE_RAW = params.get('page');
+  let QPAGE = null;
+  if (QPAGE_RAW === 'cover' || QPAGE_RAW === 'toc') QPAGE = QPAGE_RAW;
+  else if (QPAGE_RAW != null && /^\d+$/.test(QPAGE_RAW)) QPAGE = parseInt(QPAGE_RAW, 10);
 
   const state = {
     project,
@@ -155,6 +159,21 @@
       return '/projects/' + encodeURIComponent(project) + '/thumbs/' + n + '.png';
     },
 
+    // 页面评价
+    getReviews() {
+      return fetch('/api/reviews?project=' + encodeURIComponent(project))
+        .then((r) => r.json())
+        .then((d) => d.reviews || [])
+        .catch(() => []);
+    },
+    saveReview(pageId, text) {
+      return fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project, pageId, text }),
+      }).then((r) => r.json());
+    },
+
     // 容器
     get stage() { return document.getElementById('stage'); },
     get scroller() { return document.getElementById('scroller'); },
@@ -202,8 +221,8 @@
 
         // 确定功能清单（manifest.features 或按 type 默认）
         const defaults = state.type === 'poster'
-          ? ['scroller', 'progress', 'fullscreen']
-          : ['pager', 'drawer', 'notes-ruler', 'keyboard', 'fullscreen'];
+          ? ['scroller', 'progress', 'fullscreen', 'reviews']
+          : ['pager', 'drawer', 'notes-ruler', 'keyboard', 'fullscreen', 'reviews'];
         state.features = Array.isArray(meta.features) && meta.features.length ? meta.features : defaults;
 
         // 挂载功能
@@ -220,9 +239,11 @@
         });
         state.cleanups = cleanups;
 
-        // 初始页
-        let start = QPAGE;
-        if (start == null) start = 0 in state.extraPages ? 0 : 1;
+        // 初始页：默认从 cover（如有）开始；深链优先
+        let start = (0 in state.extraPages) ? 0 : 1;
+        if (QPAGE === 'cover') start = 0 in state.extraPages ? 0 : 1;
+        else if (QPAGE === 'toc') start = (state.total + 1) in state.extraPages ? state.total + 1 : state.total;
+        else if (QPAGE != null && QPAGE >= 1 && QPAGE <= state.total) start = QPAGE;
         state.current = start;
         emitPageChange(start, null, { initial: true });
       })

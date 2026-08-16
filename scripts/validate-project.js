@@ -68,6 +68,13 @@ if (meta.total !== pageFiles.length) {
   errors.push(`manifest.total=${meta.total} 但 ${pageDirUsed} 实际有 ${pageFiles.length} 个页面`);
 }
 
+// 缩略图约定：projects/{id}/thumbs/N.png（可选但建议，drawer 导航用）
+const thumbsDir = path.join(projectDir, 'thumbs');
+const hasThumbs = fs.existsSync(thumbsDir) && fs.readdirSync(thumbsDir).some((f) => /^\d+\.png$/.test(f));
+if (!hasThumbs) {
+  warnings.push('缺少缩略图目录 thumbs/（drawer 导航将显示占位；生成: node generate-thumbs.js <项目目录>）');
+}
+
 // ---------- 3. pages 元数据 ----------
 const seenIds = new Set();
 const seenNs = new Set();

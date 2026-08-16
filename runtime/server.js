@@ -119,6 +119,24 @@ function writeNotes(project, data) {
   fs.writeFileSync(notesFile(project), JSON.stringify(data, null, 2));
 }
 
+// ---------- 页面评价数据（存于项目目录 reviews.json，属沉淀资产，入 git） ----------
+
+function reviewsFile(project) {
+  const dir = path.join(PROJECTS_DIR, project);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, 'reviews.json');
+  if (!fs.existsSync(file)) fs.writeFileSync(file, '[]');
+  return file;
+}
+
+function readReviews(project) {
+  try { return JSON.parse(fs.readFileSync(reviewsFile(project), 'utf-8')); } catch { return []; }
+}
+
+function writeReviews(project, data) {
+  fs.writeFileSync(reviewsFile(project), JSON.stringify(data, null, 2));
+}
+
 // ---------- 静态文件服务 ----------
 
 function serveFile(res, filePath) {
@@ -193,6 +211,55 @@ const server = http.createServer((req, res) => {
           }
           json(res, 200, { ok: true, notes: notes[page] || [] });
         }
+      } catch (e) {
+        json(res, 400, { error: e.message });
+      }
+    });
+    return;
+  }
+
+  // --- API: 页面评价 ---
+  if (pathname === '/api/reviews' && req.method === 'GET') {
+    const project = safeProjectName(url.searchParams.get('project'));
+    json(res, 200, { reviews: readReviews(project) });
+    return;
+  }
+  if (pathname === '/api/reviews' && req.method === 'POST') {
+    let body = '';
+    req.on('data', c => body += c);
+    req.on('end', () => {
+      try {
+        const { project: rawProject, pageId, text } = JSON.parse(body);
+        const project = safeProjectName(rawProject);
+        if (!pageId || !text) return json(res, 400, { error: '缺少 pageId 或 text' });
+        const reviews = readReviews(project);
+        reviews.push({
+          pageId,
+          text,
+          ts: new Date().toISOString(),
+        });
+        writeReviews(project, reviews);
+        json(res, 200, { ok: true, count: reviews.length });
+      } catch (e) {
+        json(res, 400, { error: e.message });
+      }
+    });
+    return;
+  }
+  if (pathname === '/api/reviews' && req.method === 'DELETE') {
+    let body = '';
+    req.on('data', c => body += c);
+    req.on('end', () => {
+      try {
+        const { project: rawProject, index } = JSON.parse(body);
+        const project = safeProjectName(rawProject);
+        const reviews = readReviews(project);
+        if (index == null || index < 0 || index >= reviews.length) {
+          return json(res, 400, { error: 'index 非法' });
+        }
+        reviews.splice(index, 1);
+        writeReviews(project, reviews);
+        json(res, 200, { ok: true });
       } catch (e) {
         json(res, 400, { error: e.message });
       }

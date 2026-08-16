@@ -171,3 +171,1199 @@ body {
   letter-spacing: 0.04em;
   line-height: 1.6;
 }
+
+/* ============================================================
+   模板 class 区（从 product-roadshow 21 页提炼，2026-08-16）
+   本区由沉淀机制维护：新模板 class 实现追加于此，class 只增不删
+   ============================================================ */
+
+.arrow {
+font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+}
+
+.arrow-right::after {
+content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 0.4vw solid transparent;
+      border-bottom: 0.4vw solid transparent;
+      border-left: 0.5vw solid rgba(212,184,122,0.55);
+}
+
+.bottom {
+font-size: 2.25vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+}
+
+.bottom-chain {
+display: flex;
+      align-items: center;
+      gap: 1.5vw;
+}
+
+.bottom-chain .arrow {
+font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+}
+
+.bottom-chain .text {
+font-size: 1.375vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.05em;
+}
+
+.bottom-label {
+font-size: 1.75vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1em;
+      margin-bottom: 1vw;
+}
+
+.card {
+flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8vw;
+}
+
+.card .desc {
+font-size: 1.25vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+}
+
+.card .label {
+font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.card .label .note {
+font-size: 0.9vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      background: none;
+      -webkit-text-fill-color: rgba(255,255,255,0.35);
+      letter-spacing: 0.04em;
+      margin-left: 0.3vw;
+}
+
+.cards {
+display: flex;
+      gap: 3vw;
+      margin-bottom: 2.5vw;
+}
+
+.chain {
+display: flex; flex-direction: column; gap: 0.81vw;
+}
+
+.chain-item {
+display: flex;
+      align-items: center;
+      gap: 0.75vw;
+}
+
+.closing {
+font-size: 1.5vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+}
+
+.closing-line {
+font-size: 1.1vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+      font-style: italic;
+}
+
+.col {
+flex: 1;
+}
+
+.col-card {
+flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6vw;
+}
+
+.col-divider {
+flex-shrink: 0;
+      width: 0.05vw;
+      background: rgba(255,255,255,0.15);
+}
+
+.col-label {
+font-size: 2vw;
+      font-weight: 900;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25vw;
+}
+
+.col-rule {
+flex-shrink: 0;
+      width: 0.04vw;
+      background: rgba(212,184,122,0.18);
+      margin: 0 4vw;
+}
+
+.cols {
+display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      margin-bottom: 2.5vw;
+}
+
+.columns {
+display: flex;
+      gap: 3vw;
+      align-items: stretch;
+}
+
+.conclusion {
+font-size: 2.75vw;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-top: 1vw;
+}
+
+.conclusion .gold {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.conclusion em {
+font-style: normal;
+      color: #d4b87a;
+      font-weight: 700;
+}
+
+.conclusion.gold {
+background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.content {
+display: flex;
+      flex-direction: column;
+      gap: 0;
+}
+
+.data-desc {
+font-size: 1.1vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.40);
+      letter-spacing: 0.05em;
+}
+
+.data-num {
+font-size: 5vw;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+}
+
+.data-num.big {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.data-num.dim {
+color: rgba(255,255,255,0.25);
+}
+
+.data-num.mid {
+color: rgba(255,255,255,0.45);
+}
+
+.data-row {
+display: flex;
+      align-items: baseline;
+      gap: 1.5vw;
+      margin-bottom: 1.5vw;
+}
+
+.definition {
+font-size: 3vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      margin-bottom: 2.5vw;
+      line-height: 1.3;
+}
+
+.definition .gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.deny-tag {
+font-size: 1.125vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 0.08em;
+      text-decoration: line-through;
+      text-decoration-thickness: 0.08vw;
+      text-decoration-color: rgba(255,255,255,0.18);
+}
+
+.divider {
+width: 25vw;
+      height: 0.16vw;
+      background: rgba(255,255,255,0.18);
+      margin-bottom: 2.75vw;
+}
+
+.dot {
+font-size: 1.06vw;
+      color: rgba(255,255,255,0.35);
+}
+
+.example {
+display: flex;
+      gap: 1.75vw;
+      align-items: flex-start;
+}
+
+.example .text {
+font-size: 1.5vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+}
+
+.example .text em {
+font-style: normal;
+      color: #d4b87a;
+      font-weight: 700;
+}
+
+.example::before {
+content: '▶';
+      flex-shrink: 0;
+      font-size: 0.875vw;
+      color: rgba(255,255,255,0.30);
+      margin-top: 0.44vw;
+}
+
+.examples {
+display: flex;
+      flex-direction: column;
+      gap: 2.75vw;
+}
+
+.field {
+display: flex;
+      flex-direction: column;
+      gap: 0.2vw;
+}
+
+.field .label {
+font-size: 0.875vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.10em;
+}
+
+.field .sell {
+font-size: 1.31vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+}
+
+.field .text {
+font-size: 1.31vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+}
+
+.flow {
+font-size: 1.3vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+}
+
+.flow .arrow {
+font-size: 1.5vw;
+      color: rgba(255,255,255,0.25);
+      font-weight: 300;
+}
+
+.flow .gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.formula {
+display: flex;
+      align-items: center;
+      gap: 1.875vw;
+      margin-bottom: 4.375vw;
+}
+
+.formula .op {
+font-size: 1.5vw;
+      color: rgba(255,255,255,0.30);
+      font-weight: 300;
+}
+
+.formula .term {
+font-size: 2.5vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.formula .term.dim {
+color: rgba(255,255,255,0.55);
+}
+
+.formula .term.gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.formula .times {
+font-size: 1.75vw;
+      color: rgba(255,255,255,0.30);
+      font-weight: 300;
+}
+
+.formula-line {
+font-size: 1.3vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+}
+
+.formula-line .gold {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.golden {
+font-size: 2vw;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+      text-align: left;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.group-block {
+display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75vw;
+}
+
+.group-block .bar {
+height: 0.23vw;
+      background: rgba(255,255,255,0.3);
+}
+
+.group-block .label {
+text-align: center;
+      font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      margin-top: 0.4vw;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.group-block .words {
+display: flex;
+      gap: 2.5vw;
+      justify-content: center;
+}
+
+.header {
+display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5vw;
+}
+
+.inferences .dot {
+color: rgba(255,255,255,0.22);
+      margin: 0 0.75vw;
+}
+
+.insight {
+font-size: 1.1vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+      font-style: italic;
+}
+
+.item {
+display: flex;
+      align-items: baseline;
+      gap: 0.75vw;
+      font-size: 1.375vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+}
+
+.item .arrow {
+color: rgba(255,255,255,0.30);
+      font-weight: 300;
+      flex-shrink: 0;
+}
+
+.item .gold {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+}
+
+.items {
+display: flex;
+      flex-direction: column;
+      gap: 0.69vw;
+      margin-bottom: 3.5vw;
+      font-size: 1.44vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+}
+
+.items .item {
+display: flex;
+      align-items: baseline;
+      gap: 1vw;
+}
+
+.items .kw {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.items .num {
+font-size: 0.875vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      min-width: 1.875vw;
+}
+
+.lead {
+font-size: 2.25vw;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75vw;
+}
+
+.lesson {
+display: flex;
+      align-items: flex-start;
+      gap: 1.75vw;
+}
+
+.lesson .bar {
+width: 0.23vw;
+      flex-shrink: 0;
+      align-self: stretch;
+      background: linear-gradient(180deg, rgba(212,184,122,0.5), rgba(180,150,100,0.05));
+      border-radius: 0.08vw;
+      min-height: 100%;
+}
+
+.lesson .keyword {
+font-size: 1.56vw;
+      font-weight: 900;
+      background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      min-width: 6.25vw;
+}
+
+.lesson .text {
+font-size: 1.56vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.05em;
+      line-height: 1.55;
+      padding-top: 0.06vw;
+}
+
+.lesson .text .gold {
+background: linear-gradient(135deg, #c9a050 0%, #f5e6c8 40%, #d4b87a 50%, #f5e6c8 60%, #c9a050 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+}
+
+.lessons {
+display: flex;
+      flex-direction: column;
+      gap: 2.25vw;
+}
+
+.list-col {
+flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2vw;
+}
+
+.list-item {
+display: flex;
+      align-items: baseline;
+      gap: 1.5vw;
+}
+
+.list-item .num {
+flex-shrink: 0;
+      font-size: 0.875vw;
+      font-weight: 300;
+      color: rgba(212,184,122,0.35);
+      letter-spacing: 0.08em;
+      min-width: 2.5vw;
+}
+
+.list-item .text {
+font-size: 1.44vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+}
+
+.list-row .list-item {
+flex: 1;
+      justify-content: center;
+}
+
+.list-row .row-rule {
+flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 0.6vw;
+}
+
+.modes {
+display: flex;
+      align-items: center;
+      gap: 1vw;
+      font-size: 1.75vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.04em;
+}
+
+.modes .gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.modes .num {
+font-size: 1.3vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.22);
+      margin-right: 0.2vw;
+}
+
+.modes .sep {
+color: rgba(255,255,255,0.20);
+      font-weight: 300;
+      margin: 0 0.3vw;
+}
+
+.pillar {
+padding: 1.75vw 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vw;
+      border-bottom: 0.08vw solid rgba(255,255,255,0.06);
+}
+
+.pillar .num {
+font-size: 0.875vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+}
+
+.pillar .word {
+font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 3vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.1em;
+      line-height: 1;
+}
+
+.pillar:last-child {
+border-bottom: none;
+}
+
+.point {
+display: flex;
+      align-items: stretch;
+      gap: 1.5vw;
+}
+
+.point .body {
+display: flex;
+      flex-direction: column;
+      gap: 0.625vw;
+}
+
+.point .desc {
+font-size: 2vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.08em;
+}
+
+.point .label {
+font-size: 1.19vw;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+}
+
+.point::before {
+content: '';
+      width: 0.23vw;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #d4b87a, rgba(180,150,100,0.15));
+      border-radius: 0.08vw;
+}
+
+.points {
+display: flex;
+      gap: 3.75vw;
+      margin-top: 3.125vw;
+}
+
+.question {
+font-size: 1.625vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.06em;
+      margin-bottom: 2.5vw;
+}
+
+.quote em {
+font-style: normal;
+      font-weight: 600;
+      color: rgba(212,184,122,0.55);
+}
+
+.quotes .q {
+font-size: 2.5vw;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.rule {
+width: 100%;
+      height: 0.04vw;
+      background: rgba(212,184,122,0.20);
+}
+
+.scene-name {
+font-size: 2.25vw;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3vw;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.stage {
+text-align: center;
+}
+
+.stages {
+display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4.375vw;
+}
+
+.sub strong {
+font-weight: 900;
+      font-size: 3.75vw;
+      line-height: 1;
+      background: linear-gradient(180deg, #b48b3a 0%, #f5e6c8 40%, #e2c988 50%, #f5e6c8 60%, #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.subtitle {
+font-size: 1.625vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.48);
+      letter-spacing: 0.08em;
+}
+
+.subtitle .brand-name {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.subtitle .inline-logo {
+height: 2.5vw;
+      filter: brightness(0.95) saturate(0.4);
+}
+
+.tags {
+display: flex;
+      gap: 3.5vw;
+      font-size: 1.25vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.42);
+      letter-spacing: 0.12em;
+}
+
+.tags .bracket {
+color: rgba(212,184,122,0.50);
+      font-weight: 300;
+      font-size: 1.4vw;
+}
+
+.tags .keyword {
+font-weight: 700;
+      font-size: 1.625vw;
+      letter-spacing: 0.10em;
+      background: linear-gradient(180deg,
+        #e2c988 0%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.tags .suffix {
+font-size: 1.25vw;
+      font-weight: 400;
+      color: rgba(255,255,255,0.42);
+      letter-spacing: 0.12em;
+}
+
+.tags span {
+display: flex;
+      align-items: baseline;
+      gap: 0.6vw;
+}
+
+.takeaway {
+display: flex;
+      align-items: baseline;
+      gap: 1.5vw;
+}
+
+.takeaway .num {
+font-size: 1.1vw;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.28);
+      letter-spacing: 0.06em;
+      min-width: 2vw;
+}
+
+.takeaway .text {
+font-size: 1.6vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.68);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+}
+
+.takeaway .text .gold {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.takeaways {
+display: flex;
+      flex-direction: column;
+      gap: 1.5vw;
+      margin-bottom: 3vw;
+}
+
+.text {
+font-size: 1.31vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+}
+
+.title {
+font-size: 4vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75vw;
+}
+
+.title .gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.title .kw {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.top-title {
+font-size: 2.75vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.12em;
+}
+
+.trait {
+font-size: 1.8vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5vw;
+      line-height: 1.6;
+}
+
+.trait .gold {
+font-weight: 700;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.trap {
+font-size: 1.25vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,0.18);
+      text-decoration-thickness: 0.08vw;
+}
+
+.traps {
+display: flex;
+      gap: 1vw;
+}
+
+.vline {
+width: 0.08vw;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+      flex-shrink: 0;
+}
+
+.warning {
+font-size: 1.44vw;
+      font-weight: 500;
+      color: rgba(255,255,255,0.60);
+      letter-spacing: 0.05em;
+      margin-bottom: 3.5vw;
+      line-height: 1.8;
+}
+
+.warning .zero {
+font-weight: 900;
+      font-size: 2vw;
+      background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.what {
+font-size: 2.75vw;
+      font-weight: 900;
+      color: #e0ded5;
+      letter-spacing: 0.10em;
+      white-space: nowrap;
+}
+
+.what .gold {
+background: linear-gradient(135deg,
+        #e2c988 0%,
+        #f5e6c8 25%,
+        #d4b87a 40%,
+        #c9a050 50%,
+        #d4b87a 60%,
+        #f5e6c8 75%,
+        #b48b3a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+}
+
+.who {
+font-size: 1.625vw;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.10em;
+      margin-bottom: 1.5vw;
+}
+
+.word-card {
+text-align: center;
+      flex-shrink: 0;
+}
+
+.word-card .cn {
+font-size: 2.625vw;
+      font-weight: 900;
+      color: #ece9e0;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+}
+
+.word-card .num {
+font-size: 1.56vw;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4vw;
+}
+/* .list-grid（补：注释干扰未自动提取） */
+.list-grid {
+  display: flex;
+  gap: 0;
+}

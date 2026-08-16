@@ -110,7 +110,8 @@
               '<div class="slide-inner' + (extra ? ' ' + extra : '') + '">' + slide.innerHTML + '</div>');
             loaded++;
             if (loaded === total) {
-              if (typeof window.__MII_SCROLLER_READY__ === 'function') window.__MII_SCROLLER_READY__();
+              // 就绪事件（与顺序无关，progress 等模块监听）
+              document.dispatchEvent(new CustomEvent('mii:scroller-ready', { detail: { total: total } }));
             }
           })
           .catch(function () { loaded++; });

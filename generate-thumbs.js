@@ -14,7 +14,11 @@ if (!project) {
   process.exit(1);
 }
 
-const projectDir = path.join(__dirname, project);
+// 项目目录：支持完整路径（projects/{id}）或名称（仓库根下的老项目）
+let projectDir = path.join(__dirname, project);
+if (!fs.existsSync(projectDir) && fs.existsSync(path.join(__dirname, 'projects', project))) {
+  projectDir = path.join(__dirname, 'projects', project);
+}
 const thumbsDir = path.join(projectDir, 'thumbs');
 
 if (!fs.existsSync(projectDir)) {
@@ -22,11 +26,20 @@ if (!fs.existsSync(projectDir)) {
   process.exit(1);
 }
 
-// 数一下有多少页 HTML
-const htmlFiles = fs.readdirSync(projectDir)
+// 页面查找：优先 slides/ 子目录（新结构），否则项目根（老结构）
+const slidesDir = path.join(projectDir, 'slides');
+const pageDir = fs.existsSync(slidesDir) ? slidesDir : projectDir;
+const htmlFiles = fs.readdirSync(pageDir)
   .filter(f => /^\d+\.html$/.test(f))
   .sort((a, b) => parseInt(a) - parseInt(b));
 const total = htmlFiles.length;
+
+// 缩略图尺寸：读 manifest（竖屏 9:16 → 180x320；横屏 16:9 → 320x180）
+let thumbW = 320, thumbH = 180;
+try {
+  const meta = JSON.parse(fs.readFileSync(path.join(projectDir, 'manifest.json'), 'utf-8'));
+  if (meta.type === 'poster') { thumbW = 180; thumbH = 320; }
+} catch { /* 老项目无 manifest，默认横屏 */ }
 
 if (total === 0) {
   console.error('项目目录下没有找到页面文件 (N.html)');
@@ -38,7 +51,9 @@ const PORT = 8765;
 function startServer() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
-      const filePath = path.join(projectDir, req.url === '/' ? '1.html' : req.url);
+      // 归一化：/slides/N.html → pageDir/N.html
+      let rel = req.url === '/' ? '1.html' : decodeURIComponent(req.url).replace(/^\/slides\//, '/');
+      const filePath = path.join(pageDir, rel);
       try {
         const content = fs.readFileSync(filePath);
         const ext = path.extname(filePath);
@@ -87,7 +102,7 @@ function startServer() {
 
   for (let i = 0; i < total; i++) {
     const n = parseInt(htmlFiles[i]);
-    const url = `http://localhost:${PORT}/${n}.html`;
+    const url = `http://localhost:${PORT}/slides/${n}.html`;
     console.log(`  [${i + 1}/${total}] 截图第 ${n} 页...`);
 
     await page.goto(url, { waitUntil: 'load', timeout: 10000 });
@@ -96,8 +111,8 @@ function startServer() {
     const outFile = path.join(thumbsDir, `${n}.png`);
     await page.screenshot({ path: outFile, type: 'png', omitBackground: false });
 
-    // 缩小到 320×180 (16:9 缩略图)
-    execSync(`sips -z 180 320 "${outFile}"`);
+    // 缩略图尺寸：横屏 320×180 (16:9) / 竖屏 180×320 (9:16)
+    execSync(`sips -z ${thumbH} ${thumbW} "${outFile}"`);
   }
 
   await browser.close();

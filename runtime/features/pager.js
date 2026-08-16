@@ -87,6 +87,15 @@
     const stage = api.stage;
     if (currentStyle) { currentStyle.remove(); currentStyle = null; }
 
+    // URL 深链同步（分享当前页）：内容页 ?page=N；附加页 ?page=cover / ?page=toc
+    try {
+      const url = new URL(window.location.href);
+      if (n === 0 && 0 in api.state.extraPages) url.searchParams.set('page', 'cover');
+      else if (n === api.total + 1 && (api.total + 1) in api.state.extraPages) url.searchParams.set('page', 'toc');
+      else if (n >= 1 && n <= api.total) url.searchParams.set('page', String(n));
+      window.history.replaceState(null, '', url.pathname + url.search);
+    } catch (e) { /* 忽略 URL 失败 */ }
+
     const fadeIn = () => {
       stage.style.transition = 'none';
       stage.style.opacity = '0';

@@ -54,8 +54,8 @@
       cleanupFns.push(function () { bar.remove(); });
 
       if (api.type === 'poster') {
-        // 竖屏：等 scroller 就绪后监听滚动
-        window.__MII_SCROLLER_READY__ = function () {
+        // 竖屏：监听 scroller 就绪事件（与挂载顺序无关）
+        const onReady = function () {
           updateForScroller();
           const scroller = document.getElementById('scroller');
           const onScroll = updateForScroller;
@@ -66,6 +66,10 @@
             window.removeEventListener('resize', onScroll);
           });
         };
+        document.addEventListener('mii:scroller-ready', onReady);
+        cleanupFns.push(function () { document.removeEventListener('mii:scroller-ready', onReady); });
+        // 若 scroller 已先行就绪（事件已派发），主动补查一次
+        updateForScroller();
       } else {
         // 横屏：跟随翻页
         const unsub = api.onPage(updateForPager);
