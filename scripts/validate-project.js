@@ -119,6 +119,8 @@ while ((m = selRe.exec(themeCss))) {
 const BAD_PX = /(\d+(\.\d+)?)px\b/;
 const BAD_STYLE_TAG = /<style[\s>]/i;
 const BAD_SCRIPT = /<script[\s>]/i;
+// 移动端滚动杀手（2026-08-10 华为 X5 双指滑动事故）：user-scalable=no 禁用缩放导致单指滑动失效
+const BAD_USER_SCALABLE = /user-scalable\s*=\s*no/i;
 
 pageFiles.sort((a, b) => parseInt(a) - parseInt(b)).forEach((f) => {
   const src = fs.readFileSync(path.join(pageDirUsed, f), 'utf-8');
@@ -131,6 +133,9 @@ pageFiles.sort((a, b) => parseInt(a) - parseInt(b)).forEach((f) => {
   }
   if (BAD_SCRIPT.test(src)) {
     errors.push(`${f}: 含 <script>（内容页禁止脚本）`);
+  }
+  if (BAD_USER_SCALABLE.test(src)) {
+    errors.push(`${f}: 含 user-scalable=no（华为 X5 单指滑动失效事故根源，禁止）`);
   }
   if (BAD_PX.test(src.replace(/<!--[\s\S]*?-->/g, ''))) {
     warnings.push(`${f}: 含写死 px（应使用主题容器单位）`);
