@@ -61,11 +61,20 @@ function safeProjectName(name) {
   return String(name || '').replace(/[^a-zA-Z0-9_-]/g, '_');
 }
 
-// ---------- 项目 manifest 聚合 ----------
+// ---------- 项目 manifest 聚合（带索引缓存） ----------
+
+let _projectsCache = null;
+let _projectsCacheAt = 0;
+const CACHE_TTL = 5000; // 5s TTL：目录扫描不阻塞每次请求
 
 function listProjects() {
-  if (!fs.existsSync(PROJECTS_DIR)) return [];
-  return fs.readdirSync(PROJECTS_DIR)
+  const now = Date.now();
+  if (_projectsCache && now - _projectsCacheAt < CACHE_TTL) {
+    return _projectsCache;
+  }
+  let out = [];
+  if (!fs.existsSync(PROJECTS_DIR)) return out;
+  out = fs.readdirSync(PROJECTS_DIR)
     .filter(d => {
       try { return fs.statSync(path.join(PROJECTS_DIR, d)).isDirectory(); } catch { return false; }
     })
@@ -78,6 +87,9 @@ function listProjects() {
         return { id: d, title: d, type: 'presentation', ratio: '16:9' };
       }
     });
+  _projectsCache = out;
+  _projectsCacheAt = now;
+  return out;
 }
 
 function loadManifest(project) {
@@ -197,6 +209,16 @@ const server = http.createServer((req, res) => {
     const target = projectEntry(project, manifest);
     res.writeHead(302, { Location: target });
     res.end();
+    return;
+  }
+
+  // --- 兼容老入口: /p/{project}/{page}.html 直接访问内容页 ---
+  const entryPageMatch = pathname.match(/^\/p\/([A-Za-z0-9_-]+)\/(\d+)\.html$/);
+  if (entryPageMatch) {
+    const project = entryPageMatch[1];
+    const page = entryPageMatch[2];
+    const file = path.join(PROJECTS_DIR, project, 'slides', page + '.html');
+    serveFile(res, file);
     return;
   }
 

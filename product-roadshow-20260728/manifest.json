@@ -1,0 +1,33 @@
+{
+  "id": "product-roadshow-20260728",
+  "title": "觅火 MIIFIRE 产品路演",
+  "date": "2026-07-28",
+  "type": "presentation",
+  "ratio": "16:9",
+  "theme": "landscape",
+  "total": 21,
+  "features": ["cover", "toc", "drawer", "pager", "notes-ruler", "keyboard", "fullscreen"],
+  "pages": [
+    { "id": "prelude",          "n": 1,  "title": "前情回顾" },
+    { "id": "no-bs",            "n": 2,  "title": "不要给我讲虚头巴脑的东西" },
+    { "id": "direction",        "n": 3,  "title": "方向 · 实操 · 路线" },
+    { "id": "three-paths",      "n": 4,  "title": "网红 · 老板 · 稀里糊涂" },
+    { "id": "trust-first",      "n": 5,  "title": "老板拍短视频要直奔着信任去" },
+    { "id": "detours",          "n": 6,  "title": "我把大部分弯路都走了一遍" },
+    { "id": "three-minds",      "n": 7,  "title": "普通人 · 聪明人 · 最聪明的人" },
+    { "id": "hard-work",        "n": 8,  "title": "什么叫埋头苦干？" },
+    { "id": "credit",           "n": 9,  "title": "你的信用是怎么累积的" },
+    { "id": "design-site",      "n": 10, "title": "方案设计 · 验收工地" },
+    { "id": "negotiation",      "n": 11, "title": "和客户谈方案 · 材料验收" },
+    { "id": "other-industries", "n": 12, "title": "其他行业其实也是一样" },
+    { "id": "process",          "n": 13, "title": "过程里有什么" },
+    { "id": "story-8",          "n": 14, "title": "讲故事的八要素" },
+    { "id": "see-vs-say",       "n": 15, "title": "从嘴说到眼见" },
+    { "id": "tools-machines",   "n": 16, "title": "开采手段和生产机器" },
+    { "id": "ai-leverage",      "n": 17, "title": "AI 是杠杆，不是引擎" },
+    { "id": "authenticity",     "n": 18, "title": "真实、真诚远胜于专业拍剪" },
+    { "id": "super-flyer",      "n": 19, "title": "能获得信任的短视频，才叫超级传单" },
+    { "id": "flyer-charm",      "n": 20, "title": "超级传单的魅力" },
+    { "id": "takeaways",        "n": 21, "title": "你起身，能带走了什么" }
+  ]
+}

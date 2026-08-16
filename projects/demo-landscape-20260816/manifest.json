@@ -1,0 +1,16 @@
+{
+  "id": "demo-landscape-20260816",
+  "title": "引擎验证 Demo（横屏）",
+  "date": "2026-08-16",
+  "type": "presentation",
+  "ratio": "16:9",
+  "theme": "landscape",
+  "total": 3,
+  "features": ["cover", "toc", "pager", "drawer", "notes-ruler", "keyboard", "fullscreen"],
+  "cover": { "logo": "/runtime/assets/logo.png", "slogan": "引擎分层验证示例" },
+  "pages": [
+    { "id": "intro",  "n": 1, "title": "演示页一：封面" },
+    { "id": "compare", "n": 2, "title": "演示页二：双栏" },
+    { "id": "closing", "n": 3, "title": "演示页三：收尾" }
+  ]
+}

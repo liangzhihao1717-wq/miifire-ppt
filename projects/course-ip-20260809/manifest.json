@@ -5,5 +5,29 @@
   "type": "poster",
   "ratio": "9:16",
   "total": 21,
-  "theme": "portrait"
+  "theme": "portrait",
+  "features": ["scroller", "progress", "fullscreen"],
+  "pages": [
+    { "id": "cover",         "n": 1,  "title": "获客短视频IP打造" },
+    { "id": "turn",          "n": 2,  "title": "" },
+    { "id": "problem",       "n": 3,  "title": "解决什么问题" },
+    { "id": "practice",      "n": 4,  "title": "所有实操环节均含课堂实战纠错" },
+    { "id": "format",        "n": 5,  "title": "课程形式" },
+    { "id": "tutor",         "n": 6,  "title": "梁挚昊 主讲/带教" },
+    { "id": "toc",           "n": 7,  "title": "目录" },
+    { "id": "ch1-positioning", "n": 8,  "title": "第一章账号定位" },
+    { "id": "ch2-content",   "n": 9,  "title": "第二章内容挖掘" },
+    { "id": "ch3-methods",   "n": 10, "title": "第三章短视频选题" },
+    { "id": "ch3-lines",     "n": 11, "title": "第三章短视频选题" },
+    { "id": "ch4-copy",      "n": 12, "title": "第四章内容文案" },
+    { "id": "ch5-filming",   "n": 13, "title": "第五章上镜拍摄" },
+    { "id": "ch6-broll",     "n": 14, "title": "第六章画面穿插" },
+    { "id": "ch7-editing",   "n": 15, "title": "第七章成片剪辑" },
+    { "id": "ch8-playbooks", "n": 16, "title": "第八章升级玩法" },
+    { "id": "ch9-mix",       "n": 17, "title": "第九章选题配比" },
+    { "id": "ch10-leads",    "n": 18, "title": "第十章线索获客" },
+    { "id": "ch11-review",   "n": 19, "title": "第十一章发布复盘" },
+    { "id": "ch12-sop",      "n": 20, "title": "第十二章SOP 流水线" },
+    { "id": "closing",       "n": 21, "title": "" }
+  ]
 }

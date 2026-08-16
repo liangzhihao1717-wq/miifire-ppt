@@ -1,0 +1,173 @@
+/* ============================================================
+   觅火 MIIFIRE · 横屏主题（landscape）
+   基础视觉框架：为「纯内容页」提供公共样式。
+   老页面（内嵌自身样式）不受本主题影响。
+   模板专用 class 随模板沉淀逐步补充到本文件。
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  background: #000;
+}
+
+/* ---------- 页面骨架 ---------- */
+
+.slide {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  padding: 4.5vw 3.5vw 3vw;
+  background: #000;
+  color: #e0ded5;
+  overflow: hidden;
+}
+
+/* ---------- 品牌栏 ---------- */
+
+.brand {
+  position: absolute;
+  top: 1.8vw;
+  left: 3.5vw;
+  display: flex;
+  align-items: center;
+  gap: 0.7vw;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.brand:hover { opacity: 1; }
+.brand img { height: 2.5vw; filter: brightness(0.95) saturate(0.4); }
+.brand span {
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+/* ---------- 内容容器 ---------- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 5vw;
+  height: 100%;
+  padding-top: 3vw;
+}
+
+/* ---------- 通用排版 ---------- */
+
+.title {
+  font-size: 4vw;
+  font-weight: 900;
+  color: #e0ded5;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+.subtitle {
+  font-size: 1.4vw;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.08em;
+}
+.rule {
+  width: 100%;
+  height: 0.16vw;
+  background: linear-gradient(90deg, rgba(212, 184, 122, 0.45), rgba(212, 184, 122, 0.05));
+  border: none;
+}
+.divider {
+  width: 25vw;
+  height: 0.16vw;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+}
+.gold {
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #c9a050 60%, #d4b87a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #d4b87a;
+}
+.kw {
+  color: #d4b87a;
+  font-weight: 700;
+}
+.dim { color: rgba(255, 255, 255, 0.35); }
+
+/* ---------- 通用列表 ---------- */
+
+.num {
+  font-size: 1.6vw;
+  font-weight: 700;
+  color: #d4b87a;
+  font-variant-numeric: tabular-nums;
+}
+.list-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1vw;
+  font-size: 1.5vw;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.05em;
+}
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: 1vw;
+  font-size: 1.5vw;
+  color: rgba(255, 255, 255, 0.75);
+}
+.conclusion {
+  font-size: 2.75vw;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  margin-top: 1vw;
+}
+.conclusion.gold {
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #c9a050 60%, #d4b87a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #d4b87a;
+}
+
+/* ---------- 双栏 ---------- */
+
+.columns {
+  display: flex;
+  gap: 3vw;
+  align-items: stretch;
+}
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+/* ---------- 示例 ---------- */
+
+.example {
+  display: flex;
+  gap: 1.25vw;
+  align-items: flex-start;
+}
+.example::before {
+  content: '▶';
+  flex-shrink: 0;
+  font-size: 0.875vw;
+  color: rgba(212, 184, 122, 0.6);
+  padding-top: 0.3vw;
+}
+.example .text {
+  font-size: 1.5vw;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
