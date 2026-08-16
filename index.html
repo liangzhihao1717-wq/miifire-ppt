@@ -103,6 +103,23 @@
       color: rgba(255,255,255,0.15);
       letter-spacing: 0.1em;
     }
+
+    /* 移动端适配（小程序 web-view / 手机浏览器） */
+    @media (max-width: 600px) {
+      body { padding: 4vh 6vw; justify-content: flex-start; }
+      .header { margin-bottom: 4vh; }
+      .header .logo-row { gap: 2vw; margin-bottom: 2vh; }
+      .header img { height: 7vw; }
+      .header h1 { font-size: 6vw; }
+      .header .subtitle { font-size: 3.2vw; }
+      .divider { margin-bottom: 4vh; }
+      .project-list { gap: 2.4vh; }
+      .project-card { padding: 3vh 4vw; }
+      .project-card .name { font-size: 4.2vw; }
+      .project-card .date { font-size: 2.8vw; }
+      .project-card .arrow { font-size: 4vw; }
+      .footer { font-size: 2.6vw; }
+    }
   </style>
 </head>
 <body>
@@ -158,8 +175,33 @@
         });
       })
       .catch(() => {
-        document.getElementById('project-list').innerHTML =
-          '<div style="color:rgba(255,255,255,0.3);font-size:1vw">服务未启动，请运行 node runtime/server.js</div>';
+        // 服务端不可用时的静态 fallback（部署链完成前仍可浏览老项目）
+        const list = document.getElementById('project-list');
+        const fallback = [
+          { href: '/ppt/product-roadshow-20260728/', title: '觅火 MIIFIRE 产品路演', date: '2026-07-28' },
+          { href: '/p/course-ip-20260809/', title: '获客短视频 IP 打造 · 系统化课程', date: '2026-08-09' },
+        ];
+        list.innerHTML = '';
+        fallback.forEach(p => {
+          const a = document.createElement('a');
+          a.className = 'project-card';
+          a.href = p.href;
+          const d = document.createElement('div');
+          const name = document.createElement('div');
+          name.className = 'name';
+          name.textContent = p.title;
+          const date = document.createElement('div');
+          date.className = 'date';
+          date.textContent = p.date;
+          d.appendChild(name);
+          d.appendChild(date);
+          const arrow = document.createElement('div');
+          arrow.className = 'arrow';
+          arrow.textContent = '→';
+          a.appendChild(d);
+          a.appendChild(arrow);
+          list.appendChild(a);
+        });
       });
   </script>
 </body>
