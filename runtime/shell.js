@@ -6,6 +6,7 @@
 //   3. 按 manifest.features 挂载功能模块（window.MIIFIRE.features）
 //   4. 向功能模块暴露统一 api 对象（唯一通信通道）
 // 用法：由 viewers/*.html 以普通 <script> 引入
+// ⚠️ 修改引擎前必读：runtime/MOBILE-NOTES.md（移动端兼容性规范）
 // ============================================================
 
 (function () {
