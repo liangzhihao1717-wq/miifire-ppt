@@ -49,6 +49,28 @@ def collect_chars():
     return chars
 
 
+def generate_sans(out_dir):
+    """重新生成黑体子集（Inter）：只保留字母 + 数字 + 空格，去掉所有标点。
+    原因：Inter 自带 · – — “ ” … 等标点，会抢走中文标点、和宋体中文不协调；
+    标点一律交给宋体（字体栈里黑体排第一，黑体里没有就会回退到宋体）。"""
+    chars = ''.join(chr(c) for c in range(0x30, 0x3A))  # 0-9
+    chars += ''.join(chr(c) for c in range(0x41, 0x5B))  # A-Z
+    chars += ''.join(chr(c) for c in range(0x61, 0x7B))  # a-z
+    chars += ' '
+
+    for weight in ['400', '500', '700']:
+        path = os.path.join(out_dir, f'miifire-sans-{weight}.woff2')
+        font = TTFont(path)
+        options = Options()
+        options.flavor = 'woff2'
+        options.desubroutinize = True
+        ss = Subsetter(options)
+        ss.populate(text=chars)
+        ss.subset(font)
+        font.save(path)
+        print(f'✓ 生成 miifire-sans-{weight}.woff2: {os.path.getsize(path)} 字节（只保留字母数字）')
+
+
 def main():
     # 字体源 → 输出文件（字重映射）
     mapping = [
@@ -84,6 +106,10 @@ def main():
         ss.subset(font)
         font.save(out)
         print(f'✓ 生成 {out_name}: {os.path.getsize(out)} 字节 ({src_name})')
+
+    # 黑体（Inter）也要重新子集：只保留字母数字，标点交给宋体
+    print()
+    generate_sans(out_dir)
 
     print('完成。注意: 新字体需重新部署 + 用户端清缓存才能生效。')
 
