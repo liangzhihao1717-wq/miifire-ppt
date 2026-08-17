@@ -61,12 +61,10 @@ def generate_sans(out_dir):
     for weight in ['400', '500', '700']:
         path = os.path.join(out_dir, f'miifire-sans-{weight}.woff2')
         font = TTFont(path)
-        options = Options()
-        options.flavor = 'woff2'
-        options.desubroutinize = True
-        ss = Subsetter(options)
+        ss = Subsetter()
         ss.populate(text=chars)
         ss.subset(font)
+        font.flavor = 'woff2'
         font.save(path)
         print(f'✓ 生成 miifire-sans-{weight}.woff2: {os.path.getsize(path)} 字节（只保留字母数字）')
 
@@ -97,13 +95,10 @@ def main():
             continue
         out = os.path.join(out_dir, out_name)
         font = TTFont(src)
-        options = Options()
-        options.flavor = 'woff2'
-        options.desubroutinize = True
-        options.hinting = True
-        ss = Subsetter(options)
+        ss = Subsetter()
         ss.populate(text=text)
         ss.subset(font)
+        font.flavor = 'woff2'  # 关键：用 flavor 属性（Options.flavor 对 CFF 字体不生效，会输出 TTF 导致浏览器解析失败）
         font.save(out)
         print(f'✓ 生成 {out_name}: {os.path.getsize(out)} 字节 ({src_name})')
 
