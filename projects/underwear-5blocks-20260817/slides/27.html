@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为什么讲专业，都是同行在看</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh;
+  }
+  .slide {
+    width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 84% 14%, rgba(180, 150, 100, 0.07) 0%, transparent 52%),
+      radial-gradient(ellipse at 8% 96%, rgba(180, 150, 100, 0.04) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .brand {
+    position: absolute; top: 2vw; left: 3.5vw;
+    display: flex; align-items: center; gap: 0.8vw; text-decoration: none; opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span { font-size: 1.15vw; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+  .content { display: flex; flex-direction: column; }
+  .eyebrow {
+    font-size: 1.9vw; font-weight: 400; color: rgba(212,184,122,0.8);
+    letter-spacing: 0.34em; margin-bottom: 2.4vw;
+  }
+  .title {
+    font-size: 3.6vw; font-weight: 900; color: #e0ded5;
+    letter-spacing: 0.06em; line-height: 1.3; white-space: nowrap;
+    margin-bottom: 2.6vw;
+  }
+  .title .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .list { display: flex; flex-direction: column; gap: 1.9vw; }
+  .reason { display: flex; align-items: center; gap: 1.8vw; white-space: nowrap; }
+  .reason .cause {
+    font-size: 1.95vw; font-weight: 900; flex-shrink: 0;
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.08em;
+  }
+  .reason .bar {
+    width: 0.12vw; height: 2.2vw; flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(212,184,122,0.02) 0%, rgba(212,184,122,0.6) 50%, rgba(212,184,122,0.02) 100%);
+  }
+  .reason .text {
+    font-size: 1.95vw; font-weight: 700; color: rgba(255,255,255,0.88);
+    letter-spacing: 0.05em;
+  }
+  .reason .text .kw {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <a href="#" class="brand"><img src="/runtime/assets/logo.png" alt="MIIFIRE"><span>觅火 MIIFIRE</span></a>
+    <div class="content">
+      <div class="eyebrow">内衣行业 · 短视频获客</div>
+      <div class="title">为什么讲<span class="gold">专业</span>，都是<span class="gold">同行在看</span></div>
+
+      <div class="list">
+        <div class="reason">
+          <span class="cause">因为</span><span class="bar"></span>
+          <span class="text">「<span class="kw">事出无因</span>」——你讲这个，没有<span class="kw">缘由</span></span>
+        </div>
+        <div class="reason">
+          <span class="cause">因为</span><span class="bar"></span>
+          <span class="text">没有展示你在「<span class="kw">具体情境</span>」下的「<span class="kw">判断力</span>」</span>
+        </div>
+        <div class="reason">
+          <span class="cause">因为</span><span class="bar"></span>
+          <span class="text">没有展示很多人都找你、和你帮人<span class="kw">拿到了结果</span></span>
+        </div>
+        <div class="reason">
+          <span class="cause">因为</span><span class="bar"></span>
+          <span class="text">没有展示「你可以、你值得托付」的<span class="kw">证据链</span></span>
+        </div>
+        <div class="reason">
+          <span class="cause">因为</span><span class="bar"></span>
+          <span class="text">你只当了同行的<span class="kw">嘴替</span>——他拿去一字不改也能讲</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

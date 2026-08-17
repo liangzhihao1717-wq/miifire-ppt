@@ -4,7 +4,7 @@
   "date": "2026-08-17",
   "type": "presentation",
   "ratio": "16:9",
-  "total": 25,
+  "total": 29,
   "theme": "landscape",
   "features": ["pager", "keyboard", "fullscreen"],
   "pages": [
@@ -32,6 +32,10 @@
     { "id": "lead-short", "n": 22, "title": "什么是获客线索型短视频" },
     { "id": "lead-group", "n": 23, "title": "线索型短视频，不是一个，而是一组" },
     { "id": "journey-lead", "n": 24, "title": "线索获客短视频，本质上是主导客户消费旅程" },
-    { "id": "multi-videos", "n": 25, "title": "消费者，是看了你的多条短视频，才决定付费" }
+    { "id": "multi-videos", "n": 25, "title": "消费者，是看了你的多条短视频，才决定付费" },
+    { "id": "trust-stereo", "n": 26, "title": "一个人，对另一个人的信任，是立体的" },
+    { "id": "peer-only", "n": 27, "title": "为什么讲专业，都是同行在看" },
+    { "id": "content-supplier", "n": 28, "title": "你的客户，从此是你的短视频内容供应商" },
+    { "id": "adult-exam", "n": 29, "title": "短视频/直播，是每一位老板的成人大考" }
   ]
 }
