@@ -17,38 +17,38 @@
 /* ===== 自托管思源宋体子集（iOS/微信/安卓渲染一致，不依赖设备本地字体） ===== */
 @font-face {
   font-family: 'MIIFIRE Serif';
-  src: url('/runtime/fonts/miifire-serif-400.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-serif-400.v2.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'MIIFIRE Serif';
-  src: url('/runtime/fonts/miifire-serif-500.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-serif-500.v2.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'MIIFIRE Serif';
-  src: url('/runtime/fonts/miifire-serif-700.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-serif-700.v2.woff2') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
 /* 拉丁文/数字：自托管黑体（中文宋体、英文黑体的字体配对，全端一致） */
 @font-face {
   font-family: 'MIIFIRE Sans';
-  src: url('/runtime/fonts/miifire-sans-400.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-sans-400.v2.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'MIIFIRE Sans';
-  src: url('/runtime/fonts/miifire-sans-500.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-sans-500.v2.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'MIIFIRE Sans';
-  src: url('/runtime/fonts/miifire-sans-700.woff2') format('woff2');
+  src: url('/runtime/fonts/miifire-sans-700.v2.woff2') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
