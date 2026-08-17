@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内衣代理商业务特点</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh;
+  }
+  .slide {
+    width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 84% 14%, rgba(180, 150, 100, 0.07) 0%, transparent 52%),
+      radial-gradient(ellipse at 8% 96%, rgba(180, 150, 100, 0.04) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .brand {
+    position: absolute; top: 2vw; left: 3.5vw;
+    display: flex; align-items: center; gap: 0.8vw; text-decoration: none; opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span { font-size: 1.15vw; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+  .content { display: flex; flex-direction: column; }
+  .eyebrow {
+    font-size: 1.9vw; font-weight: 400; color: rgba(212,184,122,0.8);
+    letter-spacing: 0.34em; margin-bottom: 1.8vw;
+  }
+  .title {
+    font-size: 3.9vw; font-weight: 900; color: #e0ded5;
+    letter-spacing: 0.08em; line-height: 1.3; white-space: nowrap;
+    margin-bottom: 2.6vw;
+  }
+  .title .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .tags { display: flex; align-items: baseline; gap: 2vw; white-space: nowrap; margin-bottom: 3vw; }
+  .tags .tag {
+    font-size: 1.9vw; font-weight: 900;
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.06em;
+  }
+  .tags .sep { font-size: 1.5vw; color: rgba(255,255,255,0.25); font-weight: 300; }
+  .rule {
+    width: 100%; height: 0.1vw;
+    background: linear-gradient(90deg, rgba(212,184,122,0.45), rgba(212,184,122,0.04));
+    margin-bottom: 2.6vw;
+  }
+  .main {
+    font-size: 2.15vw; font-weight: 700; color: rgba(255,255,255,0.88);
+    letter-spacing: 0.05em; line-height: 1.5; white-space: nowrap;
+  }
+  .main.dim2 { color: rgba(255,255,255,0.72); font-weight: 600; margin-bottom: 0.6vw; }
+  .conclusion {
+    font-size: 2.6vw; font-weight: 900; white-space: nowrap;
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.08em;
+    margin-top: 2.6vw;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <a href="#" class="brand"><img src="/runtime/assets/logo.png" alt="MIIFIRE"><span>觅火 MIIFIRE</span></a>
+    <div class="content">
+      <div class="eyebrow">内衣代理商 · 短视频获客</div>
+      <div class="title">内衣代理商<span class="gold">业务特点</span></div>
+
+      <div class="tags">
+        <span class="tag">一次性高额投入</span><span class="sep">/</span>
+        <span class="tag">决策周期长</span><span class="sep">/</span>
+        <span class="tag">省域区域限制</span><span class="sep">/</span>
+        <span class="tag">受品牌心智影响</span>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="main dim2">客户大概率不会看你一条短视频，就决定找你</div>
+      <div class="main">一定是跟踪看、看很多条、反复看、反复权衡</div>
+
+      <div class="conclusion">销售转化 ☞ 相当一部分可以在短视频里完成</div>
+    </div>
+  </div>
+</body>
+</html>

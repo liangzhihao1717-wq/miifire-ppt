@@ -4,7 +4,7 @@
   "date": "2026-08-17",
   "type": "presentation",
   "ratio": "16:9",
-  "total": 14,
+  "total": 21,
   "theme": "landscape",
   "features": ["pager", "keyboard", "fullscreen"],
   "pages": [
@@ -21,6 +21,13 @@
     { "id": "journey", "n": 11, "title": "客户是怎么一步步走向你" },
     { "id": "persona", "n": 12, "title": "人设，是每一天累积的" },
     { "id": "xin-price", "n": 13, "title": "别人卷性价比，你在卷心价比" },
-    { "id": "happen-cases", "n": 14, "title": "每天的发生，就是选题" }
+    { "id": "happen-cases", "n": 14, "title": "每天的发生，就是选题" },
+    { "id": "say-it", "n": 15, "title": "做了，就要说出来" },
+    { "id": "conv-store", "n": 16, "title": "便利店老板的用心细节" },
+    { "id": "marketing", "n": 17, "title": "营销的本质" },
+    { "id": "agent-revenue", "n": 18, "title": "代理商 · 你的主力营收来源" },
+    { "id": "agent-audience", "n": 19, "title": "代理商 · 谁找你拿货" },
+    { "id": "agent-newstore", "n": 20, "title": "代理商 · 新开店的客户" },
+    { "id": "agent-features", "n": 21, "title": "内衣代理商业务特点" }
   ]
 }
