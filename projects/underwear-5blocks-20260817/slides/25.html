@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消费者，是看了你的多条短视频，才决定付费</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh;
+  }
+  .slide {
+    width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 84% 14%, rgba(180, 150, 100, 0.07) 0%, transparent 52%),
+      radial-gradient(ellipse at 8% 96%, rgba(180, 150, 100, 0.04) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .brand {
+    position: absolute; top: 2vw; left: 3.5vw;
+    display: flex; align-items: center; gap: 0.8vw; text-decoration: none; opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span { font-size: 1.15vw; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+  .content { display: flex; flex-direction: column; }
+  .eyebrow {
+    font-size: 1.9vw; font-weight: 400; color: rgba(212,184,122,0.8);
+    letter-spacing: 0.34em; margin-bottom: 2.4vw;
+  }
+  .title {
+    font-size: 3.4vw; font-weight: 900; color: #e0ded5;
+    letter-spacing: 0.06em; line-height: 1.3; white-space: nowrap;
+    margin-bottom: 2.6vw;
+  }
+  .title .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .list { display: flex; flex-direction: column; gap: 2.2vw; }
+  .row { display: flex; align-items: center; gap: 1.8vw; white-space: nowrap; }
+  .row .no {
+    font-size: 2vw; font-weight: 900; font-style: italic;
+    background: linear-gradient(180deg, #e2c988 0%, #d4b87a 45%, #c9a050 55%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    width: 4.4vw; flex-shrink: 0;
+  }
+  .row .bar {
+    width: 0.24vw; height: 2.4vw; flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(212,184,122,0.02) 0%, rgba(212,184,122,0.6) 50%, rgba(212,184,122,0.02) 100%);
+  }
+  .row .text {
+    font-size: 2vw; font-weight: 700; color: rgba(255,255,255,0.88);
+    letter-spacing: 0.05em;
+  }
+  .row .text .kw {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+  .conclusion {
+    margin-top: 2.4vw; padding-top: 2.2vw;
+    border-top: 0.1vw solid rgba(212,184,122,0.28);
+    display: flex; align-items: stretch; gap: 1.8vw;
+  }
+  .conclusion .c-bar {
+    width: 0.32vw; flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(212,184,122,0.85) 0%, rgba(212,184,122,0.25) 100%);
+  }
+  .conclusion .c-text {
+    font-size: 2.5vw; font-weight: 900; letter-spacing: 0.06em; line-height: 1.45;
+    display: flex; flex-direction: column; gap: 0.4vw;
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <a href="#" class="brand"><img src="/runtime/assets/logo.png" alt="MIIFIRE"><span>觅火 MIIFIRE</span></a>
+    <div class="content">
+      <div class="eyebrow">内衣行业 · 短视频获客</div>
+      <div class="title">消费者，是看了你的<span class="gold">多条短视频</span>，才决定付费</div>
+
+      <div class="list">
+        <div class="row">
+          <span class="no">01</span><span class="bar"></span>
+          <span class="text">他可以关注你<span class="kw">很久不买单</span>，也可以<span class="kw">横向对比</span></span>
+        </div>
+        <div class="row">
+          <span class="no">02</span><span class="bar"></span>
+          <span class="text">他认定你是互联网上<span class="kw">最适合他的</span>，才会给你发私信</span>
+        </div>
+        <div class="row">
+          <span class="no">03</span><span class="bar"></span>
+          <span class="text">他未必会给大V发私信——他觉得大V<span class="kw">不会亲自服务他</span></span>
+        </div>
+        <div class="conclusion">
+          <span class="c-bar"></span>
+          <span class="c-text">
+            <span>所以，把你的短视频<span class="kw">组合起来、各司其职</span></span>
+            <span>——给他一个「<span class="kw">选我，不选别人</span>」的理由</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

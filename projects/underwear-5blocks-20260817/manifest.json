@@ -4,7 +4,7 @@
   "date": "2026-08-17",
   "type": "presentation",
   "ratio": "16:9",
-  "total": 21,
+  "total": 25,
   "theme": "landscape",
   "features": ["pager", "keyboard", "fullscreen"],
   "pages": [
@@ -28,6 +28,10 @@
     { "id": "agent-revenue", "n": 18, "title": "代理商 · 你的主力营收来源" },
     { "id": "agent-audience", "n": 19, "title": "代理商 · 谁找你拿货" },
     { "id": "agent-newstore", "n": 20, "title": "代理商 · 新开店的客户" },
-    { "id": "agent-features", "n": 21, "title": "内衣代理商业务特点" }
+    { "id": "agent-features", "n": 21, "title": "内衣代理商业务特点" },
+    { "id": "lead-short", "n": 22, "title": "什么是获客线索型短视频" },
+    { "id": "lead-group", "n": 23, "title": "线索型短视频，不是一个，而是一组" },
+    { "id": "journey-lead", "n": 24, "title": "线索获客短视频，本质上是主导客户消费旅程" },
+    { "id": "multi-videos", "n": 25, "title": "消费者，是看了你的多条短视频，才决定付费" }
   ]
 }
