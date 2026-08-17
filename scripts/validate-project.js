@@ -160,6 +160,31 @@ pageFiles.sort((a, b) => parseInt(a) - parseInt(b)).forEach((f) => {
   }
 });
 
+// ---------- 7. 字体覆盖检查（子集字体，缺字会静默回退系统字体导致字体不统一） ----------
+const charsetFile = path.join(__dirname, '..', 'runtime', 'fonts', 'charset.txt');
+let charset = '';
+try { charset = fs.readFileSync(charsetFile, 'utf-8'); }
+catch { warnings.push('缺少字体字符清单 charset.txt（跑 scripts/generate-font-subset.py 生成）'); }
+
+if (charset) {
+  const fontChars = new Set(charset);
+  const missingChars = new Set();
+  pageFiles.forEach((f) => {
+    const src = fs.readFileSync(path.join(pageDirUsed, f), 'utf-8');
+    for (const ch of src) {
+      if (/[\u4e00-\u9fff]/.test(ch) && !fontChars.has(ch)) {
+        missingChars.add(ch);
+      }
+    }
+  });
+  if (missingChars.size) {
+    errors.push(
+      `有 ${missingChars.size} 个中文字不在思源宋体子集里（会回退系统字体、字体不统一）: ${[...missingChars].join('')}` +
+      ' → 跑 scripts/generate-font-subset.py 重新生成子集'
+    );
+  }
+}
+
 // ---------- 输出 ----------
 console.log('项目:', meta.title || projectDir, `(${meta.type} / ${meta.ratio} / ${meta.theme})`);
 console.log('页面数:', meta.total, pageFiles.length === meta.total ? '✓' : '✗');
