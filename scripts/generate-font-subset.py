@@ -1,25 +1,31 @@
 #!/usr/bin/env python3
 """
-觅火 MIIFIRE · 思源宋体子集生成脚本
+觅火 MIIFIRE · 字体子集生成脚本
 ====================================
 用法: python3 scripts/generate-font-subset.py
 
-作用: 从本机完整思源宋体（SourceHanSerifCN），重新生成覆盖「GB2312 全集 + 所有项目字符
-      + 常用标点 + ASCII」的子集，输出到 runtime/fonts/miifire-serif-{400,500,700}.woff2
+作用:
+  1. 宋体：从本机完整思源宋体（SourceHanSerifCN），生成覆盖「GB2312 全集 + 所有项目字符
+     + 常用标点 + ASCII」的子集
+  2. 黑体：只保留字母 + 数字 + 空格（标点交给宋体，避免中文标点被黑体抢走）
 
-为什么要这个脚本（血泪教训）:
-  字体用子集(subset)来减小体积，但子集只覆盖「生成当时」的字符。
-  新增 PPT 项目用了新字 → 子集里没有 → 浏览器静默回退到系统宋体 → 字体不统一。
-  本脚本覆盖 GB2312 全集(6763 字)，确保常用汉字都在子集内，从根本上避免这个问题。
+血泪教训（详见 runtime/fonts/README.md）:
+  坑1: 子集太小 → 新字回退系统字体
+  坑2: 标点被黑体抢走 → 黑体只留字母数字
+  坑3: Options.flavor 对 CFF 不生效 → 用 font.flavor 属性（否则输出 TTF 白屏）
+  坑4: 字体缓存 → 文件名加版本号 cache-busting
 
 依赖: pip install fonttools
 字体源: ~/Library/Fonts/SourceHanSerifCN-{Regular,Medium,Bold}.ttf
 """
 
-from fontTools.subset import Subsetter, Options
+from fontTools.subset import Subsetter
 from fontTools.ttLib import TTFont
 import glob
 import os
+
+# 字体版本号：每次更新字体内容后 +1（v2 → v3 → …），并同步改 portrait.css 里的 url
+VERSION = 'v2'
 
 
 def collect_chars():
@@ -59,22 +65,25 @@ def generate_sans(out_dir):
     chars += ' '
 
     for weight in ['400', '500', '700']:
-        path = os.path.join(out_dir, f'miifire-sans-{weight}.woff2')
+        path = os.path.join(out_dir, f'miifire-sans-{weight}.{VERSION}.woff2')
+        if not os.path.exists(path):
+            print(f'✗ 缺少黑体源: {path}（黑体一般不需要重新生成，跳过）')
+            continue
         font = TTFont(path)
         ss = Subsetter()
         ss.populate(text=chars)
         ss.subset(font)
         font.flavor = 'woff2'
         font.save(path)
-        print(f'✓ 生成 miifire-sans-{weight}.woff2: {os.path.getsize(path)} 字节（只保留字母数字）')
+        print(f'✓ 生成 miifire-sans-{weight}.{VERSION}.woff2: {os.path.getsize(path)} 字节（只保留字母数字）')
 
 
 def main():
-    # 字体源 → 输出文件（字重映射）
+    # 宋体字重映射（源文件名 → 字重）
     mapping = [
-        ('SourceHanSerifCN-Regular.ttf', 'miifire-serif-400.woff2'),
-        ('SourceHanSerifCN-Medium.ttf', 'miifire-serif-500.woff2'),
-        ('SourceHanSerifCN-Bold.ttf', 'miifire-serif-700.woff2'),
+        ('SourceHanSerifCN-Regular.ttf', '400'),
+        ('SourceHanSerifCN-Medium.ttf', '500'),
+        ('SourceHanSerifCN-Bold.ttf', '700'),
     ]
     src_dir = os.path.expanduser('~/Library/Fonts/')
     out_dir = 'runtime/fonts/'
@@ -88,25 +97,25 @@ def main():
         fh.write(text)
     print(f'✓ 输出字符清单: {charset_file}')
 
-    for src_name, out_name in mapping:
+    for src_name, weight in mapping:
         src = os.path.join(src_dir, src_name)
         if not os.path.exists(src):
             print(f'✗ 缺少字体源: {src}')
             continue
-        out = os.path.join(out_dir, out_name)
+        out = os.path.join(out_dir, f'miifire-serif-{weight}.{VERSION}.woff2')
         font = TTFont(src)
         ss = Subsetter()
         ss.populate(text=text)
         ss.subset(font)
-        font.flavor = 'woff2'  # 关键：用 flavor 属性（Options.flavor 对 CFF 字体不生效，会输出 TTF 导致浏览器解析失败）
+        font.flavor = 'woff2'  # 关键：用 flavor 属性（Options.flavor 对 CFF 字体不生效，会输出 TTF）
         font.save(out)
-        print(f'✓ 生成 {out_name}: {os.path.getsize(out)} 字节 ({src_name})')
+        print(f'✓ 生成 miifire-serif-{weight}.{VERSION}.woff2: {os.path.getsize(out)} 字节')
 
-    # 黑体（Inter）也要重新子集：只保留字母数字，标点交给宋体
     print()
     generate_sans(out_dir)
 
-    print('完成。注意: 新字体需重新部署 + 用户端清缓存才能生效。')
+    print(f'\n完成。版本号: {VERSION}。')
+    print('若改了字体内容：记得 VERSION +1，并同步改 portrait.css 里的字体 url。')
 
 
 if __name__ == '__main__':
