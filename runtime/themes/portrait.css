@@ -264,6 +264,16 @@ body > .slide {
   color: var(--ink-2);
   letter-spacing: 0;
 }
+/* 居中页里 tried 列表：4 行整体左对齐（靠左），与上方居中的眉题/主句区分；行内左对齐让 → 箭头竖向对齐 */
+.slide.center .tried,
+.slide-inner.center .tried {
+  align-self: flex-start;
+  text-align: left;
+}
+.slide.center .tried-items div,
+.slide-inner.center .tried-items div {
+  text-align: left;
+}
 .noresult {
   font-size: 4cqw;
   font-weight: 400;
@@ -335,6 +345,125 @@ body > .slide {
   line-height: 1.6;
   margin-top: 0.3vh;
   margin-top: 0.3cqh;
+}
+
+/* ===== 价值清单（大号金色编号跨两行，标题 + 说明在右）===== */
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 3.6cqh;
+  margin-top: 1cqh;
+  text-align: left;
+}
+.benefits .b-item {
+  display: flex;
+  align-items: center;
+  gap: 3.2cqw;
+}
+.benefits .b-no {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 6cqw;
+  font-weight: 500;
+  color: rgba(212,184,122,0.85);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  min-width: 8cqw;
+  text-align: right;
+}
+.benefits .b-line {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 0.14cqw;
+  background: linear-gradient(180deg, rgba(212,184,122,0.08) 0%, rgba(212,184,122,0.65) 50%, rgba(212,184,122,0.08) 100%);
+}
+.benefits .b-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqh;
+  flex: 1;
+}
+.benefits .b-title {
+  font-size: 4.8cqw;
+  font-weight: 700;
+  color: var(--ink-1);
+  line-height: 1.42;
+}
+.benefits .b-title .kw {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.benefits .b-desc {
+  font-size: 3.4cqw;
+  font-weight: 400;
+  color: var(--ink-3);
+  line-height: 1.55;
+}
+.benefits .b-desc .kw {
+  font-weight: 700;
+  color: #d4b87a;
+  margin: 0 0.5cqw;
+}
+
+/* ===== 议程时间线（大厂级日程 UI：日期分组 + 发光圆点节点）===== */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 3.8cqh;
+  text-align: left;
+  margin-top: 0.6cqh;
+}
+.agenda .day-head {
+  display: flex;
+  align-items: baseline;
+  gap: 2.6cqw;
+  padding-bottom: 1.3cqh;
+  border-bottom: 0.08cqw solid rgba(212,184,122,0.16);
+  margin-bottom: 0.2cqh;
+}
+.agenda .day-label {
+  font-size: 2.4cqw;
+  font-weight: 500;
+  color: rgba(212,184,122,0.45);
+  letter-spacing: 0.34em;
+}
+.agenda .day-date {
+  font-size: 4.6cqw;
+  font-weight: 700;
+  color: #ece9e0;
+  letter-spacing: 0.05em;
+}
+.agenda .ag-item {
+  display: flex;
+  align-items: center;
+  gap: 2.8cqw;
+  padding: 1.15cqh 0;
+}
+.agenda .ag-time {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 3.6cqw;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  min-width: 27cqw;
+  letter-spacing: 0.03em;
+}
+.agenda .ag-dot {
+  flex-shrink: 0;
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e2c988 0%, #c9a050 100%);
+  box-shadow: 0 0 1.4cqw rgba(212,184,122,0.4);
+}
+.agenda .ag-name {
+  font-size: 4.2cqw;
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: 0.01em;
 }
 
 /* ===== 分组小节（带小节标题 + 标签流） ===== */
@@ -784,6 +913,23 @@ body > .slide {
   background: linear-gradient(90deg, rgba(212,184,122,0.6), rgba(212,184,122,0.1));
   margin: 1cqh 0;
 }
+/* 对称金线分隔：中间亮、两边对称渐隐，更均衡 */
+.sep.sym {
+  width: 24cqw;
+  background: linear-gradient(90deg, rgba(212,184,122,0.05) 0%, rgba(212,184,122,0.6) 50%, rgba(212,184,122,0.05) 100%);
+}
+/* 居中页里的分隔线：水平居中（否则 flex 布局下会默认靠左） */
+.slide.center .sep,
+.slide-inner.center .sep {
+  align-self: center;
+}
+/* 垂直留白（呼吸空间）：纯空白、无线，用于段落之间制造停顿；高度可用 size 变体微调 */
+.space {
+  height: 6cqh;
+  flex-shrink: 0;
+}
+.space.md { height: 4cqh; }
+.space.sm { height: 2.5cqh; }
 /* 断句行内的小节标题（如"觅火 MIIFIRE 智能体 · 主力生产"） */
 .lines .lt {
   font-weight: 700;

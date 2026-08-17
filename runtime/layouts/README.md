@@ -40,6 +40,7 @@
 | person 人物页 | person.md | 讲师/人物介绍 | 6.html |
 | tags 标签分组 | tags.md | 标签组 + 分组标题 | 9.html |
 | turn 转折对比 | turn.md | 转折、做法对比 | 2.html |
+| benefits 锚点编号 | benefits.md | 大编号 + 竖线的价值清单 | agent-meet/4.html |
 | closing 收尾 | closing.md | 收尾落款 | 21.html |
 
 ---
