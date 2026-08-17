@@ -4,7 +4,7 @@
   "date": "2026-08-17",
   "type": "presentation",
   "ratio": "16:9",
-  "total": 7,
+  "total": 14,
   "theme": "landscape",
   "features": ["pager", "keyboard", "fullscreen"],
   "pages": [
@@ -14,6 +14,13 @@
     { "id": "pits", "n": 4, "title": "我们在一线踩过的坑" },
     { "id": "store-position", "n": 5, "title": "内衣实体店老板 · 拍短视频（定位）" },
     { "id": "store-moves", "n": 6, "title": "内衣实体店老板 · 具体怎么拍" },
-    { "id": "trust", "n": 7, "title": "信任，是短视频的核心落点" }
+    { "id": "trust", "n": 7, "title": "信任，是短视频的核心落点" },
+    { "id": "happen", "n": 8, "title": "每天都有新的「发生」" },
+    { "id": "trust-mech", "n": 9, "title": "客户只看你做了什么" },
+    { "id": "story-mkt", "n": 10, "title": "故事营销，而不是硬广告" },
+    { "id": "journey", "n": 11, "title": "客户是怎么一步步走向你" },
+    { "id": "persona", "n": 12, "title": "人设，是每一天累积的" },
+    { "id": "xin-price", "n": 13, "title": "别人卷性价比，你在卷心价比" },
+    { "id": "happen-cases", "n": 14, "title": "每天的发生，就是选题" }
   ]
 }

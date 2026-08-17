@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>别人卷性价比，你在卷心价比</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh;
+  }
+  .slide {
+    width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 78% 22%, rgba(180, 150, 100, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 12% 90%, rgba(180, 150, 100, 0.05) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .brand {
+    position: absolute; top: 2vw; left: 3.5vw;
+    display: flex; align-items: center; gap: 0.8vw; text-decoration: none; opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span { font-size: 1.15vw; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+  .content { display: flex; flex-direction: column; align-items: center; gap: 3vw; }
+  .eyebrow {
+    font-size: 1.9vw; font-weight: 400; color: rgba(212,184,122,0.8);
+    letter-spacing: 0.34em;
+  }
+  .ask {
+    font-size: 1.8vw; font-weight: 500; color: rgba(255,255,255,0.65);
+    letter-spacing: 0.08em; line-height: 1.8; text-align: center; white-space: nowrap;
+  }
+  .ask .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+  .closing {
+    font-size: 4.2vw; font-weight: 900; color: #e0ded5;
+    letter-spacing: 0.08em; line-height: 1.3; text-align: center; white-space: nowrap;
+  }
+  .closing .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <a href="#" class="brand"><img src="/runtime/assets/logo.png" alt="MIIFIRE"><span>觅火 MIIFIRE</span></a>
+    <div class="content">
+      <div class="eyebrow">那么 · 一间店到底在卖什么</div>
+      <div class="ask">什么叫<span class="gold">"小而美"</span>，什么叫<span class="gold">"情绪经济"</span>，什么叫做<span class="gold">"有温度的店铺"</span>？</div>
+      <div class="closing">别人卷性价比，你在卷<span class="gold">心价比</span></div>
+    </div>
+  </div>
+</body>
+</html>

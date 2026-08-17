@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户旅程</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh;
+  }
+  .slide {
+    width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 78% 22%, rgba(180, 150, 100, 0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 12% 90%, rgba(180, 150, 100, 0.04) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .brand {
+    position: absolute; top: 2vw; left: 3.5vw;
+    display: flex; align-items: center; gap: 0.8vw; text-decoration: none; opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span { font-size: 1.15vw; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; }
+  .content { display: flex; flex-direction: column; }
+  .eyebrow {
+    font-size: 1.9vw; font-weight: 400; color: rgba(212,184,122,0.8);
+    letter-spacing: 0.34em; margin-bottom: 3vw;
+  }
+  .title {
+    font-size: 3.6vw; font-weight: 900; color: #e0ded5;
+    letter-spacing: 0.08em; line-height: 1.3; white-space: nowrap;
+    margin-bottom: 4vw;
+  }
+  .title .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .chain { display: flex; align-items: center; gap: 1.4vw; }
+  .chain .word {
+    font-size: 2vw; font-weight: 700; color: rgba(255,255,255,0.8);
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  .chain .word.hot {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+  .chain .arrow {
+    font-size: 1.6vw; color: rgba(212,184,122,0.45); font-weight: 300;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <a href="#" class="brand"><img src="/runtime/assets/logo.png" alt="MIIFIRE"><span>觅火 MIIFIRE</span></a>
+    <div class="content">
+      <div class="eyebrow">内衣行业 · 短视频获客</div>
+      <div class="title">客户是怎么一步步<span class="gold">走向你</span>的</div>
+      <div class="chain">
+        <span class="word">了解你</span>
+        <span class="arrow">→</span>
+        <span class="word">信任你</span>
+        <span class="arrow">→</span>
+        <span class="word hot">参与你</span>
+        <span class="arrow">→</span>
+        <span class="word hot">购买你</span>
+        <span class="arrow">→</span>
+        <span class="word hot">传播你</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
