@@ -4,7 +4,7 @@
   "date": "2026-08-18",
   "type": "poster",
   "ratio": "9:16",
-  "total": 8,
+  "total": 9,
   "theme": "portrait",
   "features": ["scroller", "progress", "fullscreen"],
   "pages": [
@@ -13,8 +13,9 @@
     { "id": "explain", "n": 3, "title": "做不好短视频是因为没有方法论体系" },
     { "id": "benefits", "n": 4, "title": "这场闭门会能给你什么" },
     { "id": "who", "n": 5, "title": "是谁给你" },
-    { "id": "day1", "n": 6, "title": "闭门会 · 第一天" },
-    { "id": "day2", "n": 7, "title": "闭门会 · 第二天" },
-    { "id": "place", "n": 8, "title": "参会地点" }
+    { "id": "day1-am", "n": 6, "title": "第一天 · 上午" },
+    { "id": "day1-pm", "n": 7, "title": "第一天 · 下午" },
+    { "id": "day2", "n": 8, "title": "第二天" },
+    { "id": "place", "n": 9, "title": "参会地点" }
   ]
 }
