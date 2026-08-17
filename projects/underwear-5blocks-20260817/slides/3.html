@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内衣行业获客体系 + Agent 工具</title>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+  }
+
+  .slide {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    padding: 5.2vw 9vw;
+    background:
+      radial-gradient(ellipse at 84% 14%, rgba(180, 150, 100, 0.07) 0%, transparent 52%),
+      radial-gradient(ellipse at 8% 96%, rgba(180, 150, 100, 0.04) 0%, transparent 45%),
+      #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .brand {
+    position: absolute;
+    top: 2vw;
+    left: 3.5vw;
+    display: flex;
+    align-items: center;
+    gap: 0.8vw;
+    text-decoration: none;
+    opacity: 0.82;
+  }
+  .brand img { height: 2.3vw; filter: brightness(0.95) saturate(0.4); }
+  .brand span {
+    font-size: 1.15vw;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+  }
+
+  .content { display: flex; flex-direction: column; }
+
+  .eyebrow {
+    font-size: 1.25vw;
+    font-weight: 400;
+    color: rgba(212, 184, 122, 0.8);
+    letter-spacing: 0.34em;
+    margin-bottom: 1.4vw;
+  }
+
+  .title {
+    font-size: 3.5vw;
+    font-weight: 900;
+    color: #e0ded5;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
+    margin-bottom: 3.2vw;
+    white-space: nowrap;
+  }
+  .title .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cols { display: flex; gap: 0; align-items: stretch; margin-bottom: 3.2vw; }
+
+  .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+    padding: 1.2vw 2.4vw;
+  }
+
+  .col .no {
+    font-size: 1.2vw;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(212, 184, 122, 0.5);
+    letter-spacing: 0.16em;
+  }
+
+  .col .name {
+    font-size: 2.4vw;
+    font-weight: 900;
+    color: #e0ded5;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .col .meta {
+    font-size: 1.6vw;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+  .col .meta .kw {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .vline {
+    width: 0.06vw;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(212, 184, 122, 0.02) 0%, rgba(212, 184, 122, 0.35) 50%, rgba(212, 184, 122, 0.02) 100%);
+  }
+
+  .rule {
+    width: 100%;
+    height: 0.1vw;
+    background: linear-gradient(90deg, rgba(212, 184, 122, 0.45), rgba(212, 184, 122, 0.04));
+    margin-bottom: 2.4vw;
+  }
+
+  .conclusion {
+    font-size: 2.1vw;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .conclusion .gold {
+    background: linear-gradient(135deg, #e2c988 0%, #f5e6c8 25%, #d4b87a 40%, #c9a050 50%, #d4b87a 60%, #f5e6c8 75%, #b48b3a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+
+    <a href="#" class="brand">
+      <img src="/runtime/assets/logo.png" alt="MIIFIRE">
+      <span>觅火 MIIFIRE</span>
+    </a>
+
+    <div class="content">
+      <div class="eyebrow">内衣行业 · 短视频获客</div>
+      <div class="title">内衣行业 <span class="gold">获客体系</span> + <span class="gold">Agent 工具</span></div>
+
+      <div class="cols">
+        <div class="col">
+          <div class="no">01</div>
+          <div class="name">方法论体系</div>
+          <div class="meta">是一棵<span class="kw">生长的树</span></div>
+        </div>
+        <div class="vline"></div>
+        <div class="col">
+          <div class="no">02</div>
+          <div class="name">短视频</div>
+          <div class="meta">是树上结出来的<span class="kw">果子</span></div>
+        </div>
+        <div class="vline"></div>
+        <div class="col">
+          <div class="no">03</div>
+          <div class="name">Agent 工具</div>
+          <div class="meta">是<span class="kw">种植 / 采摘</span>机器</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="conclusion">短视频是靠体系<span class="gold">「生长」出来</span>的，不是"想一出是一出"的</div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -84,6 +84,7 @@
     get type() { return state.type; },
     get theme() { return state.theme; },
     get current() { return state.current; },
+    get state() { return state; },
 
     // 跳页：n 为数字页码；'cover' / 'toc' 为附加页
     go(n, opts) {

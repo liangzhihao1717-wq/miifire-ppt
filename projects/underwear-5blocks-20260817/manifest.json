@@ -1,0 +1,19 @@
+{
+  "id": "underwear-5blocks-20260817",
+  "title": "内衣行业短视频获客",
+  "date": "2026-08-17",
+  "type": "presentation",
+  "ratio": "16:9",
+  "total": 7,
+  "theme": "landscape",
+  "features": ["pager", "keyboard", "fullscreen"],
+  "pages": [
+    { "id": "blocks", "n": 1, "title": "内衣行业短视频获客 · 6 个障碍" },
+    { "id": "attitude", "n": 2, "title": "我只要落地" },
+    { "id": "system", "n": 3, "title": "获客体系 + Agent 工具" },
+    { "id": "pits", "n": 4, "title": "我们在一线踩过的坑" },
+    { "id": "store-position", "n": 5, "title": "内衣实体店老板 · 拍短视频（定位）" },
+    { "id": "store-moves", "n": 6, "title": "内衣实体店老板 · 具体怎么拍" },
+    { "id": "trust", "n": 7, "title": "信任，是短视频的核心落点" }
+  ]
+}
